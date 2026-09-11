@@ -45,7 +45,8 @@ if(resumeProjects){
   resumeProjects.addEventListener('pointercancel',endDrag);
   resumeProjects.addEventListener('click',function(ev){if(moved){ev.preventDefault();ev.stopPropagation()}},true);
 }
-var projects=q('project-grid');if(projects)projects.innerHTML=(d.projects||[]).map(function(p,i){return'<a class="project-card" href="project.html?id='+encodeURIComponent(p.id)+'"><div class="project-thumb tone-'+i%3+'"><span>'+e(p.year)+'</span></div><div class="project-meta"><span>'+e(p.genre)+'</span><h2>'+e(p.title)+'</h2><p>'+e(p.role)+'</p></div><div class="project-hover"><strong>'+e(p.summary)+'</strong><span>상세 보기 →</span></div></a>'}).join('');/* 숏폼 영상 한 칸. 유튜브 주소면 embed 로 바꿔 넣습니다.
+var projects=q('project-grid');if(projects)projects.innerHTML=(d.projects||[]).map(function(p,i){return'<a class="project-card" href="project.html?id='+encodeURIComponent(p.id)+'"><div class="project-thumb tone-'+i%3+'"><span>'+e(p.year)+'</span></div><div class="project-meta"><span>'+e(p.genre)+'</span><h2>'+e(p.title)+'</h2><p>'+e(p.role)+'</p></div><div class="project-hover"><strong>'+e(p.summary)+'</strong><span>상세 보기 →</span></div></a>'}).join('');/* 숏폼 영상 한 칸. 유튜브 주소면 미리보기 그림을 먼저 놓고,
+   재생 버튼을 누르면 그 자리에서 플레이어로 바뀝니다.
    세로(9:16)로 볼지 가로(16:9)로 볼지는 data.js 의 ratio 값으로 정할 수 있습니다.
    값이 없으면 유튜브 일반 영상은 가로, 유튜브 쇼츠와 직접 넣은 영상 파일은 세로입니다. */
 function videoEmbed(x){
@@ -54,22 +55,37 @@ function videoEmbed(x){
       tall=x&&x.ratio?String(x.ratio).replace(':','/')==='9/16':(yt?/\/shorts\//.test(src):true),
       cls='video-item'+(tall?' tall':' wide');
   if(yt){
-    var id=yt[1],t=src.match(/[?&]t=(\d+)/);
-    /* 파일을 더블클릭해 열면(file://) 유튜브가 "오류 153"을 내며 재생을 막는다.
-       이때는 미리보기 그림을 눌러 유튜브에서 열도록 바꿔 준다. */
-    if(location.protocol==='file:'){
-      var watch='https://www.youtube.com/watch?v='+id+(t?'&t='+t[1]+'s':''),
-          thumb='https://img.youtube.com/vi/'+id+'/';
-      return'<a class="'+cls+' yt-link" href="'+e(watch)+'" target="_blank" rel="noopener">'
-        +'<img src="'+e(thumb)+'maxresdefault.jpg" alt="'+e(x.title||'유튜브 영상')+'" '
-        +'onerror="if(this.dataset.fb){this.style.display=\'none\'}else{this.dataset.fb=1;this.src=\''+e(thumb)+'hqdefault.jpg\'}">'
-        +'<span class="yt-play" aria-hidden="true"></span>'
-        +'<span class="yt-hint">유튜브에서 보기 →</span></a>';
-    }
-    var embed='https://www.youtube.com/embed/'+id+(t?'?start='+t[1]:'');
-    return'<div class="'+cls+'"><iframe src="'+e(embed)+'" title="'+e(x.title||'프로젝트 영상')+'" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
+    var id=yt[1],t=src.match(/[?&]t=(\d+)/),start=t?t[1]:'0',
+        watch='https://www.youtube.com/watch?v='+id+(t?'&t='+t[1]+'s':''),
+        thumb='https://img.youtube.com/vi/'+id+'/';
+    return'<div class="'+cls+'">'
+      +'<div class="yt-facade" data-yt="'+e(id)+'" data-start="'+e(start)+'">'
+        +'<button type="button" class="yt-poster" aria-label="'+e(x.title||'영상')+' 재생">'
+          +'<img src="'+e(thumb)+'maxresdefault.jpg" alt="" '
+          +'onerror="if(this.dataset.fb){this.style.display=\''+'none'+'\'}else{this.dataset.fb=1;this.src=\''+e(thumb)+'hqdefault.jpg\'}">'
+          +'<span class="yt-play" aria-hidden="true"></span>'
+        +'</button>'
+      +'</div>'
+      /* 파일을 더블클릭해 열면(file://) 유튜브가 "오류 153"으로 재생을 막는다. 그때를 위한 탈출구. */
+      +(location.protocol==='file:'?'<a class="yt-fallback" href="'+e(watch)+'" target="_blank" rel="noopener">재생되지 않으면 유튜브에서 보기 →</a>':'')
+      +'</div>';
   }
   return'<div class="'+cls+'"><video controls playsinline preload="metadata" src="'+e(src)+'"></video></div>';
+}
+
+/* 미리보기 그림을 누르면 그 자리에서 유튜브 플레이어로 바꿔 넣는다. */
+function wireVideos(root){
+  var boxes=root.querySelectorAll('.yt-facade');
+  for(var i=0;i<boxes.length;i++){
+    boxes[i].addEventListener('click',function(ev){
+      var box=ev.currentTarget,id=String(box.getAttribute('data-yt')||''),
+          start=parseInt(box.getAttribute('data-start'),10)||0;
+      if(!/^[A-Za-z0-9_-]{6,}$/.test(id)||box.querySelector('iframe'))return;
+      box.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0'+(start?'&start='+start:'')
+        +'" title="프로젝트 영상" referrerpolicy="strict-origin-when-cross-origin" '
+        +'allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    });
+  }
 }
 
 /* 엑셀 표. 브라우저는 file:// 에서 .xlsx 를 읽지 못하므로
@@ -112,12 +128,15 @@ if(detail){
     var team=(p.team||[]).map(function(x){return'<li><span>'+e(x.part)+'</span><strong>'+e(x.count)+'명</strong></li>'}).join('')||'<li class="project-empty">인원 구성 입력</li>',
         videos=(p.shortVideos||[]).map(videoEmbed).join('')||'<div class="media-placeholder">숏폼 영상 추가 영역</div>',
         gallery=(p.images||[]).filter(function(x){return x&&x.src}),
-        galleryBlock=gallery.length
-          ?'<div class="gallery-main" id="gallery-main"></div>'
-           +(gallery.length>1?'<div class="gallery-rail">'+gallery.map(function(x,i){
-               return'<button type="button" class="gallery-thumb'+(i?'':' on')+'" data-img="'+i+'">'
-                 +'<img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'" loading="lazy"></button>'}).join('')+'</div>':'')
-          :'<div class="media-placeholder">프로젝트 이미지 추가 영역</div>',
+        /* 이미지가 아직 없어도 큰 사진 자리와 오른쪽 목록 틀은 그대로 보여 준다. */
+        railItems=gallery.length
+          ?gallery.map(function(x,i){
+             return'<button type="button" class="gallery-thumb'+(i?'':' on')+'" data-img="'+i+'">'
+               +'<img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'" loading="lazy"></button>'}).join('')
+          :'<span class="gallery-slot"></span><span class="gallery-slot"></span><span class="gallery-slot"></span><span class="gallery-slot"></span>',
+        galleryBlock='<div class="gallery-main" id="gallery-main">'
+            +(gallery.length?'':'<div class="media-placeholder">프로젝트 이미지 추가 영역</div>')+'</div>'
+          +'<div class="gallery-rail">'+railItems+'</div>',
         docList=(p.documents||[]).filter(function(x){return x&&x.src}),
         docTabs=docList.map(function(x,i){return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'+e(x.title||('기획서 '+(i+1)))+'</button>'}).join(''),
         docBlock=docList.length
@@ -137,6 +156,8 @@ if(detail){
       +'<section class="video-block"><div class="video-grid">'+videos+'</div></section>'
       +'<section class="gallery-block">'+galleryBlock+'</section>'
       +'<section class="document-block">'+docBlock+'</section>';
+
+    wireVideos(detail);
 
     /* 프로젝트 이미지: 오른쪽 목록을 누르면 큰 사진이 바뀝니다. */
     var main=q('gallery-main');

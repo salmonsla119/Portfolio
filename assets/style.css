@@ -377,3 +377,45 @@ html{overflow-x:hidden}
   .gallery-rail{flex-direction:row;max-height:none;overflow-x:auto}
   .gallery-thumb{flex:0 0 132px}
 }
+
+/* ===== 숏폼 영상: 눌러서 그 자리에서 재생 ===== */
+.yt-facade{position:relative;display:block;overflow:hidden;aspect-ratio:16/9;border:2px solid var(--ink);border-radius:18px;background:var(--ink);box-shadow:5px 6px 0 var(--sand)}
+.video-item.tall .yt-facade{aspect-ratio:9/16}
+.yt-facade>iframe{display:block;width:100%;height:100%;border:0}
+.yt-poster{display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.yt-poster>img{display:block;width:100%;height:100%;object-fit:cover}
+.yt-fallback{display:inline-block;margin-top:10px;color:var(--muted);font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.video-block .video-item>.yt-facade{box-shadow:5px 6px 0 var(--sand)}
+
+/* ===== 프로젝트 이미지: 비어 있어도 틀과 목록 유지 ===== */
+.gallery-main{min-height:clamp(220px,26vw,360px);display:flex;flex-direction:column;justify-content:center;background:var(--card)}
+.gallery-main>.media-placeholder{flex:1;min-height:clamp(200px,24vw,340px);margin:14px;background:var(--fog)}
+.gallery-rail{height:clamp(260px,30vw,420px);max-height:none;overflow-y:auto;overflow-x:hidden}
+.gallery-slot{display:block;flex:0 0 auto;height:98px;border:2px dashed var(--line);border-radius:13px;background:var(--card)}
+
+/* ===== 얇은 띠: 제목은 왼쪽 끝, 값은 오른쪽 끝 ===== */
+.brief-line{justify-content:space-between;gap:16px}
+.role-section .brief-line p{text-align:right}
+.team-section .team-list{flex:0 1 auto;display:grid;justify-content:end}
+
+/* ===== 프로젝트 한 줄 설명 강조 ===== */
+.note-lead{margin:0 0 16px;font-size:clamp(20px,2.4vw,27px);font-weight:700;line-height:1.4}
+.note-section .project-body{font-size:15.5px}
+
+@media(max-width:850px){
+  .gallery-rail{height:auto;max-height:none;overflow-x:auto;overflow-y:hidden}
+  .gallery-slot{flex:0 0 132px;height:84px}
+}
+@media(max-width:560px){
+  .brief-line{justify-content:flex-start}
+  .role-section .brief-line p{text-align:left}
+  .team-section .team-list{flex:1 1 auto;justify-content:stretch;grid-template-columns:1fr}
+}
+/* 참여 인원 칩: 이름과 인원수가 붙지 않도록 최소 너비와 간격 확보 */
+.team-section .team-list{grid-template-columns:repeat(3,minmax(112px,auto))}
+.team-section .team-list li{gap:12px}
+@media(max-width:560px){.team-section .team-list{grid-template-columns:1fr}}
+/* 오른쪽 목록은 큰 사진 상자와 같은 높이로 늘어나고, 넘치면 아래로 스크롤된다 */
+.gallery-block{align-items:stretch}
+.gallery-rail{height:auto;max-height:none;overflow-y:auto}
+@media(max-width:850px){.gallery-block{align-items:start}.gallery-rail{overflow-x:auto;overflow-y:hidden}}
