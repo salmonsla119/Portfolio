@@ -326,3 +326,54 @@ html{overflow-x:hidden}
 .yt-play:after{content:"";position:absolute;left:56%;top:50%;transform:translate(-50%,-50%);border-left:19px solid var(--ink);border-top:12px solid transparent;border-bottom:12px solid transparent}
 .video-item.yt-link:hover .yt-play,.video-item.yt-link:focus-visible .yt-play{transform:translate(-50%,-50%) scale(1.07)}
 .yt-hint{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 13px;background:linear-gradient(rgba(34,49,79,0),rgba(34,49,79,.88));color:#fff;font-size:13px;font-weight:600;text-align:center}
+
+/* ===== 프로젝트 상세 레이아웃 (목업 반영) ===== */
+/* 내 역할 · 참여 인원: 한 줄짜리 얇은 띠 */
+.project-brief{grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px;margin-top:26px}
+.project-brief>.project-section{padding:13px 18px 15px}
+.project-brief .artifact-label{margin:0 0 6px;font-size:10px}
+.brief-line{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brief-line h2{margin:0;font-size:17px;white-space:nowrap}
+.role-section .brief-line p{margin:0;color:var(--muted);font-size:15px;word-break:keep-all}
+.team-section .team-list{flex:1 1 auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.team-section .team-list li{padding:7px 12px;border-radius:10px}
+.team-section .team-list span{font-size:11px}
+.team-section .team-list strong{font-size:14px}
+
+/* 상세 설명: 간단 설명이 앞에, 본문이 뒤에 */
+.note-section{margin-top:14px;padding:clamp(22px,3vw,30px) clamp(22px,3vw,32px)}
+.note-lead{margin:0 0 14px;font-size:clamp(17px,1.8vw,21px);font-weight:650;line-height:1.45;word-break:keep-all}
+.note-section .project-body{margin:0;max-width:none;font-size:15px;color:var(--muted)}
+
+/* 숏폼 영상: 상자 없이 가로 전체 */
+.video-block{margin-top:18px}
+.video-block .video-grid{grid-template-columns:1fr;gap:16px}
+.video-block .video-item{max-width:none}
+.video-block .video-item.tall{max-width:420px}
+.video-block .video-item>video,.video-block .video-item>iframe,.video-block .video-item.yt-link{border:2px solid var(--ink);box-shadow:5px 6px 0 var(--sand)}
+.video-block .media-placeholder{min-height:clamp(220px,32vw,420px)}
+
+/* 프로젝트 이미지: 큰 사진 + 오른쪽 목록 */
+.gallery-block{display:grid;grid-template-columns:minmax(0,1fr) 168px;gap:14px;margin-top:18px;align-items:start}
+.gallery-main{overflow:hidden;border:2px solid var(--ink);border-radius:20px;background:var(--card);box-shadow:5px 6px 0 var(--sand)}
+.gallery-main img{display:block;width:100%;height:auto}
+.gallery-caption{margin:0;padding:12px 16px;border-top:2px solid var(--ink);color:var(--muted);font-size:13px}
+.gallery-rail{display:flex;flex-direction:column;gap:10px;max-height:min(70vh,620px);overflow:auto;padding:12px;border:2px solid var(--ink);border-radius:20px;background:var(--fog)}
+.gallery-thumb{padding:0;border:2px solid var(--ink);border-radius:13px;background:var(--card);overflow:hidden;cursor:pointer;line-height:0}
+.gallery-thumb img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;opacity:.65;transition:opacity .15s ease}
+.gallery-thumb.on img,.gallery-thumb:hover img{opacity:1}
+.gallery-thumb.on{box-shadow:3px 4px 0 var(--sand)}
+.gallery-block>.media-placeholder{grid-column:1/-1;min-height:clamp(200px,26vw,320px)}
+
+/* 상세 기획서: 제목 버튼이 상자 위로 */
+.document-block{margin-top:22px}
+.document-block .doc-tabs{margin:0 0 14px}
+.document-block .document-section{margin-top:0}
+.document-section>h2{margin:0 0 18px;font-size:clamp(20px,2.2vw,26px)}
+
+@media(max-width:850px){
+  .project-brief{grid-template-columns:1fr}
+  .gallery-block{grid-template-columns:1fr}
+  .gallery-rail{flex-direction:row;max-height:none;overflow-x:auto}
+  .gallery-thumb{flex:0 0 132px}
+}

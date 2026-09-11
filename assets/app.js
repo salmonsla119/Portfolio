@@ -99,36 +99,63 @@ function sheetTable(key){
 }
 
 /* ===== 프로젝트 상세 페이지 =====
-   순서: 내 역할 · 참여 인원 → (숏폼 영상 | 상세 설명) → 프로젝트 이미지 → 상세 기획서
-   상세 기획서는 위쪽 제목 버튼을 누르면 아래 뷰어에 해당 문서가 뜹니다. */
+   순서: 제목 → (내 역할 | 참여 인원) → 상세 설명 → 숏폼 영상 → 프로젝트 이미지 → 상세 기획서
+   - 내 역할·참여 인원은 한 줄짜리 얇은 띠
+   - 상세 설명은 간단 설명(summary)이 큰 글씨로 앞에 오고 그 아래 본문
+   - 프로젝트 이미지는 큰 사진 한 장 + 오른쪽 목록. 목록을 누르면 큰 사진이 바뀜
+   - 상세 기획서는 위쪽 제목 버튼을 누르면 아래 상자에 그 문서가 뜸 */
 var detail=q('project-detail');
 if(detail){
   var id=new URLSearchParams(location.search).get('id'),
       p=(d.projects||[]).find(function(x){return x.id===id})||(d.projects||[])[0];
   if(p){
-    var team=(p.team||[]).map(function(x){return'<li><span>'+e(x.part)+'</span><strong>'+e(x.count)+'명</strong></li>'}).join('')||'<li class="project-empty">인원 구성을 입력해 주세요.</li>',
+    var team=(p.team||[]).map(function(x){return'<li><span>'+e(x.part)+'</span><strong>'+e(x.count)+'명</strong></li>'}).join('')||'<li class="project-empty">인원 구성 입력</li>',
         videos=(p.shortVideos||[]).map(videoEmbed).join('')||'<div class="media-placeholder">숏폼 영상 추가 영역</div>',
-        images=(p.images||[]).map(function(x){return'<figure><img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'" loading="lazy"><figcaption>'+e(x.caption||'')+'</figcaption></figure>'}).join('')||'<div class="media-placeholder">프로젝트 이미지 추가 영역</div>',
+        gallery=(p.images||[]).filter(function(x){return x&&x.src}),
+        galleryBlock=gallery.length
+          ?'<div class="gallery-main" id="gallery-main"></div>'
+           +(gallery.length>1?'<div class="gallery-rail">'+gallery.map(function(x,i){
+               return'<button type="button" class="gallery-thumb'+(i?'':' on')+'" data-img="'+i+'">'
+                 +'<img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'" loading="lazy"></button>'}).join('')+'</div>':'')
+          :'<div class="media-placeholder">프로젝트 이미지 추가 영역</div>',
         docList=(p.documents||[]).filter(function(x){return x&&x.src}),
         docTabs=docList.map(function(x,i){return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'+e(x.title||('기획서 '+(i+1)))+'</button>'}).join(''),
         docBlock=docList.length
-          ?'<div class="doc-tabs" role="tablist">'+docTabs+'</div><div class="doc-viewer" id="doc-viewer"></div>'
-          :'<div class="media-placeholder">상세 기획서 추가 영역</div>';
+          ?'<div class="doc-tabs" role="tablist">'+docTabs+'</div>'
+           +'<section class="project-section document-section"><h2 id="doc-title"></h2><div class="doc-viewer" id="doc-viewer"></div></section>'
+          :'<section class="project-section document-section"><div class="media-placeholder">상세 기획서 추가 영역</div></section>';
     detail.innerHTML='<a class="back" href="portfolio.html">← 포트폴리오 목록</a>'
-      +'<div class="detail-hero"><p class="kicker">'+e(p.year)+' · '+e(p.genre)+'</p><h1>'+e(p.title)+'</h1><p>'+e(p.summary)+'</p></div>'
+      +'<div class="detail-hero"><p class="kicker">'+e(p.year)+' · '+e(p.genre)+'</p><h1>'+e(p.title)+'</h1></div>'
       +'<div class="project-brief">'
-        +'<section class="project-section role-section"><p class="artifact-label">MY ROLE</p><h2>내 역할</h2><p>'+e(p.role)+'</p></section>'
-        +'<section class="project-section team-section"><p class="artifact-label">TEAM</p><h2>참여 인원</h2><ul class="team-list">'+team+'</ul></section>'
+        +'<section class="project-section role-section"><p class="artifact-label">MY ROLE</p>'
+          +'<div class="brief-line"><h2>내 역할</h2><p>'+e(p.role)+'</p></div></section>'
+        +'<section class="project-section team-section"><p class="artifact-label">TEAM</p>'
+          +'<div class="brief-line"><h2>참여 인원</h2><ul class="team-list">'+team+'</ul></div></section>'
       +'</div>'
-      +'<div class="project-main">'
-        +'<section class="project-section video-section"><p class="artifact-label">SHORT-FORM VIDEO</p><h2>숏폼 영상</h2><div class="video-grid">'+videos+'</div></section>'
-        +'<section class="project-section note-section"><p class="artifact-label">PROJECT NOTE</p><h2>상세 설명</h2><p class="project-body">'+e(p.body)+'</p></section>'
-      +'</div>'
-      +'<section class="project-section"><p class="artifact-label">IMAGES</p><h2>프로젝트 이미지</h2><div class="image-gallery">'+images+'</div></section>'
-      +'<section class="project-section document-section"><p class="artifact-label">DOCUMENTS</p><h2>상세 기획서</h2>'+docBlock+'</section>';
+      +'<section class="project-section note-section"><p class="note-lead">'+e(p.summary)+'</p>'
+        +'<p class="project-body">'+e(p.body)+'</p></section>'
+      +'<section class="video-block"><div class="video-grid">'+videos+'</div></section>'
+      +'<section class="gallery-block">'+galleryBlock+'</section>'
+      +'<section class="document-block">'+docBlock+'</section>';
 
-    /* 기획서 뷰어: 확장자로 이미지와 PDF를 구분해 보여 줍니다. */
-    var viewer=q('doc-viewer');
+    /* 프로젝트 이미지: 오른쪽 목록을 누르면 큰 사진이 바뀝니다. */
+    var main=q('gallery-main');
+    if(main&&gallery.length){
+      var thumbs=detail.querySelectorAll('.gallery-thumb');
+      var showImage=function(n){
+        var x=gallery[n];if(!x)return;
+        main.innerHTML='<img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'">'
+          +(x.caption?'<p class="gallery-caption">'+e(x.caption)+'</p>':'');
+        for(var i=0;i<thumbs.length;i++){thumbs[i].classList.toggle('on',i===n)}
+      };
+      for(var i=0;i<thumbs.length;i++){
+        thumbs[i].addEventListener('click',function(ev){showImage(+ev.currentTarget.getAttribute('data-img'))});
+      }
+      showImage(0);
+    }
+
+    /* 기획서 뷰어: 엑셀 표, 이미지, PDF 를 구분해 보여 줍니다. */
+    var viewer=q('doc-viewer'),docTitle=q('doc-title');
     if(viewer&&docList.length){
       var tabs=detail.querySelectorAll('.doc-tab');
       var showDoc=function(n){
@@ -141,8 +168,8 @@ if(detail){
         else if(isImage){cls=' is-image';stage='<img src="'+e(src)+'" alt="'+e(x.title||'기획서 이미지')+'">'}
         else if(isPdf){cls=' is-file';stage='<iframe src="'+e(src)+'" title="'+e(x.title||'기획서')+'" loading="lazy"></iframe>'}
         else{cls=' is-note';stage='<p class="doc-note">브라우저에서 바로 볼 수 없는 형식입니다. 아래에서 파일을 내려받아 확인해 주세요.</p>'}
+        if(docTitle)docTitle.textContent=x.title||'상세 기획서';
         viewer.innerHTML='<div class="doc-stage'+cls+'">'+stage+'</div>'
-          +'<p class="doc-name">'+e(x.title||'')+'</p>'
           +'<div class="doc-actions">'
           +(hasSheet?'':'<a class="button outline" href="'+e(src)+'" target="_blank" rel="noopener">새 창으로 보기</a>')
           +'<a class="button filled" href="'+e(src)+'" download>'+(hasSheet?'엑셀 파일 다운로드 ↓':'다운로드 ↓')+'</a></div>';
