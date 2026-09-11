@@ -26,7 +26,11 @@
 | `assets/markdown.js` | 자체 제작 경량 마크다운 변환기 |
 | `assets/style.css` | 전체 스타일 |
 | `assets/portfolio-images.js` | 포트폴리오 카드 썸네일 배경 지정 |
+| `assets/sheets.js` | 엑셀(.xlsx) 표 데이터. `tools/xlsx-to-sheets.py`가 생성 |
+| `tools/xlsx-to-sheets.py` | 엑셀을 위 JS로 바꾸는 보조 스크립트 (사이트 실행에는 불필요) |
 | `편집방법.md` | 사용자용 한국어 편집 안내 (수정하면 여기도 갱신할 것) |
+
+프로젝트 상세의 `shortVideos`는 유튜브 주소를 넣으면 embed 로 바꿔 넣는다(`videoEmbed`). `documents`의 `sheet` 값은 `assets/sheets.js`의 키이며, 엑셀 내용을 표로 그린다(`sheetTable`). `fetch` 금지 제약 때문에 엑셀은 반드시 미리 JS로 변환해 둔다.
 
 `assets/data.js` 최상위 항목: `metrics`, `coverLetter`, `specialties`, `games`, `skills`, `resumePersonalInfo`, `resumeCareers`, `resumeProjects`, `projects`
 

@@ -45,7 +45,49 @@ if(resumeProjects){
   resumeProjects.addEventListener('pointercancel',endDrag);
   resumeProjects.addEventListener('click',function(ev){if(moved){ev.preventDefault();ev.stopPropagation()}},true);
 }
-var projects=q('project-grid');if(projects)projects.innerHTML=(d.projects||[]).map(function(p,i){return'<a class="project-card" href="project.html?id='+encodeURIComponent(p.id)+'"><div class="project-thumb tone-'+i%3+'"><span>'+e(p.year)+'</span></div><div class="project-meta"><span>'+e(p.genre)+'</span><h2>'+e(p.title)+'</h2><p>'+e(p.role)+'</p></div><div class="project-hover"><strong>'+e(p.summary)+'</strong><span>상세 보기 →</span></div></a>'}).join('');/* ===== 프로젝트 상세 페이지 =====
+var projects=q('project-grid');if(projects)projects.innerHTML=(d.projects||[]).map(function(p,i){return'<a class="project-card" href="project.html?id='+encodeURIComponent(p.id)+'"><div class="project-thumb tone-'+i%3+'"><span>'+e(p.year)+'</span></div><div class="project-meta"><span>'+e(p.genre)+'</span><h2>'+e(p.title)+'</h2><p>'+e(p.role)+'</p></div><div class="project-hover"><strong>'+e(p.summary)+'</strong><span>상세 보기 →</span></div></a>'}).join('');/* 숏폼 영상 한 칸. 유튜브 주소면 embed 로 바꿔 넣습니다.
+   세로(9:16)로 볼지 가로(16:9)로 볼지는 data.js 의 ratio 값으로 정할 수 있습니다.
+   값이 없으면 유튜브 일반 영상은 가로, 유튜브 쇼츠와 직접 넣은 영상 파일은 세로입니다. */
+function videoEmbed(x){
+  var src=String(x&&x.src||''),
+      yt=src.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/),
+      tall=x&&x.ratio?String(x.ratio).replace(':','/')==='9/16':(yt?/\/shorts\//.test(src):true),
+      cls='video-item'+(tall?' tall':' wide');
+  if(yt){
+    var t=src.match(/[?&]t=(\d+)/),
+        embed='https://www.youtube.com/embed/'+yt[1]+(t?'?start='+t[1]:'');
+    return'<div class="'+cls+'"><iframe src="'+e(embed)+'" title="'+e(x.title||'프로젝트 영상')+'" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
+  }
+  return'<div class="'+cls+'"><video controls playsinline preload="metadata" src="'+e(src)+'"></video></div>';
+}
+
+/* 엑셀 표. 브라우저는 file:// 에서 .xlsx 를 읽지 못하므로
+   tools/xlsx-to-sheets.py 로 미리 뽑아 둔 assets/sheets.js 의 내용을 표로 그립니다. */
+function sheetTable(key){
+  var store=window.PORTFOLIO_SHEETS||{},sheet=store[key];
+  if(!sheet)return'';
+  var colgroup=(sheet.cols||[]).map(function(w){return'<col style="width:'+Math.max(48,Math.round((+w||10)*8))+'px">'}).join(''),
+      body=(sheet.rows||[]).map(function(row){
+        return'<tr>'+row.map(function(c){
+          var attr='',style='';
+          if(c.cs)attr+=' colspan="'+(parseInt(c.cs,10)||1)+'"';
+          if(c.rs)attr+=' rowspan="'+(parseInt(c.rs,10)||1)+'"';
+          if(c.f&&/^#[0-9a-fA-F]{6}$/.test(c.f)){
+            style+='background:'+c.f+';';
+            var n=parseInt(c.f.slice(1),16),
+                lum=(((n>>16)&255)*299+((n>>8)&255)*587+(n&255)*114)/1000;
+            if(lum<150)style+='color:#fff;';
+          }
+          if(c.b)style+='font-weight:700;';
+          if(style)attr+=' style="'+style+'"';
+          return'<td'+attr+'>'+e(c.v||'')+'</td>';
+        }).join('')+'</tr>';
+      }).join('');
+  return'<div class="sheet-wrap" tabindex="0" aria-label="'+e(sheet.title||'표')+'"><table class="sheet-table">'
+    +(colgroup?'<colgroup>'+colgroup+'</colgroup>':'')+'<tbody>'+body+'</tbody></table></div>';
+}
+
+/* ===== 프로젝트 상세 페이지 =====
    순서: 내 역할 · 참여 인원 → (숏폼 영상 | 상세 설명) → 프로젝트 이미지 → 상세 기획서
    상세 기획서는 위쪽 제목 버튼을 누르면 아래 뷰어에 해당 문서가 뜹니다. */
 var detail=q('project-detail');
@@ -54,7 +96,7 @@ if(detail){
       p=(d.projects||[]).find(function(x){return x.id===id})||(d.projects||[])[0];
   if(p){
     var team=(p.team||[]).map(function(x){return'<li><span>'+e(x.part)+'</span><strong>'+e(x.count)+'명</strong></li>'}).join('')||'<li class="project-empty">인원 구성을 입력해 주세요.</li>',
-        videos=(p.shortVideos||[]).map(function(x){return'<video controls playsinline preload="metadata" src="'+e(x.src)+'"></video>'}).join('')||'<div class="media-placeholder">숏폼 영상 추가 영역</div>',
+        videos=(p.shortVideos||[]).map(videoEmbed).join('')||'<div class="media-placeholder">숏폼 영상 추가 영역</div>',
         images=(p.images||[]).map(function(x){return'<figure><img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'" loading="lazy"><figcaption>'+e(x.caption||'')+'</figcaption></figure>'}).join('')||'<div class="media-placeholder">프로젝트 이미지 추가 영역</div>',
         docList=(p.documents||[]).filter(function(x){return x&&x.src}),
         docTabs=docList.map(function(x,i){return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'+e(x.title||('기획서 '+(i+1)))+'</button>'}).join(''),
@@ -81,14 +123,18 @@ if(detail){
       var showDoc=function(n){
         var x=docList[n];if(!x)return;
         var src=String(x.src||''),ext=src.split('?')[0].split('.').pop().toLowerCase(),
+            hasSheet=!!(x.sheet&&(window.PORTFOLIO_SHEETS||{})[x.sheet]),
             isImage=['png','jpg','jpeg','gif','webp','svg','bmp','avif'].indexOf(ext)>=0,
-            stage=isImage
-              ?'<img src="'+e(src)+'" alt="'+e(x.title||'기획서 이미지')+'">'
-              :'<iframe src="'+e(src)+'" title="'+e(x.title||'기획서')+'" loading="lazy"></iframe>';
-        viewer.innerHTML='<div class="doc-stage'+(isImage?' is-image':' is-file')+'">'+stage+'</div>'
+            isPdf=ext==='pdf',stage,cls;
+        if(hasSheet){cls=' is-sheet';stage=sheetTable(x.sheet)}
+        else if(isImage){cls=' is-image';stage='<img src="'+e(src)+'" alt="'+e(x.title||'기획서 이미지')+'">'}
+        else if(isPdf){cls=' is-file';stage='<iframe src="'+e(src)+'" title="'+e(x.title||'기획서')+'" loading="lazy"></iframe>'}
+        else{cls=' is-note';stage='<p class="doc-note">브라우저에서 바로 볼 수 없는 형식입니다. 아래에서 파일을 내려받아 확인해 주세요.</p>'}
+        viewer.innerHTML='<div class="doc-stage'+cls+'">'+stage+'</div>'
           +'<p class="doc-name">'+e(x.title||'')+'</p>'
-          +'<div class="doc-actions"><a class="button outline" href="'+e(src)+'" target="_blank" rel="noopener">새 창으로 보기</a>'
-          +'<a class="button filled" href="'+e(src)+'" download>다운로드 ↓</a></div>';
+          +'<div class="doc-actions">'
+          +(hasSheet?'':'<a class="button outline" href="'+e(src)+'" target="_blank" rel="noopener">새 창으로 보기</a>')
+          +'<a class="button filled" href="'+e(src)+'" download>'+(hasSheet?'엑셀 파일 다운로드 ↓':'다운로드 ↓')+'</a></div>';
         for(var t=0;t<tabs.length;t++){tabs[t].classList.toggle('on',t===n)}
       };
       for(var t=0;t<tabs.length;t++){

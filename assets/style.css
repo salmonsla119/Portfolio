@@ -300,3 +300,20 @@ html{overflow-x:hidden}
 .doc-actions .button{min-height:44px;padding:11px 20px;font-size:14px}
 @media(max-width:850px){.project-main{grid-template-columns:1fr}}
 @media(max-width:650px){.doc-stage iframe{height:min(64vh,540px)}.doc-actions .button{width:100%}}
+
+/* ===== 숏폼 영상 칸 (유튜브 포함) ===== */
+.video-item{width:100%;margin-inline:auto}
+.video-item.tall{max-width:340px}
+.video-item>video,.video-item>iframe{display:block;width:100%;height:auto;aspect-ratio:16/9;border:0;border-radius:18px;background:var(--ink)}
+.video-item.tall>video,.video-item.tall>iframe{aspect-ratio:9/16;max-height:70vh}
+.video-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));justify-items:center}
+
+/* ===== 상세 기획서: 엑셀 표 보기 ===== */
+.doc-stage.is-sheet{padding:0;background:#fff}
+.sheet-wrap{overflow:auto;max-height:min(72vh,760px);-webkit-overflow-scrolling:touch}
+.sheet-table{border-collapse:collapse;table-layout:fixed;width:max-content;min-width:100%;background:#fff;font-size:12px}
+.sheet-table td{padding:6px 8px;border:1px solid var(--line);color:var(--ink);line-height:1.45;vertical-align:top;word-break:break-word;white-space:pre-wrap}
+.sheet-table tr:first-child td{font-size:15px;text-align:center}
+.doc-stage.is-note{display:grid;place-items:center;min-height:180px;padding:28px}
+.doc-note{margin:0;color:var(--muted);font-size:14px;text-align:center;word-break:keep-all}
+@media(max-width:650px){.sheet-wrap{max-height:60vh}.sheet-table{font-size:11px}.sheet-table td{padding:5px 6px}}
