@@ -457,3 +457,31 @@ html{overflow-x:hidden}
 .portfolio-section .page-head>p{margin:0 0 10px;max-width:none;flex:0 1 auto;word-break:keep-all}
 .portfolio-section .page-head>.head-icon{margin-left:auto}
 @media(max-width:650px){.portfolio-section .page-head{flex-wrap:wrap}.portfolio-section .page-head>p{margin-bottom:0}}
+
+/* ===== 안쪽 칸은 크림색, 카드 테두리에 주황 그림자 통일 ===== */
+/* 1. 프로젝트 상세 */
+/* 내 역할·참여 인원의 글 시작점을 상세 설명 글과 같은 위치로 */
+.project-brief>.project-section{padding:13px clamp(22px,3vw,32px) 15px}
+/* 두 칸 높이 맞춤 */
+.project-brief{align-items:stretch}
+.project-brief>.project-section{display:flex;flex-direction:column;justify-content:flex-start}
+.project-brief .brief-line{flex:1 1 auto;align-items:center}
+/* 기획·아트·프로그래밍 칸 */
+.team-section .team-list li{background:var(--fog)}
+/* 주황 그림자가 없던 칸에 공통으로 적용 */
+.project-section,.gallery-rail{box-shadow:5px 6px 0 var(--sand)}
+
+/* 2. 자기소개서 인용 네모칸 */
+.markdown blockquote{background:var(--fog)}
+
+/* 3. 이력서 */
+.skill{background:var(--fog)}
+.resume-entry{background:var(--fog)}
+.empty-slot{background:var(--fog)}
+.personal-history-list,.personal-history-head{background:var(--fog)}
+/* 프로젝트 목록 칸: 점선 → 다른 칸과 같은 남색 실선 */
+.resume-projects article,.resume-placeholder-block .resume-projects article,
+.resume-placeholder-block .resume-projects article:first-child{border:2px solid var(--ink);background:var(--fog)}
+
+/* 4. 게임 목록 칸 */
+.game-card{background:var(--fog)}
