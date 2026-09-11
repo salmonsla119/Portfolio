@@ -467,21 +467,21 @@ html{overflow-x:hidden}
 .project-brief>.project-section{display:flex;flex-direction:column;justify-content:flex-start}
 .project-brief .brief-line{flex:1 1 auto;align-items:center}
 /* 기획·아트·프로그래밍 칸 */
-.team-section .team-list li{background:var(--fog)}
+.team-section .team-list li{background:var(--paper)}
 /* 주황 그림자가 없던 칸에 공통으로 적용 */
 .project-section,.gallery-rail{box-shadow:5px 6px 0 var(--sand)}
 
 /* 2. 자기소개서 인용 네모칸 */
-.markdown blockquote{background:var(--fog)}
+.markdown blockquote{background:var(--paper)}
 
 /* 3. 이력서 */
-.skill{background:var(--fog)}
-.resume-entry{background:var(--fog)}
-.empty-slot{background:var(--fog)}
-.personal-history-list,.personal-history-head{background:var(--fog)}
+.skill{background:var(--paper)}
+.resume-entry{background:var(--paper)}
+.empty-slot{background:var(--paper)}
+.personal-history-list,.personal-history-head{background:var(--paper)}
 /* 프로젝트 목록 칸: 점선 → 다른 칸과 같은 남색 실선 */
 .resume-projects article,.resume-placeholder-block .resume-projects article,
-.resume-placeholder-block .resume-projects article:first-child{border:2px solid var(--ink);background:var(--fog)}
+.resume-placeholder-block .resume-projects article:first-child{border:2px solid var(--ink);background:var(--paper)}
 
 /* 4. 게임 목록 칸 */
-.game-card{background:var(--fog)}
+.game-card{background:var(--paper)}
