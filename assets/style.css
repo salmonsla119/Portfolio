@@ -1,5 +1,5 @@
 @font-face{font-family:Pretendard;src:url('PretendardVariable.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
-:root{--ink:#22314f;--paper:#faf6ea;--card:#fffdf7;--mist:#f2e9d6;--fog:#f6efdf;--muted:#8d7551;--ash:#b39c76;--peach:#f0d4b2;--sand:#e7c496;--gold:#c09a5c;--brown:#6a4a24;--line:#e8dcc5;--max:1200px;--side:24px;--side:max(24px,env(safe-area-inset-left));--shadow:0 0 0 1px rgba(34,49,79,.06),0 18px 30px -14px rgba(106,74,36,.3);--shadow-hard:0 0 0 1px var(--line),12px 14px 0 var(--sand)}
+:root{--ink:#22314f;--paper:#faf6ea;--card:#ffffff;--mist:#f2e9d6;--fog:#f6efdf;--muted:#8d7551;--ash:#b39c76;--peach:#f0d4b2;--sand:#e7c496;--gold:#c09a5c;--brown:#6a4a24;--line:#e8dcc5;--max:1200px;--side:24px;--side:max(24px,env(safe-area-inset-left));--shadow:0 0 0 1px rgba(34,49,79,.06),0 18px 30px -14px rgba(106,74,36,.3);--shadow-hard:0 0 0 1px var(--line),12px 14px 0 var(--sand)}
 *{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--paper)}body{margin:0;background:var(--paper);color:var(--ink);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;letter-spacing:-.018em;overflow-x:hidden}a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}.skip{position:fixed;z-index:50;left:16px;top:-60px;padding:12px 18px;border-radius:9999px;background:var(--ink);color:#fff}.skip:focus{top:12px}.shell{width:min(calc(100% - 2 * var(--side)),var(--max));margin-inline:auto}
 .header{position:fixed;z-index:30;top:0;left:0;right:0;min-height:74px;padding:14px max(24px,env(safe-area-inset-right)) 14px max(24px,env(safe-area-inset-left));display:flex;align-items:center;gap:30px;background:rgba(240,212,178,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}.logo{margin-right:auto;font-size:17px;font-weight:800;letter-spacing:-.04em}.logo span{color:var(--brown)}.nav{display:flex;gap:7px}.nav a{padding:10px 17px;border-radius:9999px;color:var(--muted);font-size:14px;font-weight:500;white-space:nowrap}.nav a:hover,.nav a.active{background:var(--ink);color:#fff}
 .hero{position:relative;min-height:100vh;min-height:100svh;padding-top:130px;padding-bottom:80px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(330px,.75fr);align-items:center;gap:clamp(60px,9vw,130px)}.kicker{margin:0 0 22px;color:var(--gold);font-size:13px;font-weight:600;letter-spacing:.13em}.hero h1,.page-head h1,.markdown>h1,.project-detail h1{margin:0;font-size:clamp(48px,7vw,88px);font-weight:650;line-height:1.04;letter-spacing:-.055em;word-break:keep-all}.hero h1 em{position:relative;font-style:normal;font-weight:650;z-index:0}.hero h1 em:after{content:"";position:absolute;z-index:-1;left:-.05em;right:-.06em;bottom:.03em;height:.26em;background:var(--sand);border-radius:4px}.intro{margin:32px 0 38px;color:var(--muted);font-size:clamp(18px,2vw,22px);line-height:1.55;font-weight:430;word-break:keep-all}.button-row{display:flex;flex-wrap:wrap;gap:12px}.button{display:inline-flex;min-height:50px;padding:13px 23px;align-items:center;justify-content:center;border:1px solid var(--ink);border-radius:9999px;font-size:15px;font-weight:500}.button.filled{background:var(--ink);color:#fff}.button.outline{background:transparent}.button:hover{transform:translateY(-2px)}.metrics{position:relative;padding:20px 26px 8px;border-radius:22px;background:var(--card);box-shadow:var(--shadow-hard)}.artifact-label{margin:4px 0 8px;color:var(--gold);font-size:12px;font-weight:600;letter-spacing:.13em}.metric{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:22px 0;border-top:1px solid var(--line)}.metric-label{font-size:16px}.metric-value{display:inline-flex;align-items:baseline;gap:4px;white-space:nowrap}.metric-value strong{font-size:48px;font-weight:520;letter-spacing:-.05em}.metric-value small{color:var(--ash);font-size:14px}.section{padding:110px 0}.fog{background:var(--fog)}.section-head{margin-bottom:42px}.section-head h2{margin:0;font-size:clamp(40px,5vw,64px);font-weight:560;line-height:1.1;letter-spacing:-.045em}
@@ -443,14 +443,14 @@ html{overflow-x:hidden}
 /* ===== 큰 카드 바탕을 흰색으로 통일 ===== */
 .resume-profile,.resume-block,.resume-placeholder-block,.mini-block,.resume-download,
 .project-section,.gallery-rail,.project-card{background:var(--card)}
-/* 흰 카드 안에 들어가는 작은 칸은 은은한 크림으로 구분 */
-.game-card{background:var(--paper)}
-.resume-projects article,.resume-placeholder-block .resume-projects article{background:var(--paper)}
-.personal-history-head{background:var(--paper)}
-.gallery-slot{background:var(--paper)}
-.gallery-main>.media-placeholder,.project-section .media-placeholder,.video-block .media-placeholder{background:var(--paper)}
-/* 내 역할 칸은 이미 흰색이므로 옆 칸과 구분되게 크림 테두리 대신 바탕만 유지 */
-.team-section .team-list li,.doc-tab{background:var(--paper)}
+/* 카드 안의 작은 칸도 같은 흰색. 남색 테두리로 구분된다 */
+.game-card{background:var(--card)}
+.resume-projects article,.resume-placeholder-block .resume-projects article{background:var(--card)}
+.gallery-slot{background:var(--card)}
+.gallery-main>.media-placeholder,.project-section .media-placeholder,.video-block .media-placeholder{background:var(--card)}
+.team-section .team-list li,.doc-tab{background:var(--card)}
+/* 인적사항 머리줄은 테두리가 없으므로 밑줄로 구분 */
+.personal-history-head{background:var(--card);border-bottom:2px solid var(--ink)}
 
 /* ===== 포트폴리오 머리말 위치: 제목 바로 옆으로 ===== */
 .portfolio-section .page-head{justify-content:flex-start;gap:clamp(16px,2vw,28px)}

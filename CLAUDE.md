@@ -40,7 +40,7 @@
 
 ```
 --ink:#22314f   남색 (글자, 외곽선)      --paper:#faf6ea  크림 배경
---card:#fffdf7  카드 흰색                --peach:#f0d4b2  상단 띠, 강조 카드
+--card:#ffffff  카드 흰색 (순백)                --peach:#f0d4b2  상단 띠, 강조 카드
 --sand:#e7c496  제목 밑줄, 하드 그림자   --gold:#c09a5c   영문 라벨, 별
 --muted:#8d7551 본문 갈색                --brown:#6a4a24  강조 글씨
 ```
