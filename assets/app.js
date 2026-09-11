@@ -45,5 +45,57 @@ if(resumeProjects){
   resumeProjects.addEventListener('pointercancel',endDrag);
   resumeProjects.addEventListener('click',function(ev){if(moved){ev.preventDefault();ev.stopPropagation()}},true);
 }
-var projects=q('project-grid');if(projects)projects.innerHTML=(d.projects||[]).map(function(p,i){return'<a class="project-card" href="project.html?id='+encodeURIComponent(p.id)+'"><div class="project-thumb tone-'+i%3+'"><span>'+e(p.year)+'</span></div><div class="project-meta"><span>'+e(p.genre)+'</span><h2>'+e(p.title)+'</h2><p>'+e(p.role)+'</p></div><div class="project-hover"><strong>'+e(p.summary)+'</strong><span>상세 보기 →</span></div></a>'}).join('');var detail=q('project-detail');if(detail){var id=new URLSearchParams(location.search).get('id'),p=(d.projects||[]).find(function(x){return x.id===id})||(d.projects||[])[0];if(p){var team=(p.team||[]).map(function(x){return'<li><span>'+e(x.part)+'</span><strong>'+e(x.count)+'명</strong></li>'}).join('')||'<li class="project-empty">인원 구성을 입력해 주세요.</li>',videos=(p.shortVideos||[]).map(function(x){return'<video controls playsinline preload="metadata" src="'+e(x.src)+'"></video>'}).join('')||'<div class="media-placeholder">숏폼 영상 추가 영역</div>',images=(p.images||[]).map(function(x){return'<figure><img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'" loading="lazy"><figcaption>'+e(x.caption||'')+'</figcaption></figure>'}).join('')||'<div class="media-placeholder">프로젝트 이미지 추가 영역</div>',docs=(p.documents||[]).map(function(x){return'<article class="document-card"><div><span>DOCUMENT</span><h3>'+e(x.title)+'</h3></div><div><a href="'+e(x.src)+'" target="_blank" rel="noopener">바로 보기</a><a href="'+e(x.src)+'" download>다운로드</a></div></article>'}).join('')||'<div class="media-placeholder">상세 기획서 추가 영역</div>';detail.innerHTML='<a class="back" href="portfolio.html">← 포트폴리오 목록</a><div class="detail-hero"><p class="kicker">'+e(p.year)+' · '+e(p.genre)+'</p><h1>'+e(p.title)+'</h1><p>'+e(p.summary)+'</p></div><section class="project-section video-section"><p class="artifact-label">SHORT-FORM VIDEO</p><h2>숏폼 영상</h2><div class="video-grid">'+videos+'</div></section><div class="project-brief"><section class="project-section role-section"><p class="artifact-label">MY ROLE</p><h2>내 역할</h2><p>'+e(p.role)+'</p></section><section class="project-section team-section"><p class="artifact-label">TEAM</p><h2>참여 인원</h2><ul class="team-list">'+team+'</ul></section></div><section class="project-section"><p class="artifact-label">PROJECT NOTE</p><h2>상세 설명</h2><p class="project-body">'+e(p.body)+'</p></section><section class="project-section"><p class="artifact-label">IMAGES</p><h2>프로젝트 이미지</h2><div class="image-gallery">'+images+'</div></section><section class="project-section"><p class="artifact-label">DOCUMENTS</p><h2>상세 기획서</h2><div class="document-list">'+docs+'</div></section>'}}
+var projects=q('project-grid');if(projects)projects.innerHTML=(d.projects||[]).map(function(p,i){return'<a class="project-card" href="project.html?id='+encodeURIComponent(p.id)+'"><div class="project-thumb tone-'+i%3+'"><span>'+e(p.year)+'</span></div><div class="project-meta"><span>'+e(p.genre)+'</span><h2>'+e(p.title)+'</h2><p>'+e(p.role)+'</p></div><div class="project-hover"><strong>'+e(p.summary)+'</strong><span>상세 보기 →</span></div></a>'}).join('');/* ===== 프로젝트 상세 페이지 =====
+   순서: 내 역할 · 참여 인원 → (숏폼 영상 | 상세 설명) → 프로젝트 이미지 → 상세 기획서
+   상세 기획서는 위쪽 제목 버튼을 누르면 아래 뷰어에 해당 문서가 뜹니다. */
+var detail=q('project-detail');
+if(detail){
+  var id=new URLSearchParams(location.search).get('id'),
+      p=(d.projects||[]).find(function(x){return x.id===id})||(d.projects||[])[0];
+  if(p){
+    var team=(p.team||[]).map(function(x){return'<li><span>'+e(x.part)+'</span><strong>'+e(x.count)+'명</strong></li>'}).join('')||'<li class="project-empty">인원 구성을 입력해 주세요.</li>',
+        videos=(p.shortVideos||[]).map(function(x){return'<video controls playsinline preload="metadata" src="'+e(x.src)+'"></video>'}).join('')||'<div class="media-placeholder">숏폼 영상 추가 영역</div>',
+        images=(p.images||[]).map(function(x){return'<figure><img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'" loading="lazy"><figcaption>'+e(x.caption||'')+'</figcaption></figure>'}).join('')||'<div class="media-placeholder">프로젝트 이미지 추가 영역</div>',
+        docList=(p.documents||[]).filter(function(x){return x&&x.src}),
+        docTabs=docList.map(function(x,i){return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'+e(x.title||('기획서 '+(i+1)))+'</button>'}).join(''),
+        docBlock=docList.length
+          ?'<div class="doc-tabs" role="tablist">'+docTabs+'</div><div class="doc-viewer" id="doc-viewer"></div>'
+          :'<div class="media-placeholder">상세 기획서 추가 영역</div>';
+    detail.innerHTML='<a class="back" href="portfolio.html">← 포트폴리오 목록</a>'
+      +'<div class="detail-hero"><p class="kicker">'+e(p.year)+' · '+e(p.genre)+'</p><h1>'+e(p.title)+'</h1><p>'+e(p.summary)+'</p></div>'
+      +'<div class="project-brief">'
+        +'<section class="project-section role-section"><p class="artifact-label">MY ROLE</p><h2>내 역할</h2><p>'+e(p.role)+'</p></section>'
+        +'<section class="project-section team-section"><p class="artifact-label">TEAM</p><h2>참여 인원</h2><ul class="team-list">'+team+'</ul></section>'
+      +'</div>'
+      +'<div class="project-main">'
+        +'<section class="project-section video-section"><p class="artifact-label">SHORT-FORM VIDEO</p><h2>숏폼 영상</h2><div class="video-grid">'+videos+'</div></section>'
+        +'<section class="project-section note-section"><p class="artifact-label">PROJECT NOTE</p><h2>상세 설명</h2><p class="project-body">'+e(p.body)+'</p></section>'
+      +'</div>'
+      +'<section class="project-section"><p class="artifact-label">IMAGES</p><h2>프로젝트 이미지</h2><div class="image-gallery">'+images+'</div></section>'
+      +'<section class="project-section document-section"><p class="artifact-label">DOCUMENTS</p><h2>상세 기획서</h2>'+docBlock+'</section>';
+
+    /* 기획서 뷰어: 확장자로 이미지와 PDF를 구분해 보여 줍니다. */
+    var viewer=q('doc-viewer');
+    if(viewer&&docList.length){
+      var tabs=detail.querySelectorAll('.doc-tab');
+      var showDoc=function(n){
+        var x=docList[n];if(!x)return;
+        var src=String(x.src||''),ext=src.split('?')[0].split('.').pop().toLowerCase(),
+            isImage=['png','jpg','jpeg','gif','webp','svg','bmp','avif'].indexOf(ext)>=0,
+            stage=isImage
+              ?'<img src="'+e(src)+'" alt="'+e(x.title||'기획서 이미지')+'">'
+              :'<iframe src="'+e(src)+'" title="'+e(x.title||'기획서')+'" loading="lazy"></iframe>';
+        viewer.innerHTML='<div class="doc-stage'+(isImage?' is-image':' is-file')+'">'+stage+'</div>'
+          +'<p class="doc-name">'+e(x.title||'')+'</p>'
+          +'<div class="doc-actions"><a class="button outline" href="'+e(src)+'" target="_blank" rel="noopener">새 창으로 보기</a>'
+          +'<a class="button filled" href="'+e(src)+'" download>다운로드 ↓</a></div>';
+        for(var t=0;t<tabs.length;t++){tabs[t].classList.toggle('on',t===n)}
+      };
+      for(var t=0;t<tabs.length;t++){
+        tabs[t].addEventListener('click',function(ev){showDoc(+ev.currentTarget.getAttribute('data-doc'))});
+      }
+      showDoc(0);
+    }
+  }
+}
 var items=document.querySelectorAll('.appear');if(!('IntersectionObserver'in window))items.forEach(function(x){x.classList.add('visible')});else{var ob=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('visible');ob.unobserve(x.target)}})},{threshold:.08});items.forEach(function(x){ob.observe(x)})}})();

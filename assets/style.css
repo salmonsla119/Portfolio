@@ -270,3 +270,33 @@ html{overflow-x:hidden}
 .team-section .team-list span{font-size:12px}
 .team-section .team-list strong{font-size:16px}
 @media(max-width:850px){.project-brief{grid-template-columns:1fr}}
+
+/* ===== 추가 수정 2 ===== */
+/* 4. 히어로 버튼 호버 색을 로그라인 글씨와 같은 남색으로 */
+.hero .button-row .button:hover,.hero .button-row .button:focus-visible{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* 2. 자기소개서 뒷판을 불투명 흰색으로 */
+.cover-page{background:#fff}
+
+/* 3. 프로젝트 상세: 내 역할·참여 인원을 같은 크기로, 그 아래 영상(왼쪽)과 상세 설명을 한 줄에 */
+.project-brief{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+.role-section{background:#fff}
+.project-main{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;margin-top:16px;align-items:stretch}
+.project-main>.project-section{margin-top:0}
+.note-section .project-body{max-width:none}
+.video-section .media-placeholder{min-height:360px}
+
+/* 상세 기획서: 위쪽 제목 버튼 → 아래 뷰어 → 다운로드 */
+.doc-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.doc-tab{padding:11px 18px;border:2px solid var(--ink);border-radius:999px;background:var(--card);color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.doc-tab:hover{background:var(--peach)}
+.doc-tab.on{background:var(--ink);color:#fff}
+.doc-stage{overflow:hidden;border:2px solid var(--ink);border-radius:18px;background:#fff}
+.doc-stage.is-image{display:grid;place-items:center;padding:14px}
+.doc-stage img{display:block;width:100%;height:auto;border-radius:8px}
+.doc-stage iframe{display:block;width:100%;height:min(78vh,820px);border:0;background:#fff}
+.doc-name{margin:14px 0 0;color:var(--muted);font-size:14px}
+.doc-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.doc-actions .button{min-height:44px;padding:11px 20px;font-size:14px}
+@media(max-width:850px){.project-main{grid-template-columns:1fr}}
+@media(max-width:650px){.doc-stage iframe{height:min(64vh,540px)}.doc-actions .button{width:100%}}
