@@ -419,3 +419,23 @@ html{overflow-x:hidden}
 .gallery-block{align-items:stretch}
 .gallery-rail{height:auto;max-height:none;overflow-y:auto}
 @media(max-width:850px){.gallery-block{align-items:start}.gallery-rail{overflow-x:auto;overflow-y:hidden}}
+
+/* ===== 색 조정 ===== */
+/* 특기 사항: 카드를 흰색으로, 아이콘 상자 없이 크게, 영문 라벨 제거 */
+.specialty-card{background:var(--card);padding:34px 24px 30px}
+.specialty-icon{width:auto;height:auto;margin:0 auto 4px;border-radius:0;background:transparent;box-shadow:none;border:0}
+.specialty-icon svg.pixel{width:92px;max-width:92px}
+.specialty-card h3{margin:18px 0 8px}
+
+/* 포트폴리오 카드: 빈 썸네일은 검게, 아래 정보 띠는 남색 */
+.project-thumb,.project-thumb.tone-0,.project-thumb.tone-1,.project-thumb.tone-2{background-color:#12141c}
+.project-thumb>span{color:rgba(255,255,255,.6)}
+/* 썸네일 이미지 위에 얹던 검은 반투명 레이어 제거 */
+.project-thumb.has-image:before,.project-card.featured .project-thumb.has-image:before{display:none}
+.project-thumb.has-image{text-shadow:0 1px 3px rgba(0,0,0,.55),0 2px 16px rgba(0,0,0,.6)}
+.project-thumb.has-image>span,.project-card.featured .project-thumb.has-image>span{color:rgba(255,255,255,.82)}
+.project-meta{background:#2b3b5f;color:#fff}
+.project-meta>span{color:var(--sand)}
+.project-meta h2{color:#fff}
+.project-meta p{color:rgba(255,255,255,.72)}
+@media(max-width:560px){.specialty-icon svg.pixel{width:72px;max-width:72px}.specialty-card{padding:26px 18px 24px}}
