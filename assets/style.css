@@ -233,3 +233,40 @@ html{overflow-x:hidden}
 /* 작은 화면에서는 별 배경을 작고 옅게 */
 @media(max-width:700px){body{background-size:190px 190px}}
 @media(max-width:560px){.nav a{padding:10px 10px 11px;font-size:12px;border-width:2px}.nav{gap:2px;margin-bottom:-3px}.logo{display:none}}
+
+/* ===== 추가 수정 ===== */
+/* 1. 히어로의 이력서·자기소개서·포트폴리오 버튼: 마우스를 올리면 검은색 */
+.hero .button-row .button:hover,.hero .button-row .button:focus-visible{background:#111;border-color:#111;color:#fff;box-shadow:5px 7px 0 var(--sand)}
+
+/* 2. 특기 사항: 아이콘 확대, 글씨 두께 증가 */
+.specialty-icon{width:126px;height:126px;border-radius:32px}
+.specialty-icon svg.pixel{width:76px;max-width:76px}
+.specialty-card h3{font-size:23px;font-weight:640}
+.specialty-card>span{font-weight:600}
+.specialty-card p{font-weight:500}
+@media(max-width:560px){.specialty-icon{width:104px;height:104px}.specialty-icon svg.pixel{width:62px;max-width:62px}}
+
+/* 4. 자기소개서: 인용 상자 안쪽을 흰색으로, 본문 뒤에 반투명 흰색 뒷판 */
+.markdown blockquote{background:#fff}
+.cover-page{margin-top:34px;margin-bottom:60px;padding:clamp(30px,4vw,54px);border:2px solid var(--ink);border-radius:28px;background:rgba(255,255,255,.78);box-shadow:5px 6px 0 var(--sand)}
+
+/* 5. 포트폴리오 카드: 호버 오버레이가 연도·제목 위를 덮도록 (겹침 방지) */
+.project-hover{z-index:2}
+
+/* 6. 프로젝트 상세: 숏폼 영상을 위쪽에 크게, 내 역할·참여 인원은 한 줄로 축소 */
+.video-section{margin-top:36px}
+.video-grid{grid-template-columns:repeat(auto-fit,minmax(220px,340px));justify-content:center;gap:18px}
+.video-grid video{aspect-ratio:9/16;height:auto;max-height:none}
+.video-section .media-placeholder{width:100%;max-width:340px;min-height:420px;margin-inline:auto}
+.project-brief{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:16px;margin-top:16px;align-items:start}
+.project-brief>.project-section{margin-top:0;padding:22px clamp(20px,2.4vw,28px)}
+.project-brief h2{margin:6px 0 12px;font-size:clamp(20px,2vw,24px)}
+/* 주황 바탕에서 글씨가 묻히지 않도록 남색·갈색으로 */
+.role-section{background:var(--peach);color:var(--ink)}
+.role-section .artifact-label{color:var(--brown)}
+.role-section>p:last-child{font-size:16px}
+.team-section .team-list{gap:8px}
+.team-section .team-list li{padding:13px 15px;border-radius:12px}
+.team-section .team-list span{font-size:12px}
+.team-section .team-list strong{font-size:16px}
+@media(max-width:850px){.project-brief{grid-template-columns:1fr}}
