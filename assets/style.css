@@ -317,3 +317,12 @@ html{overflow-x:hidden}
 .doc-stage.is-note{display:grid;place-items:center;min-height:180px;padding:28px}
 .doc-note{margin:0;color:var(--muted);font-size:14px;text-align:center;word-break:keep-all}
 @media(max-width:650px){.sheet-wrap{max-height:60vh}.sheet-table{font-size:11px}.sheet-table td{padding:5px 6px}}
+
+/* file:// 로 열었을 때의 유튜브 대체 화면 (유튜브가 임베드 재생을 막는 경우) */
+.video-item.yt-link{position:relative;display:block;overflow:hidden;aspect-ratio:16/9;border-radius:18px;background:var(--ink)}
+.video-item.tall.yt-link{aspect-ratio:9/16}
+.video-item.yt-link img{display:block;width:100%;height:100%;object-fit:cover}
+.yt-play{position:absolute;left:50%;top:50%;width:66px;height:66px;transform:translate(-50%,-50%);border:2px solid var(--ink);border-radius:50%;background:#fff;box-shadow:3px 4px 0 var(--sand);transition:transform .15s ease}
+.yt-play:after{content:"";position:absolute;left:56%;top:50%;transform:translate(-50%,-50%);border-left:19px solid var(--ink);border-top:12px solid transparent;border-bottom:12px solid transparent}
+.video-item.yt-link:hover .yt-play,.video-item.yt-link:focus-visible .yt-play{transform:translate(-50%,-50%) scale(1.07)}
+.yt-hint{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 13px;background:linear-gradient(rgba(34,49,79,0),rgba(34,49,79,.88));color:#fff;font-size:13px;font-weight:600;text-align:center}

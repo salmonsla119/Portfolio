@@ -54,8 +54,19 @@ function videoEmbed(x){
       tall=x&&x.ratio?String(x.ratio).replace(':','/')==='9/16':(yt?/\/shorts\//.test(src):true),
       cls='video-item'+(tall?' tall':' wide');
   if(yt){
-    var t=src.match(/[?&]t=(\d+)/),
-        embed='https://www.youtube.com/embed/'+yt[1]+(t?'?start='+t[1]:'');
+    var id=yt[1],t=src.match(/[?&]t=(\d+)/);
+    /* 파일을 더블클릭해 열면(file://) 유튜브가 "오류 153"을 내며 재생을 막는다.
+       이때는 미리보기 그림을 눌러 유튜브에서 열도록 바꿔 준다. */
+    if(location.protocol==='file:'){
+      var watch='https://www.youtube.com/watch?v='+id+(t?'&t='+t[1]+'s':''),
+          thumb='https://img.youtube.com/vi/'+id+'/';
+      return'<a class="'+cls+' yt-link" href="'+e(watch)+'" target="_blank" rel="noopener">'
+        +'<img src="'+e(thumb)+'maxresdefault.jpg" alt="'+e(x.title||'유튜브 영상')+'" '
+        +'onerror="if(this.dataset.fb){this.style.display=\'none\'}else{this.dataset.fb=1;this.src=\''+e(thumb)+'hqdefault.jpg\'}">'
+        +'<span class="yt-play" aria-hidden="true"></span>'
+        +'<span class="yt-hint">유튜브에서 보기 →</span></a>';
+    }
+    var embed='https://www.youtube.com/embed/'+id+(t?'?start='+t[1]:'');
     return'<div class="'+cls+'"><iframe src="'+e(embed)+'" title="'+e(x.title||'프로젝트 영상')+'" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
   }
   return'<div class="'+cls+'"><video controls playsinline preload="metadata" src="'+e(src)+'"></video></div>';
