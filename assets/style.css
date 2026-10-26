@@ -485,3 +485,11 @@ html{overflow-x:hidden}
 
 /* 4. 게임 목록 칸 */
 .game-card{background:var(--paper)}
+
+/* ===== 배경 장식 끄기 (도트 별 배경 · 픽셀 도시 실루엣) =====
+   다시 켜려면 이 블록만 통째로 지우면 됩니다.
+   원본 그림은 위쪽의 body{background-image:...} 와 .city-strip{background-image:...}
+   규칙에 base64 로 그대로 남아 있습니다. */
+body{background-image:none}
+.city-strip{display:none}
+.city-band{display:none}
