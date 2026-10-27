@@ -36,10 +36,10 @@ function videoEmbed(x){
   return'<div class="'+cls+'"><video controls playsinline preload="metadata" src="'+e(src)+'"></video></div>';
 }
 
-/* 유튜브 주소에서 미리보기 그림 주소만 뽑는다 (메인 무대용). */
-function videoPoster(src){
+/* 유튜브 주소에서 영상 아이디만 뽑는다 (메인 무대용). */
+function youtubeId(src){
   var yt=String(src||'').match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
-  return yt?'https://img.youtube.com/vi/'+yt[1]+'/maxresdefault.jpg':'';
+  return yt?yt[1]:'';
 }
 
 /* 미리보기 그림을 누르면 그 자리에서 유튜브 플레이어로 바꿔 넣는다. */
@@ -95,14 +95,30 @@ function sheetTable(key){
     var p=list[at];
     if(!p){stage.innerHTML='<div class="screen-empty">프로젝트를 추가해 주세요</div>';return}
     var clip=(p.shortVideos||[])[0],
-        cover=(clip?videoPoster(clip.src):'')||p.image||'',
-        media=cover
-          ?'<img class="screen-img" src="'+e(cover)+'" alt="'+e(p.title)+'" '
-            +'onerror="this.style.display=\'none\'">'
-          :'<div class="screen-empty">영상이나 대표 이미지를 넣어 주세요</div>';
+        ytid=clip?youtubeId(clip.src):'',
+        media='';
+    /* 그림을 먼저 깔고(영상이 뜨기 전·막혔을 때 대비) 그 위에 소리 없이 자동 재생되는 영상을 얹는다.
+       영상에는 pointer-events:none 을 줘서 클릭은 전부 바깥 링크가 받는다. */
+    if(ytid){
+      media='<img class="screen-img" src="https://img.youtube.com/vi/'+e(ytid)+'/maxresdefault.jpg" alt="" '
+        +'onerror="if(this.dataset.fb){this.style.display=\'none\'}else{this.dataset.fb=1;'
+        +'this.src=\'https://img.youtube.com/vi/'+e(ytid)+'/hqdefault.jpg\'}">'
+        +'<iframe class="screen-video" src="https://www.youtube.com/embed/'+e(ytid)
+        +'?autoplay=1&mute=1&loop=1&playlist='+e(ytid)+'&controls=0&modestbranding=1&playsinline=1&rel=0&showinfo=0"'
+        +' title="'+e(p.title)+'" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"'
+        +' frameborder="0" tabindex="-1" aria-hidden="true"></iframe>';
+    }else if(clip&&clip.src){
+      media='<video class="screen-video" src="'+e(clip.src)+'" autoplay muted loop playsinline'
+        +(p.image?' poster="'+e(p.image)+'"':'')+'></video>';
+    }else if(p.image){
+      media='<img class="screen-img" src="'+e(p.image)+'" alt="'+e(p.title)+'">';
+    }else{
+      media='<span class="screen-empty">영상이나 대표 이미지를 넣어 주세요</span>';
+    }
     /* 무대를 누르면 그 프로젝트 상세 페이지로 넘어간다 */
-    stage.innerHTML='<a class="screen-go" href="project.html?id='+encodeURIComponent(p.id)+'" '
-      +'aria-label="'+e(p.title)+' 프로젝트 보기"><span class="screen-media">'+media+'</span></a>';
+    stage.innerHTML='<span class="screen-media">'+media+'</span>'
+      +'<a class="screen-go" href="project.html?id='+encodeURIComponent(p.id)+'" '
+      +'aria-label="'+e(p.title)+' 프로젝트 보기"></a>';
     if(count)count.textContent=(at+1)+' / '+list.length;
   }
   var arrows=document.querySelectorAll('.stage-arrow');
