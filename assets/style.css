@@ -77,9 +77,11 @@ ul{margin:0;padding:0;list-style:none}
   border:var(--bw-lg) solid var(--ink);border-radius:clamp(16px,2vw,40px);
   background:var(--panel);box-shadow:var(--pop-lg)}
 .screen-media{position:absolute;inset:0;display:block;overflow:hidden}
-/* 16:9 영상을 16:10 화면에 꽉 차게 덮는다. 클릭은 위의 링크가 받는다. */
+/* 16:9 영상을 16:10 화면에 꽉 차게 덮는다. 클릭은 위의 링크가 받는다.
+   칸을 억지로 늘리면 유튜브가 그 안에서 영상을 레터박스로 깔아 테두리에
+   빈 띠가 생긴다. 그래서 iframe 자체를 정확히 16:9로 두고 칸보다 크게 키운다. */
 .screen-video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:100%;height:56.25%;min-height:100%;min-width:177.78%;border:0;
+  width:auto;height:100%;aspect-ratio:16/9;min-width:100%;border:0;background:#000;
   object-fit:cover;pointer-events:none}
 .screen-img{display:block;width:100%;height:100%;object-fit:cover}
 .screen-go{position:absolute;inset:0;z-index:1;display:block;cursor:pointer}
@@ -130,7 +132,8 @@ body.pj-page{background:#fff}
 .pj-slide{position:absolute;inset:0;display:grid;place-items:center}
 /* 16:9 칸에 꽉 차는 플레이어. 영상이 뜨기 전에는 아래 깔아 둔 그림이 보인다. */
 .pj-poster{position:absolute;inset:0}
-.pj-player{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;object-fit:cover}
+.pj-player{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;
+  background:#000;object-fit:cover}
 /* 유튜브 화면을 직접 누르면 멈추거나 유튜브로 나가므로 클릭을 막는다 */
 iframe.pj-player{pointer-events:none}
 .pj-slide img{width:100%;height:100%;object-fit:cover}
