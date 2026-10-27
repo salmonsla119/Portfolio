@@ -171,12 +171,12 @@ function sheetTable(key){
       +'</section>'
 
       /* 2) 참여 포지션 */
-      +'<section class="pj-intro"><div class="wrap">'
+      +'<section class="pj-intro on-light"><div class="wrap">'
         +'<p class="pj-position">참여 포지션: <b>'+e(p.position||'00')+'</b></p>'
       +'</div></section>'
 
       /* 3) 회색 띠 */
-      +'<section class="pj-band"><div class="wrap">'
+      +'<section class="pj-band on-light"><div class="wrap">'
         +'<div class="pj-row">'
           +'<figure class="pj-shot">'+fill(p.image||(slides[0]||{}).src,p.title,'대표 이미지 추가 영역')+'</figure>'
           +'<div class="pj-copy"><h2>'+e(p.summary||'한 줄 설명 입력')+'</h2>'
@@ -197,7 +197,7 @@ function sheetTable(key){
       +'</div></section>'
 
       /* 5) 상세 기획서 */
-      +'<section class="wrap pj-extra">'
+      +'<section class="pj-extra on-light"><div class="wrap">'
         +'<div class="docs"><h2>상세 기획서</h2>'
           +(docs.length
             ?'<div class="doc-tabs" role="tablist">'+docs.map(function(x,i){
@@ -206,7 +206,7 @@ function sheetTable(key){
             :'<div class="media-empty">상세 기획서 추가 영역</div>')
         +'</div>'
         +'<a class="back" href="index.html">← 메인으로</a>'
-      +'</section>';
+      +'</div></section>';
 
     /* 썸네일 줄을 좌우 화살표로 밀어서 본다 */
     var rail=q('pj-thumbs'),rowArrows=root.querySelectorAll('.pj-thumbs-arrow');
