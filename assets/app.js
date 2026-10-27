@@ -9,52 +9,10 @@ function e(v){return String(v==null?'':v).replace(/[&<>'"]/g,function(c){
 function q(id){return document.getElementById(id)}
 function projects(){return d.projects||[]}
 
-/* ===== 영상 한 칸 =====
-   유튜브 주소면 미리보기 그림을 먼저 놓고, 재생 버튼을 누르면 그 자리에서 플레이어로 바뀝니다.
-   세로(9:16)로 볼지 가로(16:9)로 볼지는 data.js 의 ratio 로 정합니다. */
-function videoEmbed(x){
-  var src=String(x&&x.src||''),
-      yt=src.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/),
-      tall=x&&x.ratio?String(x.ratio).replace(':','/')==='9/16':(yt?/\/shorts\//.test(src):true),
-      cls='video-item'+(tall?' tall':' wide');
-  if(yt){
-    var id=yt[1],t=src.match(/[?&]t=(\d+)/),start=t?t[1]:'0',
-        watch='https://www.youtube.com/watch?v='+id+(t?'&t='+t[1]+'s':''),
-        thumb='https://img.youtube.com/vi/'+id+'/';
-    return'<div class="'+cls+'">'
-      +'<div class="yt-facade" data-yt="'+e(id)+'" data-start="'+e(start)+'">'
-        +'<button type="button" class="yt-poster" aria-label="'+e(x.title||'영상')+' 재생">'
-          +'<img src="'+e(thumb)+'maxresdefault.jpg" alt="" '
-          +'onerror="if(this.dataset.fb){this.style.display=\'none\'}else{this.dataset.fb=1;this.src=\''+e(thumb)+'hqdefault.jpg\'}">'
-          +'<span class="yt-play" aria-hidden="true"></span>'
-        +'</button>'
-      +'</div>'
-      /* file:// 로 열면 유튜브가 재생을 막는 경우가 있어(오류 153) 탈출구를 남겨 둔다. */
-      +(location.protocol==='file:'?'<a class="yt-fallback" href="'+e(watch)+'" target="_blank" rel="noopener">재생되지 않으면 유튜브에서 보기 →</a>':'')
-      +'</div>';
-  }
-  return'<div class="'+cls+'"><video controls playsinline preload="metadata" src="'+e(src)+'"></video></div>';
-}
-
 /* 유튜브 주소에서 영상 아이디만 뽑는다 (메인 무대용). */
 function youtubeId(src){
   var yt=String(src||'').match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
   return yt?yt[1]:'';
-}
-
-/* 미리보기 그림을 누르면 그 자리에서 유튜브 플레이어로 바꿔 넣는다. */
-function wireVideos(root){
-  var boxes=root.querySelectorAll('.yt-facade');
-  for(var i=0;i<boxes.length;i++){
-    boxes[i].addEventListener('click',function(ev){
-      var box=ev.currentTarget,id=String(box.getAttribute('data-yt')||''),
-          start=parseInt(box.getAttribute('data-start'),10)||0;
-      if(!/^[A-Za-z0-9_-]{6,}$/.test(id)||box.querySelector('iframe'))return;
-      box.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0'+(start?'&start='+start:'')
-        +'" title="프로젝트 영상" referrerpolicy="strict-origin-when-cross-origin" '
-        +'allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-    });
-  }
 }
 
 /* 엑셀 표. file:// 에서는 .xlsx 를 읽지 못하므로
@@ -232,7 +190,7 @@ function sheetTable(key){
         +'<h2 class="pj-solve-title">해결 과정</h2>'
         +'<div class="pj-ba">'
           +'<div class="pj-ba-box">'+fill(solve.before,'해결 전','전 이미지 추가 영역')+'</div>'
-          +'<span class="pj-arrow" aria-hidden="true">→</span>'
+          +'<span class="pj-arrow" aria-hidden="true"></span>'
           +'<div class="pj-ba-box">'+fill(solve.after,'해결 후','후 이미지 추가 영역')+'</div>'
         +'</div>'
         +'<p class="pj-note">'+e(solve.note||'해결 과정 설명 입력')+'</p>'
@@ -273,8 +231,6 @@ function sheetTable(key){
         window.scrollTo({top:0,behavior:'smooth'});
       });
     }
-
-    wireVideos(root);
 
     /* 16:9 화면의 소리 켜기/끄기. 유튜브는 postMessage 로, 영상 파일은 muted 로 바꾼다. */
     var sound=root.querySelector('.pj-sound');
