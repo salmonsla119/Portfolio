@@ -48,17 +48,17 @@ ul{margin:0;padding:0;list-style:none}
 .hero-wrap{padding:0}
 .frame{display:grid;align-items:center;min-height:100vh;min-height:100svh;background:#929292;
   padding:clamp(34px,5vw,80px) clamp(24px,4vw,72px)}
-.frame-inner{display:grid;grid-template-columns:clamp(150px,18%,290px) minmax(0,1fr);
+.frame-inner{display:grid;grid-template-columns:minmax(0,1fr) clamp(150px,22%,440px);
   gap:clamp(18px,3vw,56px);align-items:start;width:min(100%,1600px);margin-inline:auto}
 
-/* 왼쪽 버튼 네 개 */
-.frame-menu{display:flex;flex-direction:column;gap:clamp(10px,1.6vw,26px);
+/* 오른쪽 알약 버튼 */
+.frame-right{display:flex;flex-direction:column;gap:clamp(12px,2vw,38px);
   padding-top:clamp(0px,1vw,18px)}
-.frame-menu a{display:grid;place-items:center;min-height:clamp(46px,5.2vw,94px);padding:10px 14px;
-  border:clamp(4px,.7vw,13px) solid #fff;border-radius:999px;background:#d9d9d9;color:#fff;
-  font-size:clamp(13px,1.35vw,26px);font-weight:800;line-height:1.1;text-align:center;
+.frame-pill{display:grid;place-items:center;min-height:clamp(48px,6.2vw,118px);padding:10px 14px;
+  border:clamp(4px,.8vw,16px) solid #fff;border-radius:999px;background:#d9d9d9;color:#fff;
+  font-size:clamp(13px,1.5vw,30px);font-weight:800;line-height:1.1;text-align:center;
   box-shadow:clamp(4px,.45vw,9px) clamp(5px,.55vw,11px) 0 0 #000}
-.frame-menu a:hover{background:#c4c4c4}
+.frame-pill:hover{background:#c4c4c4}
 
 /* 큰 화면 — 기울임 없음 */
 .frame-left{min-width:0}
@@ -102,8 +102,8 @@ ul{margin:0;padding:0;list-style:none}
 @media(max-width:760px){
   .frame{min-height:0;padding:26px var(--side) 30px}
   .frame-inner{grid-template-columns:1fr;gap:16px}
-  .frame-menu{flex-direction:row;flex-wrap:wrap;padding-top:0}
-  .frame-menu a{flex:1 1 44%;min-height:46px;border-width:4px;font-size:13px}
+  .frame-right{flex-direction:row;flex-wrap:wrap;padding-top:0}
+  .frame-pill{flex:1 1 30%;min-height:46px;border-width:4px;font-size:13px}
   .screen-title{left:12px;top:10px;max-width:86%}
   .t-sm,.t-lg{white-space:normal}
   .frame-nav{justify-content:flex-end;margin-right:0}
@@ -191,6 +191,19 @@ ul{margin:0;padding:0;list-style:none}
   .pj-thumbs{gap:5px}
 }
 
+/* ========== 왼쪽 바로가기 버튼 (이력서·자기소개서) ========== */
+.with-menu{display:grid;grid-template-columns:clamp(120px,14%,210px) minmax(0,1fr);
+  gap:clamp(16px,2.4vw,40px);align-items:start}
+.side-menu{position:sticky;top:clamp(20px,4vh,48px);display:flex;flex-direction:column;
+  gap:clamp(8px,1.2vw,16px)}
+.side-menu a{display:grid;place-items:center;min-height:clamp(40px,3.6vw,58px);padding:8px 10px;
+  border:2px solid var(--text);border-radius:999px;background:var(--box);color:var(--text);
+  font-size:clamp(12px,1vw,15px);font-weight:700;text-align:center;
+  box-shadow:4px 5px 0 0 #000}
+.side-menu a:hover{background:var(--text);color:#fff}
+.side-menu a.on{background:var(--text);color:#fff}
+.page-body{min-width:0}
+
 /* ========== 이력서 (옛 레이아웃, 현재 색) ========== */
 .page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
   margin-bottom:clamp(16px,2.2vw,30px)}
@@ -268,6 +281,9 @@ ul{margin:0;padding:0;list-style:none}
 .cover-body li{margin:4px 0}
 
 @media(max-width:900px){
+  .with-menu{grid-template-columns:minmax(0,1fr)}
+  .side-menu{position:static;flex-direction:row;flex-wrap:wrap}
+  .side-menu a{flex:1 1 40%}
   .resume-profile{grid-template-columns:clamp(130px,22vw,190px) minmax(0,1fr)}
   .skill-panel{grid-column:1/-1}
   .mini-row{grid-template-columns:1fr}
