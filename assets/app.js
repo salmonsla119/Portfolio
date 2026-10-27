@@ -174,11 +174,15 @@ function sheetTable(key){
         +'<div class="pj-slide">'+fill(hero,p.title,'프로젝트 이미지 추가 영역')+'</div>'
         +'<div class="pj-head"><h1>'+e(p.title)+'</h1>'
           +'<p class="pj-tags">'+(tags.length?tags.map(function(t){return'#'+e(t)}).join('  '):'#장르 입력')+'</p></div>'
-        +'<div class="pj-thumbs">'+others.map(function(x){
-            var c=coverOf(x);
-            return'<button type="button" class="pj-thumb" data-go="'+e(x.id)+'" title="'+e(x.title)+'">'
-              +(c?'<img src="'+e(c)+'" alt="'+e(x.title)+'" loading="lazy">'
-                 :'<span class="pj-thumb-empty">'+e(x.title)+'</span>')+'</button>'}).join('')
+        +'<div class="pj-thumbs-wrap">'
+          +'<button type="button" class="pj-thumbs-arrow" data-scroll="-1" aria-label="이전 프로젝트들">‹</button>'
+          +'<div class="pj-thumbs" id="pj-thumbs">'+others.map(function(x){
+              var c=coverOf(x);
+              return'<button type="button" class="pj-thumb" data-go="'+e(x.id)+'" title="'+e(x.title)+'">'
+                +(c?'<img src="'+e(c)+'" alt="'+e(x.title)+'" loading="lazy">'
+                   :'<span class="pj-thumb-empty">'+e(x.title)+'</span>')+'</button>'}).join('')
+          +'</div>'
+          +'<button type="button" class="pj-thumbs-arrow" data-scroll="1" aria-label="다음 프로젝트들">›</button>'
         +'</div>'
       +'</section>'
 
@@ -221,6 +225,17 @@ function sheetTable(key){
         +'</div>'
         +'<a class="back" href="index.html">← 메인으로</a>'
       +'</section>';
+
+    /* 썸네일 줄을 좌우 화살표로 밀어서 본다 */
+    var rail=q('pj-thumbs'),rowArrows=root.querySelectorAll('.pj-thumbs-arrow');
+    for(var a=0;a<rowArrows.length;a++){
+      rowArrows[a].addEventListener('click',function(ev){
+        if(!rail)return;
+        var dir=parseInt(ev.currentTarget.getAttribute('data-scroll'),10)||1,
+            one=rail.querySelector('.pj-thumb');
+        rail.scrollBy({left:dir*((one?one.offsetWidth:120)+16)*2,behavior:'smooth'});
+      });
+    }
 
     /* 오른쪽 위 썸네일 → 그 프로젝트로 내용 교체 */
     var thumbs=root.querySelectorAll('.pj-thumb');

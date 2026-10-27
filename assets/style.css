@@ -112,6 +112,7 @@ ul{margin:0;padding:0;list-style:none}
 /* ========== 프로젝트 상세 ==========
    피그마 "프로젝트" + "Slide 16:9 - 3" 두 프레임이 위아래로 이어진 한 페이지.
    공통: 흰 테두리(또는 회색 테두리) + 검은 하드 그림자, 모서리 둥근 사각형. */
+body.pj-page{background:#fff}
 .pj-empty{display:grid;place-items:center;width:100%;height:100%;padding:6%;
   color:#8a8a8a;font-size:clamp(11px,1vw,17px);text-align:center}
 
@@ -125,8 +126,14 @@ ul{margin:0;padding:0;list-style:none}
 .pj-tags{margin-top:.35em;color:#fff;font-size:clamp(14px,2.5vw,48px);font-weight:800;
   white-space:pre-wrap;text-shadow:0 2px 12px rgba(0,0,0,.4)}
 /* 오른쪽 위 — 다른 프로젝트 썸네일. 누르면 내용이 통째로 바뀐다 */
-.pj-thumbs{position:absolute;z-index:2;right:3.3%;top:3.8%;display:flex;gap:clamp(6px,1.4vw,28px);
-  max-width:46%;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.pj-thumbs-wrap{position:absolute;z-index:2;right:3.3%;top:3.8%;display:flex;align-items:center;
+  gap:clamp(4px,.7vw,14px);max-width:52%}
+.pj-thumbs-arrow{flex:0 0 auto;width:clamp(22px,2vw,38px);aspect-ratio:1;padding:0;border:0;
+  border-radius:50%;background:rgba(255,255,255,.85);color:#1b1b1b;cursor:pointer;
+  font-size:clamp(14px,1.3vw,24px);line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.pj-thumbs-arrow:hover{background:#fff}
+.pj-thumbs{flex:1 1 auto;min-width:0;display:flex;gap:clamp(6px,1.4vw,28px);overflow-x:auto;padding-bottom:4px;
+  scroll-behavior:smooth;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .pj-thumbs::-webkit-scrollbar{display:none}
 .pj-thumb{flex:0 0 auto;width:clamp(52px,8.6vw,165px);aspect-ratio:165/182;padding:0;overflow:hidden;
   border:clamp(4px,.63vw,12px) solid #fff;border-radius:clamp(12px,2.08vw,40px);
@@ -138,17 +145,17 @@ ul{margin:0;padding:0;list-style:none}
   color:#8a8a8a;font-size:clamp(8px,.7vw,13px);line-height:1.3;text-align:center;word-break:keep-all}
 
 /* 2) 참여 포지션 — 오른쪽 위에 기울어져 있다 */
-.pj-intro{background:#fdfdfd;padding:clamp(22px,4vw,76px) 0 0}
+.pj-intro{background:#fff;padding:clamp(22px,4vw,76px) 0 0}
 .pj-position{text-align:right;font-size:clamp(22px,5vw,96px);font-weight:800;color:#000;
   transform:rotate(4.56deg);transform-origin:right center}
 .pj-position b{font-weight:800}
 
 /* 3) 회색 띠 — 이미지 + 글, 그 아래 인용 */
 .pj-band{position:relative;margin-top:clamp(26px,5vw,96px);padding-bottom:clamp(30px,5vw,96px);
-  background:#c8c8c8}
+  background:#fff}
 .pj-row{display:grid;grid-template-columns:minmax(0,613fr) minmax(0,1065fr);
   gap:clamp(18px,3.5vw,66px);align-items:start}
-.pj-shot{margin:clamp(-26px,-4.5vw,-90px) 0 0;overflow:hidden;aspect-ratio:613/547;
+.pj-shot{margin:0;overflow:hidden;aspect-ratio:613/547;
   border:clamp(6px,.94vw,18px) solid #b8b8b8;border-radius:clamp(14px,2.08vw,40px);background:#fff;
   box-shadow:clamp(4px,.52vw,10px) clamp(8px,1.25vw,24px) 0 0 #000;display:grid;place-items:center}
 .pj-shot img{width:100%;height:100%;object-fit:cover}
@@ -162,7 +169,7 @@ ul{margin:0;padding:0;list-style:none}
   text-align:center;word-break:keep-all}
 
 /* 4) 해결 과정 */
-.pj-solve{background:#fdfdfd;padding:clamp(28px,5vw,96px) 0 clamp(20px,3vw,56px)}
+.pj-solve{background:#fff;padding:clamp(28px,5vw,96px) 0 clamp(20px,3vw,56px)}
 .pj-solve-title{display:inline-block;font-size:clamp(22px,3.33vw,64px);font-weight:800;color:#000;
   transform:rotate(-7.98deg);transform-origin:left center;margin-left:.6em}
 .pj-ba{display:grid;grid-template-columns:minmax(0,1fr) clamp(40px,4vw,77px) minmax(0,1fr);
@@ -177,7 +184,7 @@ ul{margin:0;padding:0;list-style:none}
   white-space:pre-line;word-break:keep-all}
 
 /* 5) 숏폼 영상 · 상세 기획서 */
-.pj-extra{display:block;padding:clamp(34px,5vw,90px) 0 clamp(50px,7vh,100px)}
+.pj-extra{display:block;background:#fff;padding:clamp(34px,5vw,90px) 0 clamp(50px,7vh,100px)}
 .pj-extra h2{margin-bottom:14px;font-size:clamp(18px,2.1vw,26px)}
 .pj-extra .back{display:inline-block;margin-top:clamp(28px,4vw,56px);color:var(--sub);font-size:13px}
 .pj-extra .back:hover{color:var(--text)}
