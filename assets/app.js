@@ -36,6 +36,12 @@ function videoEmbed(x){
   return'<div class="'+cls+'"><video controls playsinline preload="metadata" src="'+e(src)+'"></video></div>';
 }
 
+/* 유튜브 주소에서 미리보기 그림 주소만 뽑는다 (메인 무대용). */
+function videoPoster(src){
+  var yt=String(src||'').match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+  return yt?'https://img.youtube.com/vi/'+yt[1]+'/maxresdefault.jpg':'';
+}
+
 /* 미리보기 그림을 누르면 그 자리에서 유튜브 플레이어로 바꿔 넣는다. */
 function wireVideos(root){
   var boxes=root.querySelectorAll('.yt-facade');
@@ -89,14 +95,15 @@ function sheetTable(key){
     var p=list[at];
     if(!p){stage.innerHTML='<div class="screen-empty">프로젝트를 추가해 주세요</div>';return}
     var clip=(p.shortVideos||[])[0],
-        media=clip?videoEmbed({src:clip.src,title:p.title,ratio:clip.ratio||'16/9'})
-              :(p.image?'<img class="screen-img" src="'+e(p.image)+'" alt="'+e(p.title)+'">'
-                       :'<div class="screen-empty">영상이나 대표 이미지를 넣어 주세요</div>');
-    stage.innerHTML='<div class="screen-media">'+media+'</div>'
-      +'<a class="screen-go" href="project.html?id='+encodeURIComponent(p.id)+'">'
-        +'<b>'+e(p.title)+'</b><span>프로젝트 보기 →</span></a>';
+        cover=(clip?videoPoster(clip.src):'')||p.image||'',
+        media=cover
+          ?'<img class="screen-img" src="'+e(cover)+'" alt="'+e(p.title)+'" '
+            +'onerror="this.style.display=\'none\'">'
+          :'<div class="screen-empty">영상이나 대표 이미지를 넣어 주세요</div>';
+    /* 무대를 누르면 그 프로젝트 상세 페이지로 넘어간다 */
+    stage.innerHTML='<a class="screen-go" href="project.html?id='+encodeURIComponent(p.id)+'" '
+      +'aria-label="'+e(p.title)+' 프로젝트 보기"><span class="screen-media">'+media+'</span></a>';
     if(count)count.textContent=(at+1)+' / '+list.length;
-    wireVideos(stage);
   }
   var arrows=document.querySelectorAll('.stage-arrow');
   for(var i=0;i<arrows.length;i++){
@@ -121,13 +128,14 @@ function sheetTable(key){
 })();
 
 /* ================= 프로젝트 상세 =================
-   순서: 16:9 슬라이드 → 소개(이미지 + 참여 포지션 + 본문) → 인용
-         → 해결 과정(전 → 후) → 숏폼 영상 → 상세 기획서 */
+   피그마 "프로젝트" + "Slide 16:9 - 3" 두 프레임이 위아래로 이어지는 한 페이지.
+   16:9 슬라이드 → 참여 포지션 → 회색 띠(이미지 + 글 + 인용) → 해결 과정
+   → 숏폼 영상 → 상세 기획서 */
 (function(){
   var root=q('project');if(!root)return;
   var id=new URLSearchParams(location.search).get('id'),
       p=projects().find(function(x){return x.id===id})||projects()[0];
-  if(!p){root.innerHTML='<p class="rs-empty">프로젝트를 추가해 주세요</p>';return}
+  if(!p){root.innerHTML='<div class="wrap page"><p class="rs-empty">프로젝트를 추가해 주세요</p></div>';return}
 
   var slides=(p.images||[]).filter(function(x){return x&&x.src}),
       tags=String(p.genre||'').split(/[,·]/).map(function(t){return t.trim()}).filter(Boolean),
@@ -135,76 +143,78 @@ function sheetTable(key){
       clips=(p.shortVideos||[]).map(videoEmbed).join(''),
       docs=(p.documents||[]).filter(function(x){return x&&x.src});
 
-  function box(src,alt,empty){
+  function fill(src,alt,empty){
     return src?'<img src="'+e(src)+'" alt="'+e(alt||'')+'" loading="lazy">'
-              :'<div class="screen-empty">'+e(empty)+'</div>';
+              :'<span class="pj-empty">'+e(empty)+'</span>';
   }
 
   root.innerHTML=
     /* 1) 16:9 슬라이드 */
-    '<section class="slides'+(slides.length?'':' is-empty')+'">'
-      +'<div class="slides-view" id="slide-view"></div>'
-      +'<div class="slides-head"><h1>'+e(p.title)+'</h1>'
-        +'<p class="tags">'+(tags.length?tags.map(function(t){return'#'+e(t)}).join(' '):'#장르 입력')+'</p></div>'
-      +'<div class="slides-thumbs" id="slide-thumbs"></div>'
-      +'<p class="slides-meta">Slide 16:9 · '+(slides.length||0)+'</p>'
+    '<section class="pj-hero">'
+      +'<div class="pj-slide" id="slide-view"></div>'
+      +'<div class="pj-head"><h1>'+e(p.title)+'</h1>'
+        +'<p class="pj-tags">'+(tags.length?tags.map(function(t){return'#'+e(t)}).join('  '):'#장르 입력')+'</p></div>'
+      +'<div class="pj-thumbs" id="slide-thumbs"></div>'
     +'</section>'
 
-    /* 2) 소개 */
-    +'<section class="brief">'
-      +'<figure class="brief-shot">'+box(p.image||(slides[0]||{}).src,p.title,'대표 이미지 추가 영역')+'</figure>'
-      +'<div class="brief-copy">'
-        +'<p class="position">참여 포지션<b>'+e(p.position||'00')+'</b></p>'
-        +'<h2>'+e(p.summary||'한 줄 설명 입력')+'</h2>'
-        +'<p>'+e(p.body||'상세 설명 입력')+'</p>'
+    /* 2) 참여 포지션 */
+    +'<section class="pj-intro"><div class="wrap">'
+      +'<p class="pj-position">참여 포지션: <b>'+e(p.position||'00')+'</b></p>'
+    +'</div></section>'
+
+    /* 3) 회색 띠 — 이미지 + 글, 그 아래 인용 */
+    +'<section class="pj-band"><div class="wrap">'
+      +'<div class="pj-row">'
+        +'<figure class="pj-shot">'+fill(p.image||(slides[0]||{}).src,p.title,'대표 이미지 추가 영역')+'</figure>'
+        +'<div class="pj-copy"><h2>'+e(p.summary||'한 줄 설명 입력')+'</h2>'
+          +'<p>'+e(p.body||'상세 설명 입력')+'</p></div>'
       +'</div>'
-    +'</section>'
-    +'<p class="quote">'+(p.quote?'“'+e(p.quote)+'”':'')+'</p>'
+      +'<p class="pj-quote">'+(p.quote?'“ '+e(p.quote)+' ”':'“ 인용 한마디 입력 ”')+'</p>'
+    +'</div></section>'
 
-    /* 3) 해결 과정 */
-    +'<section class="solve"><h2>해결 과정</h2>'
-      +'<div class="ba">'
-        +'<div class="ba-box">'+box(solve.before,'해결 전','전 이미지 추가 영역')+'</div>'
-        +'<span class="ba-arrow" aria-hidden="true">→</span>'
-        +'<div class="ba-box">'+box(solve.after,'해결 후','후 이미지 추가 영역')+'</div>'
+    /* 4) 해결 과정 */
+    +'<section class="pj-solve"><div class="wrap">'
+      +'<h2 class="pj-solve-title">해결 과정</h2>'
+      +'<div class="pj-ba">'
+        +'<div class="pj-ba-box">'+fill(solve.before,'해결 전','전 이미지 추가 영역')+'</div>'
+        +'<span class="pj-arrow" aria-hidden="true">→</span>'
+        +'<div class="pj-ba-box">'+fill(solve.after,'해결 후','후 이미지 추가 영역')+'</div>'
       +'</div>'
-      +'<p class="ba-note">'+e(solve.note||'해결 과정 설명 입력')+'</p>'
-    +'</section>'
+      +'<p class="pj-note">'+e(solve.note||'해결 과정 설명 입력')+'</p>'
+    +'</div></section>'
 
-    /* 4) 숏폼 영상 */
-    +'<section class="clips"><h2>숏폼 영상</h2>'
-      +'<div class="clip-grid">'+(clips||'<div class="media-empty">숏폼 영상 추가 영역</div>')+'</div></section>'
-
-    /* 5) 상세 기획서 */
-    +'<section class="docs"><h2>상세 기획서</h2>'
-      +(docs.length
-        ?'<div class="doc-tabs" role="tablist">'+docs.map(function(x,i){
-            return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'
-              +e(x.title||('기획서 '+(i+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
-        :'<div class="media-empty">상세 기획서 추가 영역</div>')
+    /* 5) 숏폼 영상 · 상세 기획서 */
+    +'<section class="wrap pj-extra">'
+      +'<div class="clips"><h2>숏폼 영상</h2>'
+        +'<div class="clip-grid">'+(clips||'<div class="media-empty">숏폼 영상 추가 영역</div>')+'</div></div>'
+      +'<div class="docs"><h2>상세 기획서</h2>'
+        +(docs.length
+          ?'<div class="doc-tabs" role="tablist">'+docs.map(function(x,i){
+              return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'
+                +e(x.title||('기획서 '+(i+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
+          :'<div class="media-empty">상세 기획서 추가 영역</div>')
+      +'</div>'
+      +'<a class="back" href="portfolio.html">← 프로젝트 목록</a>'
     +'</section>';
 
   /* 슬라이드: 오른쪽 위 작은 그림을 누르면 큰 화면이 바뀐다 */
   var view=q('slide-view'),thumbs=q('slide-thumbs');
-  if(view){
-    if(!slides.length){view.innerHTML='<div class="screen-empty">프로젝트 이미지 추가 영역</div>'}
-    else{
-      thumbs.innerHTML=slides.map(function(x,i){
-        return'<button type="button" class="slide-thumb'+(i?'':' on')+'" data-slide="'+i+'" aria-label="'+(i+1)+'번 이미지">'
-          +'<img src="'+e(x.src)+'" alt="" loading="lazy"></button>'}).join('');
-      var showSlide=function(n){
-        var x=slides[n];if(!x)return;
-        view.innerHTML='<img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'">';
-        var ts=thumbs.querySelectorAll('.slide-thumb');
-        for(var i=0;i<ts.length;i++){ts[i].classList.toggle('on',i===n)}
-      };
-      var ts=thumbs.querySelectorAll('.slide-thumb');
-      for(var i=0;i<ts.length;i++){
-        ts[i].addEventListener('click',function(ev){
-          showSlide(parseInt(ev.currentTarget.getAttribute('data-slide'),10)||0)});
-      }
-      showSlide(0);
+  if(!slides.length){view.innerHTML='<span class="pj-empty">프로젝트 이미지 추가 영역</span>'}
+  else{
+    thumbs.innerHTML=slides.map(function(x,i){
+      return'<button type="button" class="pj-thumb'+(i?'':' on')+'" data-slide="'+i+'" aria-label="'+(i+1)+'번 이미지">'
+        +'<img src="'+e(x.src)+'" alt="" loading="lazy"></button>'}).join('');
+    var ts=thumbs.querySelectorAll('.pj-thumb');
+    var showSlide=function(n){
+      var x=slides[n];if(!x)return;
+      view.innerHTML='<img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'">';
+      for(var i=0;i<ts.length;i++){ts[i].classList.toggle('on',i===n)}
+    };
+    for(var i=0;i<ts.length;i++){
+      ts[i].addEventListener('click',function(ev){
+        showSlide(parseInt(ev.currentTarget.getAttribute('data-slide'),10)||0)});
     }
+    showSlide(0);
   }
 
   wireVideos(root);
@@ -218,10 +228,10 @@ function sheetTable(key){
       var src=String(x.src||''),ext=src.split('?')[0].split('.').pop().toLowerCase(),
           hasSheet=!!(x.sheet&&(window.PORTFOLIO_SHEETS||{})[x.sheet]),
           isImage=['png','jpg','jpeg','gif','webp','svg','bmp','avif'].indexOf(ext)>=0,
-          stage,cls;
-      if(hasSheet){cls='';stage=sheetTable(x.sheet)}
-      else if(isImage){cls='';stage='<img src="'+e(src)+'" alt="'+e(x.title||'기획서 이미지')+'">'}
-      else if(ext==='pdf'){cls='';stage='<iframe src="'+e(src)+'" title="'+e(x.title||'기획서')+'" loading="lazy"></iframe>'}
+          stage,cls='';
+      if(hasSheet){stage=sheetTable(x.sheet)}
+      else if(isImage){stage='<img src="'+e(src)+'" alt="'+e(x.title||'기획서 이미지')+'">'}
+      else if(ext==='pdf'){stage='<iframe src="'+e(src)+'" title="'+e(x.title||'기획서')+'" loading="lazy"></iframe>'}
       else{cls=' is-note';stage='<p class="doc-note">브라우저에서 바로 볼 수 없는 형식입니다. 아래에서 내려받아 확인해 주세요.</p>'}
       docView.innerHTML='<div class="doc-stage'+cls+'">'+stage+'</div>'
         +'<div class="doc-actions">'
