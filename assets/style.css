@@ -150,12 +150,13 @@ body.pj-page{background:#fff}
   transform:rotate(4.56deg);transform-origin:right center}
 .pj-position b{font-weight:800}
 
-/* 3) 회색 띠 — 이미지 + 글, 그 아래 인용 */
+/* 3) 어두운 띠 — 흰 바탕 위에 검은색 반투명을 한 겹 얹는다.
+   이미지 + 글, 그 아래 인용 */
 .pj-band{position:relative;margin-top:clamp(26px,5vw,96px);padding-bottom:clamp(30px,5vw,96px);
-  background:#fff}
+  background:rgba(0,0,0,.22)}
 .pj-row{display:grid;grid-template-columns:minmax(0,613fr) minmax(0,1065fr);
   gap:clamp(18px,3.5vw,66px);align-items:start}
-.pj-shot{margin:0;overflow:hidden;aspect-ratio:613/547;
+.pj-shot{margin:clamp(-26px,-4.5vw,-90px) 0 0;overflow:hidden;aspect-ratio:613/547;
   border:clamp(6px,.94vw,18px) solid #b8b8b8;border-radius:clamp(14px,2.08vw,40px);background:#fff;
   box-shadow:clamp(4px,.52vw,10px) clamp(8px,1.25vw,24px) 0 0 #000;display:grid;place-items:center}
 .pj-shot img{width:100%;height:100%;object-fit:cover}
