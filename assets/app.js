@@ -144,8 +144,8 @@ function sheetTable(key){
 })();
 
 /* ================= 프로젝트 상세 =================
-   16:9 화면 → 참여 포지션 → 회색 띠(이미지 + 글 + 인용) → 해결 과정
-   → 숏폼 영상 → 상세 기획서
+   16:9 화면(영상 재생) → 참여 포지션 → 어두운 띠(이미지 + 글 + 인용) → 해결 과정
+   → 상세 기획서
    오른쪽 위 작은 사각형들은 "다른 프로젝트" 썸네일이고, 누르면 내용이 통째로 바뀐다. */
 (function(){
   var root=q('project');if(!root)return;
@@ -158,7 +158,6 @@ function sheetTable(key){
     var slides=(p.images||[]).filter(function(x){return x&&x.src}),
         tags=String(p.genre||'').split(/[,·]/).map(function(t){return t.trim()}).filter(Boolean),
         solve=p.solution||{},
-        clips=(p.shortVideos||[]).map(videoEmbed).join(''),
         docs=(p.documents||[]).filter(function(x){return x&&x.src}),
         hero=coverOf(p),
         others=list.filter(function(x){return x.id!==p.id});
@@ -168,10 +167,24 @@ function sheetTable(key){
                 :'<span class="pj-empty">'+e(empty)+'</span>';
     }
 
+    /* 맨 위 16:9 칸: 영상이 있으면 영상을 틀고, 없으면 대표 이미지 */
+    var clip=(p.shortVideos||[])[0],ytid=clip?youtubeId(clip.src):'',stageMedia;
+    if(ytid){
+      stageMedia='<iframe class="pj-player" src="https://www.youtube.com/embed/'+e(ytid)
+        +'?autoplay=1&mute=1&loop=1&playlist='+e(ytid)+'&playsinline=1&rel=0"'
+        +' title="'+e(p.title)+'" allow="autoplay; encrypted-media; fullscreen"'
+        +' referrerpolicy="strict-origin-when-cross-origin" frameborder="0" allowfullscreen></iframe>';
+    }else if(clip&&clip.src){
+      stageMedia='<video class="pj-player" src="'+e(clip.src)+'" controls autoplay muted loop playsinline'
+        +(hero?' poster="'+e(hero)+'"':'')+'></video>';
+    }else{
+      stageMedia=fill(hero,p.title,'프로젝트 이미지 추가 영역');
+    }
+
     root.innerHTML=
-      /* 1) 16:9 화면 */
+      /* 1) 16:9 화면 — 영상 재생 */
       '<section class="pj-hero">'
-        +'<div class="pj-slide">'+fill(hero,p.title,'프로젝트 이미지 추가 영역')+'</div>'
+        +'<div class="pj-slide">'+stageMedia+'</div>'
         +'<div class="pj-head"><h1>'+e(p.title)+'</h1>'
           +'<p class="pj-tags">'+(tags.length?tags.map(function(t){return'#'+e(t)}).join('  '):'#장르 입력')+'</p></div>'
         +'<div class="pj-thumbs-wrap">'
@@ -212,10 +225,8 @@ function sheetTable(key){
         +'<p class="pj-note">'+e(solve.note||'해결 과정 설명 입력')+'</p>'
       +'</div></section>'
 
-      /* 5) 숏폼 영상 · 상세 기획서 */
+      /* 5) 상세 기획서 */
       +'<section class="wrap pj-extra">'
-        +'<div class="clips"><h2>숏폼 영상</h2>'
-          +'<div class="clip-grid">'+(clips||'<div class="media-empty">숏폼 영상 추가 영역</div>')+'</div></div>'
         +'<div class="docs"><h2>상세 기획서</h2>'
           +(docs.length
             ?'<div class="doc-tabs" role="tablist">'+docs.map(function(x,i){
