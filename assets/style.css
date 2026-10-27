@@ -27,7 +27,7 @@
   --fs-lead:16px;
   --fs-h2:clamp(19px,2vw,30px);
   --fs-h1:clamp(25px,3vw,44px);
-  --fs-hero:clamp(32px,4.6vw,70px);
+  --fs-hero:clamp(26px,3.1vw,52px);
   --ls:.14em;          /* 작은 라벨 자간 */
 }
 
@@ -133,7 +133,7 @@ body.on-light{background:var(--bg)}
 
 /* 큰 화면 — 제목과 화살표까지 한 화면에 들어오도록 세로 기준으로도 묶는다
    (16:10 비율을 지키려면 높이가 아니라 가로폭을 줄여야 한다) */
-.frame-left{min-width:0;max-width:min(100%,calc((100svh - 260px) * 1.6))}
+.frame-left{min-width:0;max-width:min(100%,calc((100svh - 210px) * 1.6))}
 .frame-screen{position:relative}
 .screen{position:relative;overflow:hidden;aspect-ratio:16/10;
   border:1px solid var(--line-2);border-radius:var(--radius-lg);background:var(--screen)}
@@ -149,15 +149,15 @@ body.on-light{background:var(--bg)}
 .screen-empty{display:grid;place-items:center;width:100%;height:100%;padding:5%;
   color:var(--dim);font-size:var(--fs-small);text-align:center}
 
-/* 제목 — 화면 바로 위에 둔다(영상 위에 얹지 않는다) */
-.screen-title{margin:0}
+/* 제목 — 화면 위쪽에 한 줄로. 문구가 왼쪽, 이름이 그 오른쪽. */
+.screen-title{display:flex;align-items:baseline;flex-wrap:wrap;
+  gap:6px clamp(16px,2.2vw,40px);margin:0}
 .t-sm,.t-lg{margin:0}
-.t-sm{display:flex;align-items:center;gap:12px;color:var(--sub);font-size:var(--fs-small);
-  font-weight:400;letter-spacing:.06em}
-.t-sm:before{content:"";width:34px;height:1px;background:var(--accent);flex:0 0 auto}
+.t-sm{display:flex;align-items:center;gap:12px;color:var(--sub);
+  font-size:clamp(12px,1.05vw,17px);font-weight:400;letter-spacing:.04em}
+.t-sm:before{content:"";width:clamp(24px,2.4vw,46px);height:1px;background:var(--accent);flex:0 0 auto}
 .t-sm b{color:var(--accent);font-weight:700}
-.t-lg{margin-top:.35em;color:#fff;font-size:var(--fs-hero);font-weight:800;line-height:1.05;
-  letter-spacing:-.03em}
+.t-lg{color:#fff;font-size:var(--fs-hero);font-weight:800;line-height:1.05;letter-spacing:-.03em}
 
 /* 아래 좌우 화살표 */
 .frame-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;
@@ -184,7 +184,7 @@ body.on-light{background:var(--bg)}
   .frame-right{grid-row:3}
   .frame-right{flex-direction:row;flex-wrap:wrap;padding-top:0}
   .frame-pill{flex:1 1 30%}
-  .screen-title{left:14px;top:12px;max-width:88%}
+  .screen-title{gap:4px 16px}
 }
 
 /* ========== 프로젝트 상세 ==========
