@@ -249,13 +249,23 @@ function sheetTable(key){
     }).join('')||'<p class="rs-empty">보유 기술을 입력해 주세요</p>';
   }
 
-  var personal=q('rs-personal');
-  if(personal){
-    var rows=(d.resumePersonalInfo||[]).filter(function(x){return x.year||x.history});
-    personal.innerHTML=rows.length
-      ?'<ul class="rs-list">'+rows.map(function(x){
-          return'<li><time>'+e(x.year)+'</time><strong>'+e(x.history)+'</strong></li>'}).join('')+'</ul>'
-      :'<p class="rs-empty">인적사항 입력</p>';
+  /* 프로젝트 목록 — 좌우로 끌어서 넘긴다 */
+  var rail=q('rs-projects');
+  if(rail){
+    var ps=(d.resumeProjects||[]);
+    rail.innerHTML=ps.map(function(x){
+      return'<article><time>'+e(x.year||'연도 입력')+'</time><h3>'+e(x.title||'프로젝트명 입력')+'</h3>'
+        +'<b>'+e(x.role||'역할 입력')+'</b><p>'+e(x.detail||'설명 입력')+'</p></article>'}).join('')
+      ||'<p class="rs-empty">프로젝트를 입력해 주세요</p>';
+    var dragging=false,startX=0,startScroll=0;
+    rail.addEventListener('pointerdown',function(ev){
+      dragging=true;startX=ev.clientX;startScroll=rail.scrollLeft;
+      rail.setPointerCapture(ev.pointerId);rail.classList.add('dragging')});
+    rail.addEventListener('pointermove',function(ev){
+      if(dragging)rail.scrollLeft=startScroll-(ev.clientX-startX)});
+    var stop=function(){dragging=false;rail.classList.remove('dragging')};
+    rail.addEventListener('pointerup',stop);
+    rail.addEventListener('pointercancel',stop);
   }
 
   var careers=q('rs-careers');
@@ -267,13 +277,13 @@ function sheetTable(key){
       :'<li class="rs-empty">경력 입력</li>';
   }
 
-  var rprojects=q('rs-projects');
-  if(rprojects){
-    var ps=(d.resumeProjects||[]).filter(function(x){return x.year||x.title||x.role||x.detail});
-    rprojects.innerHTML=ps.length?ps.map(function(x){
-        return'<li><time>'+e(x.year)+'</time><strong>'+e(x.title)+'</strong>'
-          +'<p>'+e(x.role)+(x.role&&x.detail?' · ':'')+e(x.detail)+'</p></li>'}).join('')
-      :'<li class="rs-empty">프로젝트 입력</li>';
+  var personal=q('rs-personal');
+  if(personal){
+    var rows=(d.resumePersonalInfo||[]).filter(function(x){return x.year||x.history});
+    personal.innerHTML=rows.length
+      ?'<div class="personal-list">'+rows.map(function(x){
+          return'<div><time>'+e(x.year)+'</time><strong>'+e(x.history)+'</strong></div>'}).join('')+'</div>'
+      :'<p class="rs-empty">인적사항 입력</p>';
   }
 })();
 

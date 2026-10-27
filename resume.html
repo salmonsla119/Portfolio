@@ -21,39 +21,46 @@
 </header>
 
 <main id="main" class="wrap page">
-  <p class="label">이력서</p>
-  <section class="panel">
-    <a class="panel-next" href="cover-letter.html" aria-label="자기소개서로">›</a>
-    <div class="rs-top">
-      <div class="rs-photo"><img src="assets/profile.jpg" alt="김채연 프로필 사진"></div>
-      <div class="box rs-info">
-        <p class="rs-role">GAME PLANNER</p>
-        <h1 class="rs-name">김채연</h1>
-        <dl class="rs-dl">
-          <div><dt>생년월일</dt><dd>2004.01.19</dd></div>
-          <div><dt>전화</dt><dd><a href="tel:01090759128">010-9075-9128</a></dd></div>
-          <div><dt>이메일</dt><dd><a href="mailto:salmonsla119@gmail.com">salmonsla119@gmail.com</a></dd></div>
-        </dl>
-      </div>
-    </div>
+  <header class="page-head">
+    <div><p class="label">RESUME</p><h1>이력서</h1></div>
+  </header>
 
-    <div class="rs-grid">
-      <div class="rs-col">
-        <section class="box"><p class="rs-sub">PERSONAL</p><div id="rs-personal"></div></section>
-        <section class="box"><p class="rs-sub">CERTIFICATE</p><p class="rs-empty">추가 예정</p></section>
-        <section class="box"><p class="rs-sub">AWARDS</p><p class="rs-empty">추가 예정</p></section>
-      </div>
-      <div class="box rs-big">
-        <section class="rs-block"><p class="rs-sub">TOOLS &amp; SKILLS</p><div class="skill-grid" id="rs-skills"></div></section>
-        <section class="rs-block"><p class="rs-sub">CAREER</p><ul class="rs-list" id="rs-careers"></ul></section>
-        <section class="rs-block"><p class="rs-sub">PROJECTS</p><ul class="rs-list" id="rs-projects"></ul></section>
-      </div>
+  <section class="box resume-profile">
+    <img src="assets/profile.jpg" alt="김채연 프로필 사진">
+    <div class="profile-copy">
+      <p class="rs-sub">GAME PLANNER</p>
+      <h2>김채연</h2>
+      <dl class="rs-dl">
+        <div><dt>생년월일</dt><dd>2004.01.19</dd></div>
+        <div><dt>전화</dt><dd><a href="tel:01090759128">010-9075-9128</a></dd></div>
+        <div><dt>이메일</dt><dd><a href="mailto:salmonsla119@gmail.com">salmonsla119@gmail.com</a></dd></div>
+      </dl>
     </div>
+    <div class="skill-panel">
+      <p class="rs-sub">TOOLS &amp; SKILLS</p>
+      <div class="skill-grid" id="rs-skills"></div>
+    </div>
+  </section>
 
-    <div class="box rs-download">
-      <div><p class="rs-sub">ORIGINAL PDF</p><p class="rs-empty">원본 PDF를 내려받아 확인할 수 있습니다.</p></div>
-      <a class="btn" href="assets/kim-chaeyeon-resume.pdf" download>PDF 다운로드 ↓</a>
-    </div>
+  <section class="box rs-block">
+    <p class="rs-sub">PROJECTS</p><h2>프로젝트 목록</h2>
+    <div class="rs-rail" id="rs-projects" tabindex="0" aria-label="프로젝트 목록, 좌우로 넘길 수 있습니다"></div>
+  </section>
+
+  <section class="box rs-block">
+    <p class="rs-sub">CAREER</p><h2>경력</h2>
+    <ul class="rs-list" id="rs-careers"></ul>
+  </section>
+
+  <div class="mini-row">
+    <section class="box rs-block"><p class="rs-sub">PERSONAL INFORMATION</p><h2>인적사항</h2><div id="rs-personal"></div></section>
+    <section class="box rs-block"><p class="rs-sub">CERTIFICATE</p><h2>자격증</h2><p class="rs-empty">추가 예정</p></section>
+    <section class="box rs-block"><p class="rs-sub">AWARDS</p><h2>수상 이력</h2><p class="rs-empty">추가 예정</p></section>
+  </div>
+
+  <section class="box rs-download">
+    <div><p class="rs-sub">ORIGINAL PDF</p><h2>원본 이력서</h2><p class="rs-empty">원본 PDF를 별도로 내려받아 확인할 수 있습니다.</p></div>
+    <a class="btn" href="assets/kim-chaeyeon-resume.pdf" download>PDF 다운로드 ↓</a>
   </section>
 </main>
 
