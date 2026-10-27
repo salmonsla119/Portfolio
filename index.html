@@ -20,25 +20,28 @@
   </nav>
 </header>
 
-<main id="main" class="wrap page hero-wrap">
-  <p class="label">메인</p>
-  <section class="panel hero-panel">
-    <div class="hero">
-      <div class="hero-stage">
-        <div class="screen" id="stage"></div>
-        <div class="hero-label">
-          <p class="eyebrow">GAME PLANNER</p>
-          <h1>어떻게든 완성하는<br><em>기획자 김채연</em></h1>
+<main id="main" class="hero-wrap">
+  <section class="frame">
+    <div class="frame-inner">
+      <div class="frame-left">
+        <div class="frame-screen">
+          <div class="screen" id="stage"></div>
+          <p class="t-sm">어떻게든 완성하는 기획자</p>
+          <p class="t-lg">김채연</p>
         </div>
-        <div class="stage-nav">
-          <button type="button" class="stage-arrow" data-dir="-1" aria-label="이전 프로젝트">‹</button>
-          <button type="button" class="stage-arrow" data-dir="1" aria-label="다음 프로젝트">›</button>
+        <div class="frame-nav">
+          <button type="button" class="arrow" data-dir="-1" aria-label="이전 프로젝트">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
+          </button>
+          <button type="button" class="arrow" data-dir="1" aria-label="다음 프로젝트">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
+          </button>
         </div>
       </div>
-      <nav class="hero-links" aria-label="바로가기">
-        <a href="resume.html">이력서</a>
-        <a href="cover-letter.html">자기소개서</a>
-      </nav>
+      <div class="frame-right">
+        <a class="frame-pill pill-a" href="resume.html">이력서</a>
+        <a class="frame-pill pill-b" href="cover-letter.html">자기소개서</a>
+      </div>
     </div>
   </section>
 </main>

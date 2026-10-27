@@ -52,55 +52,71 @@ ul{margin:0;padding:0;list-style:none}
 .panel{padding:clamp(18px,5.8%,84px);border-radius:var(--radius-lg);background:var(--panel)}
 .box{border-radius:var(--radius);background:var(--box);box-shadow:var(--shadow)}
 
-/* ========== 메인: 히어로 무대 ==========
-   와이어프레임 실측 비율 그대로.
-   회색 판 240x130 / 큰 네모 150x90(=5:3) / 버튼 59폭 / 네모와 버튼 사이 8
-   → 판 좌우 여백 5.8%, 큰 네모 : 버튼 = 150 : 59, 사이 간격 3.7% */
-.hero-wrap{padding:clamp(20px,3vh,40px) 0 clamp(40px,6vh,80px)}
-.hero-panel{padding:5% 5.8% 5.8%}
-.hero{display:grid;grid-template-columns:minmax(0,150fr) minmax(0,59fr);gap:3.7%;align-items:start}
-.hero-stage{position:relative;min-width:0}
-.screen{position:relative;overflow:hidden;aspect-ratio:5/3;border-radius:var(--radius-lg);
-  background:var(--box);box-shadow:var(--shadow-lg)}
+/* ========== 메인 ==========
+   피그마 "메인" 프레임의 생김새를 따라간다.
+   회색 바탕 / 살짝 기울어진 큰 네모 / 두꺼운 흰 테두리 + 검은 하드 그림자 /
+   서로 반대로 기울어진 알약 버튼 두 개 / 흰 외곽선이 둘린 기울어진 제목. */
+.hero-wrap{padding:0}
+.frame{background:#929292;padding:clamp(30px,5vw,80px) var(--side) clamp(26px,4vw,64px)}
+.frame-inner{position:relative;display:grid;grid-template-columns:minmax(0,1fr) clamp(170px,26%,520px);
+  gap:clamp(18px,3vw,54px);align-items:start;width:min(100%,1560px);margin-inline:auto}
+.frame-left{min-width:0}
+
+/* 큰 네모 */
+.frame-screen{position:relative;transform:rotate(-1deg)}
+.screen{position:relative;overflow:hidden;aspect-ratio:16/10;
+  border:clamp(7px,.95vw,18px) solid #fff;border-radius:clamp(16px,2vw,40px);
+  background:#d9d9d9;box-shadow:clamp(8px,.8vw,15px) clamp(10px,1vw,19px) 0 0 #000}
 .screen-media{position:absolute;inset:0}
 .screen-media .video-item{width:100%;height:100%;max-width:none;margin:0}
-.screen-media .yt-facade{width:100%;height:100%;aspect-ratio:auto;border:0;border-radius:0;box-shadow:none;background:#1b1b1b}
+.screen-media .yt-facade{width:100%;height:100%;aspect-ratio:auto;border:0;border-radius:0;
+  box-shadow:none;background:#1b1b1b}
 .screen-media .yt-poster,.screen-media .yt-poster>img{height:100%}
 .screen-media .yt-fallback{display:none}
 .screen-media video,.screen-media iframe{display:block;width:100%;height:100%;border:0;object-fit:cover}
 .screen-img{display:block;width:100%;height:100%;object-fit:cover}
-.screen-empty{display:grid;place-items:center;width:100%;height:100%;padding:20px;
-  color:var(--dim);font-size:13px;text-align:center}
+.screen-go{position:absolute;inset:0;z-index:1}
+.screen-go b,.screen-go span{position:absolute;left:-9999px}
+.screen-empty{display:grid;place-items:center;width:100%;height:100%;padding:5%;
+  color:#7f7f7f;font-size:clamp(11px,.9vw,15px);text-align:center}
 
-/* 제목표 — 큰 네모 왼쪽 위 모서리에 걸침 (왼쪽으로 10/150, 위로 7/90 만큼) */
-.hero-label{position:absolute;z-index:2;left:-6.7%;top:-7.8%;max-width:46%;
-  padding:2.4% 3.4% 2.8%;border-radius:var(--radius);
-  background:var(--box);box-shadow:var(--shadow)}
-.eyebrow{margin:0 0 4px;color:var(--dim);font-size:clamp(9px,.78vw,11px);letter-spacing:.14em;font-weight:600}
-.hero-label h1{font-size:clamp(16px,1.9vw,27px)}
-.hero-label h1 em{font-style:normal;font-weight:800}
+/* 제목 — 큰 네모 왼쪽 위 모서리에 기울어져 걸친다 */
+.t-sm,.t-lg{position:absolute;z-index:2;margin:0;white-space:nowrap;line-height:1.15;
+  font-weight:800;color:#000;transform-origin:left center;
+  -webkit-text-stroke:clamp(4px,.5vw,10px) #fff;paint-order:stroke fill}
+.t-sm{left:-4%;top:5.7%;font-size:clamp(17px,2.5vw,56px);transform:translateY(-50%) rotate(-9deg)}
+.t-lg{left:-2.8%;top:16%;font-size:clamp(26px,3.8vw,84px);transform:translateY(-50%) rotate(-9deg)}
 
-/* 무대 아래 제목 띠 */
-.screen-go{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;align-items:center;
-  justify-content:space-between;gap:14px;padding:13px clamp(14px,1.8vw,22px);
-  background:rgba(27,27,27,.86);color:#fff}
-.screen-go b{font-size:clamp(14px,1.5vw,18px);font-weight:650}
-.screen-go span{flex:0 0 auto;color:#d6d6d6;font-size:12px}
+/* 아래 좌우 화살표 */
+.frame-nav{display:flex;justify-content:flex-end;gap:clamp(14px,2vw,38px);
+  margin:clamp(14px,1.6vw,26px) clamp(10px,4%,70px) 0 0}
+.arrow{width:clamp(26px,2.6vw,52px);aspect-ratio:1;padding:0;border:0;background:none;
+  cursor:pointer;color:#4a4a4a}
+.arrow svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+.arrow:hover{color:#111}
 
-/* 좌우 넘김 — 큰 네모 아래, 오른쪽 끝에서 10/150 안쪽 */
-.stage-nav{display:flex;align-items:center;justify-content:flex-end;gap:12px;
-  margin-top:3.4%;padding-right:6.7%}
-.stage-arrow{width:clamp(28px,2.4vw,34px);aspect-ratio:1;padding:0;border:1px solid var(--line);
-  border-radius:50%;background:var(--box);color:var(--text);font-size:16px;line-height:1;
-  cursor:pointer;box-shadow:var(--shadow)}
-.stage-arrow:hover{background:var(--dark);color:#fff;border-color:var(--dark)}
+/* 오른쪽 알약 버튼 두 개 — 서로 반대로 기울어져 있다 */
+.frame-right{display:flex;flex-direction:column;gap:clamp(16px,2.6vw,52px);padding-top:clamp(4px,1vw,22px)}
+.frame-pill{display:grid;place-items:center;min-height:clamp(50px,7.2vw,137px);padding:clamp(10px,1vw,20px);
+  border:clamp(5px,.9vw,18px) solid #fff;border-radius:999px;background:#d9d9d9;
+  color:#fff;font-size:clamp(14px,1.6vw,34px);font-weight:800;line-height:1.1;text-align:center;
+  box-shadow:clamp(5px,.5vw,10px) clamp(6px,.6vw,12px) 0 0 #000}
+.pill-a{transform:rotate(-2.7deg)}
+.pill-b{transform:rotate(2.6deg)}
+.frame-pill:hover{background:#c9c9c9}
 
-/* 오른쪽 버튼 두 개 — 큰 네모와 거의 같은 높이에서 시작, 사이 간격 6/90 */
-.hero-links{display:flex;flex-direction:column;gap:4%;padding-top:1.6%}
-.hero-links a{display:flex;align-items:center;justify-content:center;min-height:clamp(44px,4.4vw,64px);
-  padding:10px 14px;border-radius:999px;background:var(--box);
-  font-size:clamp(12px,1.05vw,15px);font-weight:650;box-shadow:var(--shadow)}
-.hero-links a:hover{background:var(--dark);color:#fff}
+/* 좁은 화면: 한 줄로 쌓는다 */
+@media(max-width:760px){
+  .frame{padding:26px var(--side) 30px}
+  .frame-inner{grid-template-columns:1fr;gap:18px}
+  .frame-right{flex-direction:row;gap:10px;padding-top:0}
+  .frame-pill{flex:1}
+  .frame-nav{justify-content:center;margin-right:0}
+  /* 좁은 화면에서는 제목이 화면 밖으로 잘리지 않게 안쪽으로 */
+  .t-sm{left:1%;top:4%}
+  .t-lg{left:3%;top:15%}
+}
 
 /* ========== 프로젝트 상세 ========== */
 .page{padding:clamp(26px,4vh,46px) 0 clamp(50px,7vh,90px)}
