@@ -14,8 +14,8 @@
   --text:#e7ebee;      /* 본문 글자 */
   --sub:#9aa3ab;       /* 보조 글자 */
   --dim:#6f777f;       /* 흐린 글자·안내 */
-  --line:rgba(255,255,255,.16);   /* 가는 선 */
-  --line-2:rgba(255,255,255,.34); /* 조금 더 또렷한 선 */
+  --line:rgba(255,255,255,.24);   /* 가는 선 */
+  --line-2:rgba(255,255,255,.5);  /* 조금 더 또렷한 선 */
   --radius:6px;
   --radius-lg:8px;
   --max:1180px;
@@ -76,8 +76,23 @@ ul{margin:0;padding:0;list-style:none}
 }
 body.on-light{background:var(--bg)}
 
+/* ===== 벡터 아이콘 =====
+   전부 선 아이콘. 글자 크기를 따라가고 색은 글자색을 따른다. */
+.ico{flex:0 0 auto;width:1.25em;height:1.25em;fill:none;stroke:currentColor;
+  stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.2em}
+
+/* ===== 섹션 제목 — 아이콘 + 글자 + 끝까지 이어지는 가는 선 ===== */
+.sec-title,.pj-solve-title,.pj-extra h2,.rs-block h2,.rs-download h2,.more-title{
+  display:flex;align-items:center;gap:10px;width:100%;
+  margin:0 0 clamp(16px,2.2vw,26px);font-size:var(--fs-h2);font-weight:700;color:var(--text)}
+.sec-title:after,.pj-solve-title:after,.pj-extra h2:after,
+.rs-block h2:after,.rs-download h2:after,.more-title:after{
+  content:"";flex:1 1 auto;height:1px;min-width:24px;background:var(--line)}
+.sec-title .ico,.pj-solve-title .ico,.pj-extra h2 .ico,
+.rs-block h2 .ico,.rs-download h2 .ico,.more-title .ico{color:var(--accent);stroke-width:1.4}
+
 /* ===== 공통 버튼 ===== */
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:11px 24px;
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:11px 24px;
   border:1px solid var(--line-2);border-radius:2px;background:transparent;color:var(--text);
   font-size:var(--fs-small);font-weight:600;letter-spacing:.08em;cursor:pointer;
   transition:border-color .15s ease,color .15s ease,background .15s ease}
@@ -95,11 +110,15 @@ body.on-light{background:var(--bg)}
 
 /* 오른쪽 알약 버튼 */
 .frame-right{display:flex;flex-direction:column;gap:10px;padding-top:clamp(0px,1vw,14px)}
-.frame-pill{display:grid;place-items:center;min-height:44px;padding:10px 16px;
+.frame-pill{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  min-height:44px;padding:10px 18px;
   border:1px solid var(--line-2);border-radius:999px;background:transparent;color:var(--text);
   font-size:var(--fs-small);font-weight:600;letter-spacing:.06em;line-height:1.1;text-align:center;
   transition:border-color .15s ease,background .15s ease,color .15s ease}
 .frame-pill:hover{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+/* 아이콘이 먼저 들어가므로 순서를 뒤집어 글자를 왼쪽에 둔다 */
+.frame-pill .ico{order:2;color:var(--accent)}
+.frame-pill:hover .ico{color:var(--accent-ink)}
 
 /* 큰 화면 */
 .frame-left{min-width:0}
@@ -122,13 +141,16 @@ body.on-light{background:var(--bg)}
 .screen-title{position:absolute;z-index:2;left:clamp(18px,2.4vw,44px);top:clamp(16px,2.2vw,40px);
   max-width:74%;pointer-events:none}
 .t-sm,.t-lg{margin:0}
-.t-sm{color:var(--accent);font-size:var(--fs-label);font-weight:600;letter-spacing:var(--ls);
-  text-shadow:0 1px 10px rgba(0,0,0,.7)}
+.t-sm{display:flex;align-items:center;gap:12px;color:var(--accent);font-size:var(--fs-label);
+  font-weight:600;letter-spacing:var(--ls);text-shadow:0 1px 10px rgba(0,0,0,.7)}
+.t-sm:before{content:"";width:34px;height:1px;background:currentColor;flex:0 0 auto}
 .t-lg{margin-top:.5em;color:#fff;font-size:var(--fs-hero);font-weight:800;line-height:1.05;
   letter-spacing:-.03em;text-shadow:0 2px 18px rgba(0,0,0,.6)}
 
 /* 아래 좌우 화살표 */
-.frame-nav{display:flex;justify-content:flex-end;gap:8px;margin:clamp(14px,1.6vw,24px) 0 0}
+.frame-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;
+  margin:clamp(14px,1.6vw,24px) 0 0}
+.frame-nav:before{content:"";flex:1 1 auto;height:1px;background:var(--line);margin-right:8px}
 .arrow{display:grid;place-items:center;flex:0 0 auto;width:36px;aspect-ratio:1;padding:0;
   border:1px solid var(--line-2);border-radius:50%;background:transparent;
   cursor:pointer;color:var(--text);transition:border-color .15s ease,color .15s ease}
@@ -139,7 +161,7 @@ body.on-light{background:var(--bg)}
 /* 메인 아래 — 프로젝트 더보기 */
 .more{background:var(--bg);border-top:1px solid var(--line);
   padding:clamp(44px,6vw,96px) 0 clamp(50px,7vw,110px)}
-.more-title{margin-bottom:clamp(18px,2.4vw,30px);font-size:var(--fs-h2);font-weight:700}
+.more-title{margin-bottom:clamp(18px,2.4vw,30px)}
 
 @media(max-width:760px){
   .frame{min-height:0;padding:26px var(--side) 30px}
@@ -152,8 +174,9 @@ body.on-light{background:var(--bg)}
 /* ========== 프로젝트 상세 ==========
    16:9 영상 → 참여 포지션 → 어두운 띠(이미지 + 글 + 인용) → 해결 과정 → 상세 기획서 */
 body.pj-page{background:var(--bg)}
-.pj-empty{display:grid;place-items:center;width:100%;height:100%;padding:6%;
-  color:var(--dim);font-size:var(--fs-small);text-align:center}
+.pj-empty{display:grid;place-items:center;align-content:center;gap:10px;
+  width:100%;height:100%;padding:6%;color:var(--dim);font-size:var(--fs-small);text-align:center}
+.pj-empty .ico{width:28px;height:28px}
 
 /* 1) 16:9 화면 */
 .pj-hero{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--screen);
@@ -168,15 +191,16 @@ iframe.pj-player{pointer-events:none}
 .pj-slide img{width:100%;height:100%;object-fit:cover}
 /* 소리 켜기/끄기 — 유튜브 컨트롤 대신 쓰는 우리 버튼 */
 .pj-sound{position:absolute;z-index:3;right:3.3%;bottom:5%;
-  padding:8px 16px;border:1px solid var(--line-2);border-radius:2px;cursor:pointer;
+  display:flex;align-items:center;padding:8px 16px;border:1px solid var(--line-2);border-radius:2px;cursor:pointer;
   background:rgba(27,31,36,.55);color:#fff;font-size:var(--fs-label);font-weight:600;
   letter-spacing:.08em;line-height:1;
   -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
   transition:border-color .15s ease,color .15s ease}
 .pj-sound:hover{border-color:var(--accent);color:var(--accent)}
+.pj-sound span{display:flex;align-items:center;gap:8px}
 .pj-sound .pj-sound-on{display:none}
 .pj-sound[data-on="1"] .pj-sound-off{display:none}
-.pj-sound[data-on="1"] .pj-sound-on{display:inline}
+.pj-sound[data-on="1"] .pj-sound-on{display:flex}
 
 .pj-head{position:absolute;z-index:2;left:3.4%;top:4.6%;max-width:60%}
 .pj-head h1{color:#fff;font-size:var(--fs-h1);font-weight:800;letter-spacing:-.03em;
@@ -223,19 +247,15 @@ iframe.pj-player{pointer-events:none}
 .pj-copy p{margin-top:14px;font-size:var(--fs-body);line-height:1.85;color:var(--sub);
   white-space:pre-line;word-break:keep-all}
 /* 인용 — 상자가 아니라 가는 선 사이에 */
-.pj-quote{width:min(100%,780px);margin:clamp(30px,4.5vw,72px) auto 0;
+.pj-quote{display:grid;justify-items:center;gap:14px;width:min(100%,780px);
+  margin:clamp(30px,4.5vw,72px) auto 0;
   padding:clamp(22px,3vw,40px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   color:var(--text);font-size:var(--fs-lead);font-weight:400;line-height:1.8;
   text-align:center;word-break:keep-all}
+.pj-quote .ico{width:26px;height:26px;color:var(--accent)}
 
 /* 4) 해결 과정 */
 .pj-solve{background:var(--bg);padding:clamp(40px,5vw,84px) 0 clamp(24px,3vw,48px)}
-/* 섹션 제목 — 아래에 짧은 하늘색 선 하나 */
-.pj-solve-title,.pj-extra h2{display:inline-block;position:relative;
-  margin:0 0 clamp(22px,3vw,40px);padding-bottom:12px;
-  font-size:var(--fs-h2);font-weight:700;color:var(--text)}
-.pj-solve-title:after,.pj-extra h2:after{content:"";position:absolute;left:0;bottom:0;
-  width:34px;height:2px;background:var(--accent)}
 .pj-ba{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr);
   gap:clamp(10px,1.5vw,20px);align-items:center;margin-top:clamp(18px,2.5vw,36px)}
 .pj-ba-box{overflow:hidden;aspect-ratio:703/570;border:1px solid var(--line-2);
@@ -244,12 +264,13 @@ iframe.pj-player{pointer-events:none}
 /* 화살표는 글자로 그린다. 모바일에서는 아래 방향으로 바꿔 끼운다(기울임 없음) */
 .pj-arrow{color:var(--rose);font-size:20px;text-align:center;line-height:1}
 .pj-arrow:before{content:"→"}
-.pj-note{margin-top:clamp(18px,2.5vw,36px);font-size:var(--fs-body);line-height:1.85;
+.pj-note{margin-top:clamp(18px,2.5vw,36px);padding-top:clamp(16px,2vw,26px);
+  border-top:1px solid var(--line);font-size:var(--fs-body);line-height:1.85;
   color:var(--sub);white-space:pre-line;word-break:keep-all}
 
 /* 5) 상세 기획서 */
 .pj-extra{display:block;background:var(--bg);padding:clamp(40px,5vw,84px) 0 clamp(50px,7vh,100px)}
-.pj-extra .back{display:inline-flex;align-items:center;min-height:42px;padding:11px 24px;
+.pj-extra .back{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:11px 24px;
   margin-top:clamp(30px,4vw,56px);border:1px solid var(--line);border-radius:2px;
   background:transparent;color:var(--sub);font-size:var(--fs-small);font-weight:600;
   letter-spacing:.08em;transition:border-color .15s ease,color .15s ease}
@@ -287,8 +308,9 @@ iframe.pj-player{pointer-events:none}
 .resume-profile>img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;
   border:1px solid var(--line);border-radius:var(--radius)}
 .profile-copy h2{margin:2px 0 0;font-size:clamp(20px,2.2vw,26px);font-weight:700}
-.rs-sub{margin:0 0 8px;color:var(--accent);font-size:var(--fs-label);font-weight:600;
-  letter-spacing:var(--ls);text-transform:uppercase}
+.rs-sub{display:flex;align-items:center;gap:8px;margin:0 0 8px;color:var(--accent);
+  font-size:var(--fs-label);font-weight:600;letter-spacing:var(--ls);text-transform:uppercase}
+.rs-sub:after{content:"";flex:1 1 auto;height:1px;min-width:20px;background:var(--line)}
 .rs-dl{display:grid;gap:12px;margin-top:clamp(14px,1.8vw,22px)}
 .rs-dl dt{color:var(--dim);font-size:var(--fs-label);letter-spacing:.06em}
 .rs-dl dd{margin:3px 0 0;font-size:var(--fs-body);color:var(--text)}
@@ -303,7 +325,7 @@ iframe.pj-player{pointer-events:none}
 .dots i.on{border-color:var(--accent);background:var(--accent)}
 
 .rs-block{margin-top:12px;padding:clamp(20px,2.6vw,32px)}
-.rs-block h2{margin:0 0 clamp(14px,1.8vw,20px);font-size:clamp(17px,1.8vw,21px);font-weight:700}
+.rs-block h2{font-size:clamp(17px,1.8vw,21px)}
 .rs-empty{color:var(--dim);font-size:var(--fs-small)}
 
 /* 프로젝트 목록 — 좌우로 끌어서 넘기는 가로 목록 */
@@ -334,7 +356,8 @@ iframe.pj-player{pointer-events:none}
 
 .rs-download{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   margin-top:12px;padding:clamp(20px,2.6vw,32px)}
-.rs-download h2{margin:2px 0 6px;font-size:clamp(17px,1.8vw,21px);font-weight:700}
+.rs-download h2{margin:4px 0 8px;font-size:clamp(17px,1.8vw,21px)}
+.rs-download>div{flex:1 1 320px;min-width:0}
 
 /* ========== 자기소개서 ========== */
 .cover-page{position:relative;padding:clamp(26px,4vw,56px)}
@@ -403,9 +426,10 @@ iframe.pj-player{pointer-events:none}
   vertical-align:top;word-break:break-word;white-space:pre-wrap}
 .sheet-table tr:first-child td{font-size:13px;text-align:center}
 
-.media-empty{display:grid;place-items:center;min-height:180px;border:1px dashed var(--line-2);
+.media-empty{display:grid;place-items:center;align-content:center;gap:10px;min-height:180px;border:1px dashed var(--line-2);
   border-radius:var(--radius);background:transparent;color:var(--dim);font-size:var(--fs-small);
   text-align:center;padding:20px}
+.media-empty .ico{width:26px;height:26px}
 
 /* ========== 반응형 ========== */
 @media(max-width:640px){

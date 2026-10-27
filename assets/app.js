@@ -9,6 +9,43 @@ function e(v){return String(v==null?'':v).replace(/[&<>'"]/g,function(c){
 function q(id){return document.getElementById(id)}
 function projects(){return d.projects||[]}
 
+/* ===== 벡터 아이콘 =====
+   24x24 선 아이콘. 색은 currentColor, 굵기는 CSS(.ico)에서 정한다.
+   HTML/JS 어디서든 data-ico="이름" 만 적어 두면 paintIcons() 가 넣어 준다. */
+var ICONS={
+  doc:'<path d="M13.5 2H7a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5z"/><path d="M13.5 2v4.5H18"/><path d="M9 13h6M9 17h6"/>',
+  pen:'<path d="M4 20h4L20 8l-4-4L4 16z"/><path d="M14.5 5.5l4 4"/>',
+  grid:'<rect x="3" y="3" width="7.5" height="7.5"/><rect x="13.5" y="3" width="7.5" height="7.5"/><rect x="3" y="13.5" width="7.5" height="7.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5"/>',
+  film:'<rect x="3" y="5" width="18" height="14" rx="1"/><path d="M7.5 5v14M16.5 5v14M3 12h18"/>',
+  sound:'<path d="M4 9.5h3.5L12 6v12L7.5 14.5H4z"/><path d="M16 9.5a4 4 0 0 1 0 5"/><path d="M18.5 7a7 7 0 0 1 0 10"/>',
+  mute:'<path d="M4 9.5h3.5L12 6v12L7.5 14.5H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>',
+  quote:'<path d="M9.5 6H5v5.5h4.5c0 3.5-1.5 4.5-3.5 5.5"/><path d="M19 6h-4.5v5.5H19c0 3.5-1.5 4.5-3.5 5.5"/>',
+  swap:'<path d="M3 8.5h15"/><path d="M14.5 5l3.5 3.5-3.5 3.5"/><path d="M21 15.5H6"/><path d="M9.5 12L6 15.5 9.5 19"/>',
+  clip:'<rect x="5" y="4" width="14" height="18" rx="1"/><path d="M9 4V2.5h6V4"/><path d="M9 10.5h6M9 14.5h6"/>',
+  down:'<path d="M12 3.5v11.5"/><path d="M7.5 11L12 15.5 16.5 11"/><path d="M4 20h16"/>',
+  back:'<path d="M20 12H4"/><path d="M10 6l-6 6 6 6"/>',
+  image:'<rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 16.5l-5.5-5.5L9 17.5"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>',
+  badge:'<circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 22l5-2.6L17 22l-1.5-8.5"/>',
+  award:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.2L12 17l-5.4 3 1-6.2L3.2 9.5l6.1-.9z"/>',
+  case:'<rect x="3" y="7" width="18" height="13" rx="1"/><path d="M9 7V4.5h6V7"/><path d="M3 12.5h18"/>',
+  layers:'<path d="M12 3l9 4.8-9 4.8-9-4.8z"/><path d="M3 12.5l9 4.8 9-4.8"/>',
+  tool:'<path d="M3 7.5h9M17 7.5h4M3 16.5h4M12 16.5h9"/><circle cx="14.5" cy="7.5" r="2.4"/><circle cx="8.5" cy="16.5" r="2.4"/>'
+};
+function icon(name){
+  var p=ICONS[name];
+  return p?'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+p+'</svg>':'';
+}
+/* data-ico 가 붙은 곳에 아이콘을 한 번씩만 넣는다. */
+function paintIcons(root){
+  var els=(root||document).querySelectorAll('[data-ico]');
+  for(var i=0;i<els.length;i++){
+    var el=els[i];
+    if(el.querySelector('svg.ico'))continue;
+    el.insertAdjacentHTML('afterbegin',icon(el.getAttribute('data-ico')));
+  }
+}
+
 /* 유튜브 주소에서 영상 아이디만 뽑는다 (메인 무대용). */
 function youtubeId(src){
   var yt=String(src||'').match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
@@ -122,7 +159,7 @@ function sheetTable(key){
 
     function fill(src,alt,empty){
       return src?'<img src="'+e(src)+'" alt="'+e(alt||'')+'" loading="lazy">'
-                :'<span class="pj-empty">'+e(empty)+'</span>';
+                :'<span class="pj-empty">'+icon('image')+e(empty)+'</span>';
     }
 
     /* 맨 위 16:9 칸: 영상이 있으면 영상을 틀고, 없으면 대표 이미지.
@@ -130,8 +167,8 @@ function sheetTable(key){
        소리는 우리가 만든 작은 버튼으로 켠다. */
     var clip=(p.shortVideos||[])[0],ytid=clip?youtubeId(clip.src):'',stageMedia,
         soundBtn='<button type="button" class="pj-sound" data-on="0" aria-label="소리 켜기">'
-          +'<span class="pj-sound-off">소리 켜기</span>'
-          +'<span class="pj-sound-on">소리 끄기</span></button>';
+          +'<span class="pj-sound-off">'+icon('mute')+'소리 켜기</span>'
+          +'<span class="pj-sound-on">'+icon('sound')+'소리 끄기</span></button>';
     if(ytid){
       /* 영상이 뜨기 전·막혔을 때를 대비해 미리보기 그림을 아래에 깔아 둔다. */
       stageMedia='<img class="pj-poster" src="https://img.youtube.com/vi/'+e(ytid)+'/maxresdefault.jpg" alt="" '
@@ -182,12 +219,13 @@ function sheetTable(key){
           +'<div class="pj-copy"><h2>'+e(p.summary||'한 줄 설명 입력')+'</h2>'
             +'<p>'+e(p.body||'상세 설명 입력')+'</p></div>'
         +'</div>'
-        +'<p class="pj-quote">'+(p.quote?'“ '+e(p.quote)+' ”':'“ 인용 한마디 입력 ”')+'</p>'
+        +'<blockquote class="pj-quote">'+icon('quote')
+          +'<span>'+e(p.quote||'인용 한마디 입력')+'</span></blockquote>'
       +'</div></section>'
 
       /* 4) 해결 과정 */
       +'<section class="pj-solve"><div class="wrap">'
-        +'<h2 class="pj-solve-title">해결 과정</h2>'
+        +'<h2 class="pj-solve-title" data-ico="swap">해결 과정</h2>'
         +'<div class="pj-ba">'
           +'<div class="pj-ba-box">'+fill(solve.before,'해결 전','전 이미지 추가 영역')+'</div>'
           +'<span class="pj-arrow" aria-hidden="true"></span>'
@@ -198,15 +236,17 @@ function sheetTable(key){
 
       /* 5) 상세 기획서 */
       +'<section class="pj-extra on-light"><div class="wrap">'
-        +'<div class="docs"><h2>상세 기획서</h2>'
+        +'<div class="docs"><h2 data-ico="clip">상세 기획서</h2>'
           +(docs.length
             ?'<div class="doc-tabs" role="tablist">'+docs.map(function(x,i){
                 return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'
                   +e(x.title||('기획서 '+(i+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
-            :'<div class="media-empty">상세 기획서 추가 영역</div>')
+            :'<div class="media-empty">'+icon('clip')+'상세 기획서 추가 영역</div>')
         +'</div>'
-        +'<a class="back" href="index.html">← 메인으로</a>'
+        +'<a class="back" href="index.html" data-ico="back">메인으로</a>'
       +'</div></section>';
+
+    paintIcons(root);
 
     /* 썸네일 줄을 좌우 화살표로 밀어서 본다 */
     var rail=q('pj-thumbs'),rowArrows=root.querySelectorAll('.pj-thumbs-arrow');
@@ -263,8 +303,10 @@ function sheetTable(key){
         else{cls=' is-note';stage='<p class="doc-note">브라우저에서 바로 볼 수 없는 형식입니다. 아래에서 내려받아 확인해 주세요.</p>'}
         docView.innerHTML='<div class="doc-stage'+cls+'">'+stage+'</div>'
           +'<div class="doc-actions">'
-          +(hasSheet?'':'<a class="btn ghost" href="'+e(src)+'" target="_blank" rel="noopener">새 창으로 보기</a>')
-          +'<a class="btn" href="'+e(src)+'" download>'+(hasSheet?'엑셀 파일 다운로드 ↓':'다운로드 ↓')+'</a></div>';
+          +(hasSheet?'':'<a class="btn ghost" href="'+e(src)+'" target="_blank" rel="noopener" data-ico="doc">새 창으로 보기</a>')
+          +'<a class="btn" href="'+e(src)+'" download data-ico="down">'
+          +(hasSheet?'엑셀 파일 다운로드':'다운로드')+'</a></div>';
+        paintIcons(docView);
         for(var t=0;t<tabs.length;t++){tabs[t].classList.toggle('on',t===n)}
       };
       for(var t=0;t<tabs.length;t++){
@@ -336,5 +378,9 @@ function sheetTable(key){
     ?window.renderMarkdown(d.coverLetter||'')
     :'<p>'+e(d.coverLetter||'')+'</p>';
 })();
+
+
+/* 모든 페이지 공통: 아이콘 채우기 */
+paintIcons();
 
 })();

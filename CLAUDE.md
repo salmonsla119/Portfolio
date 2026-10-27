@@ -76,6 +76,12 @@
 
 구역 사이를 `margin`으로 띄우면 **그 틈으로 바디의 어두운 바탕이 비쳐 띠처럼 보인다.** 간격은 반드시 각 구역의 `padding`으로 준다.
 
+**어두운 구역에서는 흰 가는 선을 적극적으로 쓴다.** 섹션 제목은 `아이콘 + 글자 + 끝까지 이어지는 1px 선` 한 벌로 묶여 있고(`.sec-title,.pj-solve-title,.pj-extra h2,.rs-block h2,.rs-download h2,.more-title`), 메인 화살표 앞·해결 과정 설명 위·작은 라벨 뒤에도 같은 선을 넣었다.
+
+**아이콘은 전부 선(벡터) 아이콘이다.** `assets/app.js` 위쪽 `ICONS`에 24x24 path 만 모여 있고, 쓰는 쪽은 **`data-ico="이름"` 한 줄이면 된다**(`paintIcons()`가 채운다). JS로 그리는 곳에서는 `icon('이름')`을 쓴다. 색은 `currentColor`, 굵기는 `.ico`가 정하므로 아이콘마다 색·크기를 따로 지정하지 않는다. 다시 그려지는 화면(프로젝트 상세, 기획서 뷰어)에서는 그린 뒤 `paintIcons(root)`를 호출해야 한다.
+
+현재 있는 이름: `doc pen grid film sound mute quote swap clip down back image user badge award case layers tool`
+
 규칙은 네 가지다. **새 요소를 만들 때도 이대로 할 것.**
 
 1. **면을 칠하지 말고 1px 선으로 나눈다.** 테두리는 `--line`(은은함) 또는 `--line-2`(또렷함). 그림자는 쓰지 않는다.
