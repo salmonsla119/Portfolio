@@ -144,123 +144,129 @@ function sheetTable(key){
 })();
 
 /* ================= 프로젝트 상세 =================
-   피그마 "프로젝트" + "Slide 16:9 - 3" 두 프레임이 위아래로 이어지는 한 페이지.
-   16:9 슬라이드 → 참여 포지션 → 회색 띠(이미지 + 글 + 인용) → 해결 과정
-   → 숏폼 영상 → 상세 기획서 */
+   16:9 화면 → 참여 포지션 → 회색 띠(이미지 + 글 + 인용) → 해결 과정
+   → 숏폼 영상 → 상세 기획서
+   오른쪽 위 작은 사각형들은 "다른 프로젝트" 썸네일이고, 누르면 내용이 통째로 바뀐다. */
 (function(){
   var root=q('project');if(!root)return;
-  var id=new URLSearchParams(location.search).get('id'),
-      p=projects().find(function(x){return x.id===id})||projects()[0];
-  if(!p){root.innerHTML='<div class="wrap page"><p class="rs-empty">프로젝트를 추가해 주세요</p></div>';return}
+  var list=projects();
+  if(!list.length){root.innerHTML='<div class="wrap page"><p class="rs-empty">프로젝트를 추가해 주세요</p></div>';return}
 
-  var slides=(p.images||[]).filter(function(x){return x&&x.src}),
-      tags=String(p.genre||'').split(/[,·]/).map(function(t){return t.trim()}).filter(Boolean),
-      solve=p.solution||{},
-      clips=(p.shortVideos||[]).map(videoEmbed).join(''),
-      docs=(p.documents||[]).filter(function(x){return x&&x.src});
+  function coverOf(p){return p.image||((p.images||[])[0]||{}).src||''}
 
-  function fill(src,alt,empty){
-    return src?'<img src="'+e(src)+'" alt="'+e(alt||'')+'" loading="lazy">'
-              :'<span class="pj-empty">'+e(empty)+'</span>';
-  }
+  function render(p){
+    var slides=(p.images||[]).filter(function(x){return x&&x.src}),
+        tags=String(p.genre||'').split(/[,·]/).map(function(t){return t.trim()}).filter(Boolean),
+        solve=p.solution||{},
+        clips=(p.shortVideos||[]).map(videoEmbed).join(''),
+        docs=(p.documents||[]).filter(function(x){return x&&x.src}),
+        hero=coverOf(p),
+        others=list.filter(function(x){return x.id!==p.id});
 
-  root.innerHTML=
-    /* 1) 16:9 슬라이드 */
-    '<section class="pj-hero">'
-      +'<div class="pj-slide" id="slide-view"></div>'
-      +'<div class="pj-head"><h1>'+e(p.title)+'</h1>'
-        +'<p class="pj-tags">'+(tags.length?tags.map(function(t){return'#'+e(t)}).join('  '):'#장르 입력')+'</p></div>'
-      +'<div class="pj-thumbs" id="slide-thumbs"></div>'
-    +'</section>'
-
-    /* 2) 참여 포지션 */
-    +'<section class="pj-intro"><div class="wrap">'
-      +'<p class="pj-position">참여 포지션: <b>'+e(p.position||'00')+'</b></p>'
-    +'</div></section>'
-
-    /* 3) 회색 띠 — 이미지 + 글, 그 아래 인용 */
-    +'<section class="pj-band"><div class="wrap">'
-      +'<div class="pj-row">'
-        +'<figure class="pj-shot">'+fill(p.image||(slides[0]||{}).src,p.title,'대표 이미지 추가 영역')+'</figure>'
-        +'<div class="pj-copy"><h2>'+e(p.summary||'한 줄 설명 입력')+'</h2>'
-          +'<p>'+e(p.body||'상세 설명 입력')+'</p></div>'
-      +'</div>'
-      +'<p class="pj-quote">'+(p.quote?'“ '+e(p.quote)+' ”':'“ 인용 한마디 입력 ”')+'</p>'
-    +'</div></section>'
-
-    /* 4) 해결 과정 */
-    +'<section class="pj-solve"><div class="wrap">'
-      +'<h2 class="pj-solve-title">해결 과정</h2>'
-      +'<div class="pj-ba">'
-        +'<div class="pj-ba-box">'+fill(solve.before,'해결 전','전 이미지 추가 영역')+'</div>'
-        +'<span class="pj-arrow" aria-hidden="true">→</span>'
-        +'<div class="pj-ba-box">'+fill(solve.after,'해결 후','후 이미지 추가 영역')+'</div>'
-      +'</div>'
-      +'<p class="pj-note">'+e(solve.note||'해결 과정 설명 입력')+'</p>'
-    +'</div></section>'
-
-    /* 5) 숏폼 영상 · 상세 기획서 */
-    +'<section class="wrap pj-extra">'
-      +'<div class="clips"><h2>숏폼 영상</h2>'
-        +'<div class="clip-grid">'+(clips||'<div class="media-empty">숏폼 영상 추가 영역</div>')+'</div></div>'
-      +'<div class="docs"><h2>상세 기획서</h2>'
-        +(docs.length
-          ?'<div class="doc-tabs" role="tablist">'+docs.map(function(x,i){
-              return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'
-                +e(x.title||('기획서 '+(i+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
-          :'<div class="media-empty">상세 기획서 추가 영역</div>')
-      +'</div>'
-      +'<a class="back" href="portfolio.html">← 프로젝트 목록</a>'
-    +'</section>';
-
-  /* 슬라이드: 오른쪽 위 작은 그림을 누르면 큰 화면이 바뀐다 */
-  var view=q('slide-view'),thumbs=q('slide-thumbs');
-  if(!slides.length){view.innerHTML='<span class="pj-empty">프로젝트 이미지 추가 영역</span>'}
-  else{
-    thumbs.innerHTML=slides.map(function(x,i){
-      return'<button type="button" class="pj-thumb'+(i?'':' on')+'" data-slide="'+i+'" aria-label="'+(i+1)+'번 이미지">'
-        +'<img src="'+e(x.src)+'" alt="" loading="lazy"></button>'}).join('');
-    var ts=thumbs.querySelectorAll('.pj-thumb');
-    var showSlide=function(n){
-      var x=slides[n];if(!x)return;
-      view.innerHTML='<img src="'+e(x.src)+'" alt="'+e(x.alt||p.title)+'">';
-      for(var i=0;i<ts.length;i++){ts[i].classList.toggle('on',i===n)}
-    };
-    for(var i=0;i<ts.length;i++){
-      ts[i].addEventListener('click',function(ev){
-        showSlide(parseInt(ev.currentTarget.getAttribute('data-slide'),10)||0)});
+    function fill(src,alt,empty){
+      return src?'<img src="'+e(src)+'" alt="'+e(alt||'')+'" loading="lazy">'
+                :'<span class="pj-empty">'+e(empty)+'</span>';
     }
-    showSlide(0);
-  }
 
-  wireVideos(root);
+    root.innerHTML=
+      /* 1) 16:9 화면 */
+      '<section class="pj-hero">'
+        +'<div class="pj-slide">'+fill(hero,p.title,'프로젝트 이미지 추가 영역')+'</div>'
+        +'<div class="pj-head"><h1>'+e(p.title)+'</h1>'
+          +'<p class="pj-tags">'+(tags.length?tags.map(function(t){return'#'+e(t)}).join('  '):'#장르 입력')+'</p></div>'
+        +'<div class="pj-thumbs">'+others.map(function(x){
+            var c=coverOf(x);
+            return'<button type="button" class="pj-thumb" data-go="'+e(x.id)+'" title="'+e(x.title)+'">'
+              +(c?'<img src="'+e(c)+'" alt="'+e(x.title)+'" loading="lazy">'
+                 :'<span class="pj-thumb-empty">'+e(x.title)+'</span>')+'</button>'}).join('')
+        +'</div>'
+      +'</section>'
 
-  /* 기획서 뷰어: 엑셀 표, 이미지, PDF 를 구분해 보여 준다 */
-  var docView=q('doc-view');
-  if(docView&&docs.length){
-    var tabs=root.querySelectorAll('.doc-tab');
-    var showDoc=function(n){
-      var x=docs[n];if(!x)return;
-      var src=String(x.src||''),ext=src.split('?')[0].split('.').pop().toLowerCase(),
-          hasSheet=!!(x.sheet&&(window.PORTFOLIO_SHEETS||{})[x.sheet]),
-          isImage=['png','jpg','jpeg','gif','webp','svg','bmp','avif'].indexOf(ext)>=0,
-          stage,cls='';
-      if(hasSheet){stage=sheetTable(x.sheet)}
-      else if(isImage){stage='<img src="'+e(src)+'" alt="'+e(x.title||'기획서 이미지')+'">'}
-      else if(ext==='pdf'){stage='<iframe src="'+e(src)+'" title="'+e(x.title||'기획서')+'" loading="lazy"></iframe>'}
-      else{cls=' is-note';stage='<p class="doc-note">브라우저에서 바로 볼 수 없는 형식입니다. 아래에서 내려받아 확인해 주세요.</p>'}
-      docView.innerHTML='<div class="doc-stage'+cls+'">'+stage+'</div>'
-        +'<div class="doc-actions">'
-        +(hasSheet?'':'<a class="btn ghost" href="'+e(src)+'" target="_blank" rel="noopener">새 창으로 보기</a>')
-        +'<a class="btn" href="'+e(src)+'" download>'+(hasSheet?'엑셀 파일 다운로드 ↓':'다운로드 ↓')+'</a></div>';
-      for(var t=0;t<tabs.length;t++){tabs[t].classList.toggle('on',t===n)}
-    };
-    for(var t=0;t<tabs.length;t++){
-      tabs[t].addEventListener('click',function(ev){
-        showDoc(parseInt(ev.currentTarget.getAttribute('data-doc'),10)||0)});
+      /* 2) 참여 포지션 */
+      +'<section class="pj-intro"><div class="wrap">'
+        +'<p class="pj-position">참여 포지션: <b>'+e(p.position||'00')+'</b></p>'
+      +'</div></section>'
+
+      /* 3) 회색 띠 */
+      +'<section class="pj-band"><div class="wrap">'
+        +'<div class="pj-row">'
+          +'<figure class="pj-shot">'+fill(p.image||(slides[0]||{}).src,p.title,'대표 이미지 추가 영역')+'</figure>'
+          +'<div class="pj-copy"><h2>'+e(p.summary||'한 줄 설명 입력')+'</h2>'
+            +'<p>'+e(p.body||'상세 설명 입력')+'</p></div>'
+        +'</div>'
+        +'<p class="pj-quote">'+(p.quote?'“ '+e(p.quote)+' ”':'“ 인용 한마디 입력 ”')+'</p>'
+      +'</div></section>'
+
+      /* 4) 해결 과정 */
+      +'<section class="pj-solve"><div class="wrap">'
+        +'<h2 class="pj-solve-title">해결 과정</h2>'
+        +'<div class="pj-ba">'
+          +'<div class="pj-ba-box">'+fill(solve.before,'해결 전','전 이미지 추가 영역')+'</div>'
+          +'<span class="pj-arrow" aria-hidden="true">→</span>'
+          +'<div class="pj-ba-box">'+fill(solve.after,'해결 후','후 이미지 추가 영역')+'</div>'
+        +'</div>'
+        +'<p class="pj-note">'+e(solve.note||'해결 과정 설명 입력')+'</p>'
+      +'</div></section>'
+
+      /* 5) 숏폼 영상 · 상세 기획서 */
+      +'<section class="wrap pj-extra">'
+        +'<div class="clips"><h2>숏폼 영상</h2>'
+          +'<div class="clip-grid">'+(clips||'<div class="media-empty">숏폼 영상 추가 영역</div>')+'</div></div>'
+        +'<div class="docs"><h2>상세 기획서</h2>'
+          +(docs.length
+            ?'<div class="doc-tabs" role="tablist">'+docs.map(function(x,i){
+                return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'
+                  +e(x.title||('기획서 '+(i+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
+            :'<div class="media-empty">상세 기획서 추가 영역</div>')
+        +'</div>'
+        +'<a class="back" href="index.html">← 메인으로</a>'
+      +'</section>';
+
+    /* 오른쪽 위 썸네일 → 그 프로젝트로 내용 교체 */
+    var thumbs=root.querySelectorAll('.pj-thumb');
+    for(var i=0;i<thumbs.length;i++){
+      thumbs[i].addEventListener('click',function(ev){
+        var id=ev.currentTarget.getAttribute('data-go'),
+            next=list.find(function(x){return x.id===id});
+        if(!next)return;
+        if(history.replaceState)history.replaceState(null,'','project.html?id='+encodeURIComponent(id));
+        render(next);
+        window.scrollTo({top:0,behavior:'smooth'});
+      });
     }
-    showDoc(0);
+
+    wireVideos(root);
+
+    /* 기획서 뷰어 */
+    var docView=q('doc-view');
+    if(docView&&docs.length){
+      var tabs=root.querySelectorAll('.doc-tab');
+      var showDoc=function(n){
+        var x=docs[n];if(!x)return;
+        var src=String(x.src||''),ext=src.split('?')[0].split('.').pop().toLowerCase(),
+            hasSheet=!!(x.sheet&&(window.PORTFOLIO_SHEETS||{})[x.sheet]),
+            isImage=['png','jpg','jpeg','gif','webp','svg','bmp','avif'].indexOf(ext)>=0,
+            stage,cls='';
+        if(hasSheet){stage=sheetTable(x.sheet)}
+        else if(isImage){stage='<img src="'+e(src)+'" alt="'+e(x.title||'기획서 이미지')+'">'}
+        else if(ext==='pdf'){stage='<iframe src="'+e(src)+'" title="'+e(x.title||'기획서')+'" loading="lazy"></iframe>'}
+        else{cls=' is-note';stage='<p class="doc-note">브라우저에서 바로 볼 수 없는 형식입니다. 아래에서 내려받아 확인해 주세요.</p>'}
+        docView.innerHTML='<div class="doc-stage'+cls+'">'+stage+'</div>'
+          +'<div class="doc-actions">'
+          +(hasSheet?'':'<a class="btn ghost" href="'+e(src)+'" target="_blank" rel="noopener">새 창으로 보기</a>')
+          +'<a class="btn" href="'+e(src)+'" download>'+(hasSheet?'엑셀 파일 다운로드 ↓':'다운로드 ↓')+'</a></div>';
+        for(var t=0;t<tabs.length;t++){tabs[t].classList.toggle('on',t===n)}
+      };
+      for(var t=0;t<tabs.length;t++){
+        tabs[t].addEventListener('click',function(ev){
+          showDoc(parseInt(ev.currentTarget.getAttribute('data-doc'),10)||0)});
+      }
+      showDoc(0);
+    }
   }
+
+  var id=new URLSearchParams(location.search).get('id');
+  render(list.find(function(x){return x.id===id})||list[0]);
 })();
 
 /* ================= 이력서 ================= */

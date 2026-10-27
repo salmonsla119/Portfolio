@@ -14,11 +14,19 @@
 <main id="main" class="hero-wrap">
   <section class="frame">
     <div class="frame-inner">
+      <nav class="frame-menu" aria-label="바로가기">
+        <a href="#main">메인화면</a>
+        <a href="#projects">프로젝트</a>
+        <a href="resume.html">이력서</a>
+        <a href="cover-letter.html">자기소개서</a>
+      </nav>
       <div class="frame-left">
         <div class="frame-screen">
           <div class="screen" id="stage"></div>
-          <p class="t-sm">철두철미한 하이브리드 기획자</p>
-          <p class="t-lg">김채연</p>
+          <div class="screen-title">
+            <p class="t-sm">철두철미한 하이브리드 기획자</p>
+            <p class="t-lg">김채연</p>
+          </div>
         </div>
         <div class="frame-nav">
           <button type="button" class="arrow" data-dir="-1" aria-label="이전 프로젝트">
@@ -29,10 +37,13 @@
           </button>
         </div>
       </div>
-      <div class="frame-right">
-        <a class="frame-pill pill-a" href="resume.html">이력서</a>
-        <a class="frame-pill pill-b" href="cover-letter.html">자기소개서</a>
-      </div>
+    </div>
+  </section>
+
+  <section class="more" id="projects">
+    <div class="wrap">
+      <h2 class="more-title">프로젝트 더보기</h2>
+      <div class="proj-grid" id="project-grid"></div>
     </div>
   </section>
 </main>
