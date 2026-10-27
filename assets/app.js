@@ -167,16 +167,29 @@ function sheetTable(key){
                 :'<span class="pj-empty">'+e(empty)+'</span>';
     }
 
-    /* 맨 위 16:9 칸: 영상이 있으면 영상을 틀고, 없으면 대표 이미지 */
-    var clip=(p.shortVideos||[])[0],ytid=clip?youtubeId(clip.src):'',stageMedia;
+    /* 맨 위 16:9 칸: 영상이 있으면 영상을 틀고, 없으면 대표 이미지.
+       유튜브 UI(제목·로고·추천 영상·컨트롤)는 전부 끄고 화면만 남긴다.
+       소리는 우리가 만든 작은 버튼으로 켠다. */
+    var clip=(p.shortVideos||[])[0],ytid=clip?youtubeId(clip.src):'',stageMedia,
+        soundBtn='<button type="button" class="pj-sound" data-on="0" aria-label="소리 켜기">'
+          +'<span class="pj-sound-off">소리 켜기</span>'
+          +'<span class="pj-sound-on">소리 끄기</span></button>';
     if(ytid){
-      stageMedia='<iframe class="pj-player" src="https://www.youtube.com/embed/'+e(ytid)
-        +'?autoplay=1&mute=1&loop=1&playlist='+e(ytid)+'&playsinline=1&rel=0"'
-        +' title="'+e(p.title)+'" allow="autoplay; encrypted-media; fullscreen"'
-        +' referrerpolicy="strict-origin-when-cross-origin" frameborder="0" allowfullscreen></iframe>';
+      /* 영상이 뜨기 전·막혔을 때를 대비해 미리보기 그림을 아래에 깔아 둔다. */
+      stageMedia='<img class="pj-poster" src="https://img.youtube.com/vi/'+e(ytid)+'/maxresdefault.jpg" alt="" '
+        +'onerror="if(this.dataset.fb){this.style.display=\'none\'}else{this.dataset.fb=1;'
+        +'this.src=\'https://img.youtube.com/vi/'+e(ytid)+'/hqdefault.jpg\'}">'
+        +'<iframe class="pj-player" src="https://www.youtube.com/embed/'+e(ytid)
+        +'?autoplay=1&mute=1&loop=1&playlist='+e(ytid)
+        +'&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&fs=0'
+        +'&playsinline=1&enablejsapi=1"'
+        +' title="'+e(p.title)+'" allow="autoplay; encrypted-media"'
+        +' referrerpolicy="strict-origin-when-cross-origin" frameborder="0"'
+        +' tabindex="-1" aria-hidden="true"></iframe>'+soundBtn;
     }else if(clip&&clip.src){
-      stageMedia='<video class="pj-player" src="'+e(clip.src)+'" controls autoplay muted loop playsinline'
-        +(hero?' poster="'+e(hero)+'"':'')+'></video>';
+      stageMedia=(hero?'<img class="pj-poster" src="'+e(hero)+'" alt="">':'')
+        +'<video class="pj-player" src="'+e(clip.src)+'" autoplay muted loop playsinline'
+        +(hero?' poster="'+e(hero)+'"':'')+'></video>'+soundBtn;
     }else{
       stageMedia=fill(hero,p.title,'프로젝트 이미지 추가 영역');
     }
@@ -262,6 +275,21 @@ function sheetTable(key){
     }
 
     wireVideos(root);
+
+    /* 16:9 화면의 소리 켜기/끄기. 유튜브는 postMessage 로, 영상 파일은 muted 로 바꾼다. */
+    var sound=root.querySelector('.pj-sound');
+    if(sound){
+      sound.addEventListener('click',function(){
+        var on=sound.getAttribute('data-on')==='1',   /* 지금 소리가 켜져 있나 */
+            vid=root.querySelector('video.pj-player'),
+            fr=root.querySelector('iframe.pj-player');
+        if(vid)vid.muted=on;
+        if(fr&&fr.contentWindow)fr.contentWindow.postMessage(
+          JSON.stringify({event:'command',func:on?'mute':'unMute',args:[]}),'*');
+        sound.setAttribute('data-on',on?'0':'1');
+        sound.setAttribute('aria-label',on?'소리 켜기':'소리 끄기');
+      });
+    }
 
     /* 기획서 뷰어 */
     var docView=q('doc-view');
