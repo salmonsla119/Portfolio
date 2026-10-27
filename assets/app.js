@@ -225,7 +225,7 @@ function sheetTable(key){
 
       /* 4) 해결 과정 */
       +'<section class="pj-solve"><div class="wrap">'
-        +'<h2 class="pj-solve-title" data-ico="swap">해결 과정</h2>'
+        +'<h2 class="pj-solve-title" data-ico="swap"><b>해결</b> 과정</h2>'
         +'<div class="pj-ba">'
           +'<div class="pj-ba-box">'+fill(solve.before,'해결 전','전 이미지 추가 영역')+'</div>'
           +'<span class="pj-arrow" aria-hidden="true"></span>'
@@ -236,7 +236,7 @@ function sheetTable(key){
 
       /* 5) 상세 기획서 */
       +'<section class="pj-extra on-light"><div class="wrap">'
-        +'<div class="docs"><h2 data-ico="clip">상세 기획서</h2>'
+        +'<div class="docs"><h2 data-ico="clip"><b>상세</b> 기획서</h2>'
           +(docs.length
             ?'<div class="doc-tabs" role="tablist">'+docs.map(function(x,i){
                 return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'
