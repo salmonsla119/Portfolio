@@ -120,10 +120,11 @@ body.on-light{background:var(--bg)}
   padding:clamp(22px,3.4vh,52px) clamp(24px,4vw,72px) clamp(28px,4vw,64px)}
 /* 바닥 선 — 붓 그림이 이 선 위에 놓인 것처럼 보이게 */
 .frame:after{content:"";position:absolute;z-index:0;left:0;right:0;bottom:13%;
-  height:1px;background:var(--line)}
+  height:clamp(2px,.21vw,4px);background:var(--accent)}
 /* 장식용 붓 그림 — 클릭을 막지 않는다 */
-.frame-deco{position:absolute;z-index:1;right:clamp(-28px,-1.4vw,0px);bottom:0;
-  width:clamp(150px,21vw,390px);height:auto;pointer-events:none;user-select:none}
+.frame-deco{position:absolute;z-index:1;right:clamp(8px,3.4vw,86px);
+  bottom:clamp(-90px,-5.5vw,-24px);
+  width:clamp(175px,26vw,470px);height:auto;pointer-events:none;user-select:none}
 .frame-inner{position:relative;z-index:1}
 /* 제목은 윗줄, 영상과 버튼은 아랫줄에 나란히 → 버튼이 영상과 같은 높이에서 시작한다 */
 /* 레퍼런스 비율: 영상 ≒ 40% · 특기(목록+설명판) ≒ 31% · 붓 그림 자리 ≒ 15% */
@@ -153,7 +154,8 @@ body.on-light{background:var(--bg)}
 .frame-left{min-width:0;max-width:var(--stage-w)}
 .frame-screen{position:relative}
 .screen{position:relative;overflow:hidden;aspect-ratio:16/10;
-  border:1px solid var(--line-2);border-radius:var(--radius-lg);background:var(--screen)}
+  border:clamp(2px,.21vw,4px) solid var(--accent);border-radius:var(--radius-lg);
+  background:var(--screen)}
 .screen-media{position:absolute;inset:0;display:block;overflow:hidden}
 /* 16:9 영상을 16:10 화면에 꽉 차게 덮는다. 클릭은 위의 링크가 받는다.
    칸을 억지로 늘리면 유튜브가 그 안에서 영상을 레터박스로 깔아 테두리에
@@ -216,7 +218,7 @@ body.on-light{background:var(--bg)}
 /* 밑줄은 글자 쪽에만 (아이콘은 선 바깥) */
 .spec-name{flex:1 1 auto;padding:0 0 clamp(8px,1vw,14px);
   border-bottom:1px solid var(--line);
-  font-size:var(--fs-small);font-weight:700;letter-spacing:-.01em;word-break:keep-all;
+  font-size:clamp(13px,1.1vw,19px);font-weight:700;letter-spacing:-.01em;word-break:keep-all;
   transition:border-color .15s ease}
 .spec-item:hover,.spec-item.on{color:var(--accent)}
 .spec-item:hover .spec-name,.spec-item.on .spec-name{border-bottom-color:var(--accent)}
