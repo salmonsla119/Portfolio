@@ -115,9 +115,11 @@ body.on-light{background:var(--bg)}
 .hero-wrap{padding:0}
 /* 첫 화면은 가운데가 아니라 위쪽에 붙인다 */
 /* 붓 그림이 오른쪽 아래에 깔리므로 기준점과 넘침 처리를 준다 */
+/* 영상이 화면 왼쪽에 더 붙도록 왼쪽 여백만 좁게 */
 .frame{position:relative;overflow:hidden;
   display:grid;align-items:start;min-height:100vh;min-height:100svh;background:var(--bg);
-  padding:clamp(22px,3.4vh,52px) clamp(24px,4vw,72px) clamp(28px,4vw,64px)}
+  padding:clamp(22px,3.4vh,52px) clamp(24px,4vw,72px) clamp(28px,4vw,64px)
+          clamp(14px,1.6vw,34px)}
 /* 바닥 선 — 붓 그림이 이 선 위에 놓인 것처럼 보이게 */
 .frame:after{content:"";position:absolute;z-index:0;left:0;right:0;bottom:13%;
   height:clamp(2px,.21vw,4px);background:var(--accent)}
@@ -131,7 +133,8 @@ body.on-light{background:var(--bg)}
 .frame-inner{--stage-w:min(100%,calc((100svh - 230px) * 1.6));
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.78fr) clamp(96px,14%,270px);
   grid-template-rows:auto auto;gap:clamp(8px,1vw,16px) clamp(18px,2.6vw,46px);
-  align-items:start;width:min(100%,1600px);margin-inline:auto}
+  /* 가운데 정렬 대신 왼쪽에 붙인다 — 영상이 화면 왼쪽으로 간다 */
+  align-items:start;width:min(100%,1760px);margin-inline:0 auto}
 .frame-inner>.screen-title{grid-column:1/-1;grid-row:1;justify-self:start;max-width:62%}
 .frame-left{grid-column:1;grid-row:2}
 .frame-right{grid-column:1/-1;grid-row:1;justify-self:end}

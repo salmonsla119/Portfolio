@@ -117,10 +117,9 @@ function sheetTable(key){
       +'<span class="spec-name">'+e(x.title||'제목 입력')+'</span>'
     +'</button></li>'}).join('')||'<li class="rs-empty">특기 사항을 입력해 주세요</li>';
 
-  var at=-1,btns=list.querySelectorAll('.spec-item');
-  function show(n){
+  var btns=list.querySelectorAll('.spec-item'),at=-1,pinned=-1;
+  function open(n){
     var x=items[n];if(!x)return;
-    if(at===n){close();return}
     at=n;
     panel.innerHTML='<p class="spec-eyebrow">'+e(x.eyebrow||'')+'</p>'
       +'<h3>'+e(x.title||'제목 입력')+'</h3>'
@@ -137,10 +136,21 @@ function sheetTable(key){
       btns[i].classList.remove('on');btns[i].setAttribute('aria-expanded','false');
     }
   }
+  /* 마우스를 올리기만 해도 열리고, 누르면 그 항목이 고정된다. */
   for(var i=0;i<btns.length;i++){
+    btns[i].addEventListener('mouseenter',function(ev){
+      open(parseInt(ev.currentTarget.getAttribute('data-i'),10)||0)});
+    btns[i].addEventListener('focus',function(ev){
+      open(parseInt(ev.currentTarget.getAttribute('data-i'),10)||0)});
     btns[i].addEventListener('click',function(ev){
-      show(parseInt(ev.currentTarget.getAttribute('data-i'),10)||0)});
+      var n=parseInt(ev.currentTarget.getAttribute('data-i'),10)||0;
+      if(pinned===n){pinned=-1;close()}else{pinned=n;open(n)}
+    });
   }
+  /* 목록 밖으로 나가면 고정해 둔 항목으로 돌아간다(없으면 닫는다). */
+  list.addEventListener('mouseleave',function(){
+    if(pinned>=0){if(at!==pinned)open(pinned)}else close();
+  });
 })();
 
 /* ================= 메인: 히어로 무대 =================
