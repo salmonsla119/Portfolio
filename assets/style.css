@@ -162,14 +162,14 @@ body.on-light{background:var(--bg)}
 /* 아래 좌우 화살표 */
 .frame-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;
   margin:clamp(14px,1.6vw,24px) 0 0}
-/* 가는 선은 글자와 화살표 사이에 온다 */
-.frame-nav:before{content:"";order:1;flex:1 1 auto;height:1px;background:var(--line);margin:0 4px}
-.nav-label{order:0;display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;
+.frame-nav:before{content:"";flex:1 1 auto;height:1px;background:var(--line);margin-right:8px}
+.nav-label{display:inline-flex;align-items:center;gap:8px;
   color:var(--sub);font-size:var(--fs-small);font-weight:600;letter-spacing:.08em;
   transition:color .15s ease}
+/* 문구·이름 아래 줄에 혼자 놓인다 */
+.screen-title .nav-label{flex:0 0 100%;margin-top:clamp(2px,.6vw,10px)}
 .nav-label .ico{color:var(--accent)}
 .nav-label:hover{color:var(--accent)}
-.frame-nav .arrow{order:2}
 .arrow{display:grid;place-items:center;flex:0 0 auto;width:36px;aspect-ratio:1;padding:0;
   border:1px solid var(--line-2);border-radius:50%;background:transparent;
   cursor:pointer;color:var(--text);transition:border-color .15s ease,color .15s ease}
