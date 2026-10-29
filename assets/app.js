@@ -106,16 +106,41 @@ function sheetTable(key){
     +'<tbody>'+body+'</tbody></table></div>';
 }
 
-/* ================= 메인: 특기 사항 ================= */
+/* ================= 메인: 특기 사항 =================
+   첫 화면 오른쪽에 목록으로 두고, 누르면 그 옆에 설명판이 열린다. */
 (function(){
-  var box=q('specialties');if(!box)return;
-  box.innerHTML=(d.specialties||[]).map(function(x){
-    return'<article class="spec-card">'
+  var list=q('spec-list'),panel=q('spec-panel');if(!list||!panel)return;
+  var items=d.specialties||[];
+  list.innerHTML=items.map(function(x,i){
+    return'<li><button type="button" class="spec-item" data-i="'+i+'" aria-expanded="false">'
       +'<span class="spec-ico">'+(SPEC_ICONS[x.icon]||SPEC_ICONS.art)+'</span>'
-      +'<p class="spec-eyebrow">'+e(x.eyebrow||'')+'</p>'
+      +'<span class="spec-name">'+e(x.title||'제목 입력')+'</span>'
+    +'</button></li>'}).join('')||'<li class="rs-empty">특기 사항을 입력해 주세요</li>';
+
+  var at=-1,btns=list.querySelectorAll('.spec-item');
+  function show(n){
+    var x=items[n];if(!x)return;
+    if(at===n){close();return}
+    at=n;
+    panel.innerHTML='<p class="spec-eyebrow">'+e(x.eyebrow||'')+'</p>'
       +'<h3>'+e(x.title||'제목 입력')+'</h3>'
-      +'<p class="spec-detail">'+e(x.detail||'설명 입력')+'</p>'
-    +'</article>'}).join('')||'<p class="rs-empty">특기 사항을 입력해 주세요</p>';
+      +'<p class="spec-detail">'+e(x.detail||'설명 입력')+'</p>';
+    panel.hidden=false;
+    for(var i=0;i<btns.length;i++){
+      btns[i].classList.toggle('on',i===n);
+      btns[i].setAttribute('aria-expanded',i===n?'true':'false');
+    }
+  }
+  function close(){
+    at=-1;panel.hidden=true;
+    for(var i=0;i<btns.length;i++){
+      btns[i].classList.remove('on');btns[i].setAttribute('aria-expanded','false');
+    }
+  }
+  for(var i=0;i<btns.length;i++){
+    btns[i].addEventListener('click',function(ev){
+      show(parseInt(ev.currentTarget.getAttribute('data-i'),10)||0)});
+  }
 })();
 
 /* ================= 메인: 히어로 무대 =================

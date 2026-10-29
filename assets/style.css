@@ -28,7 +28,7 @@
   --fs-lead:16px;
   --fs-h2:clamp(19px,2vw,30px);
   --fs-h1:clamp(25px,3vw,44px);
-  --fs-hero:clamp(24px,3.4vw,56px);
+  --fs-hero:clamp(22px,2.9vw,46px);
   --ls:.14em;          /* 작은 라벨 자간 */
 }
 
@@ -114,19 +114,29 @@ body.on-light{background:var(--bg)}
    어두운 무대 / 큰 화면 하나 / 오른쪽 알약 버튼 / 화면 위에 얹은 제목. */
 .hero-wrap{padding:0}
 /* 첫 화면은 가운데가 아니라 위쪽에 붙인다 */
-.frame{display:grid;align-items:start;min-height:100vh;min-height:100svh;background:var(--bg);
+/* 붓 그림이 오른쪽 아래에 깔리므로 기준점과 넘침 처리를 준다 */
+.frame{position:relative;overflow:hidden;
+  display:grid;align-items:start;min-height:100vh;min-height:100svh;background:var(--bg);
   padding:clamp(22px,3.4vh,52px) clamp(24px,4vw,72px) clamp(28px,4vw,64px)}
+/* 바닥 선 — 붓 그림이 이 선 위에 놓인 것처럼 보이게 */
+.frame:after{content:"";position:absolute;z-index:0;left:0;right:0;bottom:13%;
+  height:1px;background:var(--line)}
+/* 장식용 붓 그림 — 클릭을 막지 않는다 */
+.frame-deco{position:absolute;z-index:1;right:clamp(-20px,-1vw,0px);bottom:0;
+  width:clamp(130px,17vw,300px);height:auto;pointer-events:none;user-select:none}
+.frame-inner{position:relative;z-index:1}
 /* 제목은 윗줄, 영상과 버튼은 아랫줄에 나란히 → 버튼이 영상과 같은 높이에서 시작한다 */
-.frame-inner{--stage-w:min(100%,calc((100svh - 230px) * 1.6));
-  display:grid;grid-template-columns:minmax(0,1fr) clamp(140px,19%,260px);
+.frame-inner{--stage-w:min(100%,calc((100svh - 230px) * 1.45));
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr);
   grid-template-rows:auto auto;gap:clamp(8px,1vw,16px) clamp(18px,3vw,56px);
   align-items:start;width:min(100%,1500px);margin-inline:auto}
 .frame-inner>.screen-title{grid-column:1;grid-row:1}
 .frame-left{grid-column:1;grid-row:2}
-.frame-right{grid-column:2;grid-row:2}
+.frame-right{grid-column:2;grid-row:1}
 
 /* 오른쪽 알약 버튼 */
-.frame-right{display:flex;flex-direction:column;gap:10px}
+.frame-right{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;align-items:center}
+.frame-pill{flex:0 1 auto}
 .frame-pill{display:flex;align-items:center;justify-content:space-between;gap:12px;
   min-height:44px;padding:10px 18px;
   border:1px solid var(--line-2);border-radius:999px;background:transparent;color:var(--text);
@@ -192,23 +202,30 @@ body.on-light{background:var(--bg)}
   stroke-linecap:round;stroke-linejoin:round}
 .arrow:hover{border-color:var(--accent);color:var(--accent)}
 
-/* 메인 가운데 — 특기 사항 (도트 아이콘은 옛 디자인에서 가져오고 색만 새 팔레트) */
-.spec{background:var(--bg);border-top:1px solid var(--line);
-  padding:clamp(44px,6vw,90px) 0}
-.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:clamp(12px,1.4vw,20px)}
-.spec-card{display:flex;flex-direction:column;align-items:flex-start;
-  padding:clamp(20px,2.2vw,30px);border:1px solid var(--line);border-radius:var(--radius);
-  background:var(--box);transition:border-color .15s ease}
-.spec-card:hover{border-color:var(--accent)}
-.spec-ico{display:block;margin-bottom:clamp(16px,2vw,26px)}
-.spec-eyebrow{color:var(--accent);font-size:var(--fs-label);font-weight:600;
+/* 첫 화면 오른쪽 — 특기 사항 목록 + 누르면 열리는 설명판 */
+.hero-spec{grid-column:2;grid-row:2;display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:clamp(10px,1.4vw,22px);align-items:start;min-width:0}
+.spec-list{display:flex;flex-direction:column;gap:clamp(6px,.9vw,14px);min-width:0}
+.spec-item{display:flex;align-items:center;gap:clamp(8px,1vw,16px);width:100%;
+  padding:0 0 clamp(6px,.7vw,10px);border:0;border-bottom:1px solid var(--line);
+  background:none;color:var(--text);text-align:left;cursor:pointer;
+  transition:border-color .15s ease,color .15s ease}
+.spec-item:hover,.spec-item.on{border-bottom-color:var(--accent);color:var(--accent)}
+.spec-ico{display:block;flex:0 0 auto}
+.spec-name{font-size:var(--fs-small);font-weight:700;letter-spacing:-.01em;word-break:keep-all}
+/* 설명판 — 하늘색 쪽지 */
+.spec-panel{position:relative;padding:clamp(14px,1.4vw,22px);border-radius:var(--radius);
+  background:var(--accent);color:var(--accent-ink)}
+.spec-panel:before{content:"";position:absolute;left:clamp(-10px,-.7vw,-7px);top:clamp(16px,1.6vw,26px);
+  border:7px solid transparent;border-right-color:var(--accent);border-left:0}
+.spec-panel .spec-eyebrow{color:rgba(26,30,34,.6);font-size:var(--fs-label);font-weight:700;
   letter-spacing:var(--ls)}
-.spec-card h3{margin:8px 0 10px;font-size:var(--fs-lead);font-weight:800}
-.spec-detail{color:var(--sub);font-size:var(--fs-small);line-height:1.75;word-break:keep-all}
+.spec-panel h3{margin:6px 0 8px;font-size:var(--fs-lead);font-weight:800}
+.spec-panel .spec-detail{font-size:var(--fs-small);line-height:1.7;word-break:keep-all}
 
 /* 도트 아이콘 — 칸마다 선을 두르면 형체가 뭉개지므로 stroke 를 끈다 */
-.pixel{display:block;width:clamp(44px,4.4vw,64px);height:auto;shape-rendering:crispEdges}
+.pixel{display:block;width:clamp(26px,2.5vw,40px);height:auto;shape-rendering:crispEdges}
 .pixel,.pixel g,.pixel rect{stroke:none}
 .px-ink{fill:var(--text)}
 .px-cream{fill:var(--bg-2)}
@@ -228,7 +245,12 @@ body.on-light{background:var(--bg)}
   .frame-inner>.screen-title,.frame-left,.frame-right{grid-column:1}
   .frame-inner>.screen-title{grid-row:1}
   .frame-left{grid-row:2;max-width:100%}
-  .frame-right{grid-row:3}
+  .frame-right{grid-row:3;justify-content:flex-start}
+  .hero-spec{grid-column:1;grid-row:4;grid-template-columns:1fr}
+  .spec-panel:before{left:clamp(14px,4vw,24px);top:-7px;
+    border:7px solid transparent;border-bottom-color:var(--accent);border-top:0}
+  .frame-deco{width:120px;opacity:.5}
+  .frame:after{display:none}
   .frame-right{flex-direction:row;flex-wrap:wrap;padding-top:0}
   .frame-pill{flex:1 1 30%}
   .screen-title{gap:4px 16px}
