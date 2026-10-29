@@ -84,7 +84,16 @@
 
 현재 있는 이름: `doc pen grid film sound mute quote swap clip down back image user badge award case layers tool alert hybrid`
 
-`hybrid`(문서 위에 큰 붓으로 붓질 = 기획 × 아트)처럼 **아이콘 안에서 일부만 포인트 색을 쓰려면** 그 `path`에 `class="a"`를 준다(`.ico .a{stroke:var(--accent)}`). 보조 클래스: `fill-bg`(뒤를 가리는 면), `dot`(꽉 찬 점), `stroke-thick`(붓질처럼 두꺼운 선).
+아이콘 안에서 일부만 포인트 색을 쓰려면 그 `path`(또는 `g`)에 클래스를 준다 — `a`(선을 하늘색), `fill-a`(면을 하늘색), `no-line`(선 없이 면만).
+
+**사용자가 그린 SVG를 그대로 넣을 수 있다.** 24x24가 아니면 문자열 대신 객체로 적는다. `hybrid`(문서에 붓칠 = 기획 × 아트)가 그 예다.
+
+```js
+hybrid:{vb:'0 0 512 512',sw:20,p:'<path .../><g class="a">...</g>'}
+```
+
+- `vb` 원본 viewBox, `sw` 원본 선 굵기(인라인 style로 들어가 `.ico`의 1.5를 덮는다), `p` 내용
+- 받은 SVG에서 **고정 색(`#E7ECEF` 등)은 지우고** 흰회색은 그냥 두어 `currentColor`를 따르게, 하늘색은 `class="a"`/`fill-a`로 바꾼다. 그래야 밝은 구역에서도 색이 같이 뒤집힌다.
 
 **굵기와 색을 한 줄 안에서 섞는다.** 섹션 제목은 기본 600이고 `<b>`로 감싼 부분만 하늘색 800이다(`해결 과정` → `<b>해결</b> 과정`). 라벨은 11px/600 하늘색, 본문은 14px/400 보조색, 이름·수치는 800 흰색 — 이 대비가 발랄한 인상을 만든다. 주요 버튼(`.btn`)은 하늘색으로 채우고 보조 버튼(`.btn.ghost`)만 선으로 둔다.
 

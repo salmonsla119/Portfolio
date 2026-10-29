@@ -33,17 +33,24 @@ var ICONS={
   tool:'<path d="M3 7.5h9M17 7.5h4M3 16.5h4M12 16.5h9"/><circle cx="14.5" cy="7.5" r="2.4"/><circle cx="8.5" cy="16.5" r="2.4"/>',
   alert:'<path d="M12 3.2L1.9 20.8h20.2z"/><path d="M12 9.5v4.8M12 17.6h.01"/>',
   /* 기획(연필) × 아트(붓)을 엇갈려 놓은 하이브리드 아이콘. 붓 쪽만 하늘색. */
-  /* 기획(문서) 위에 아트(큰 붓)가 붓질하는 모양 */
-  hybrid:'<path d="M4.2 4.6h8.2a1.6 1.6 0 0 1 1.6 1.6v12.4a1.6 1.6 0 0 1-1.6 1.6H4.2a1.6 1.6 0 0 1-1.6-1.6V6.2a1.6 1.6 0 0 1 1.6-1.6z"/>'
-    +'<path d="M5.6 8.2h4.2M5.6 11h2.8"/>'
-    +'<path class="a stroke-thick" d="M12.4 12.2c-2.2 3-5 4.5-7.6 4.7"/>'
-    +'<path d="M20.36 2.36 21.64 3.64 17.64 7.64 16.36 6.36z"/>'
-    +'<path d="M16.08 6.08 17.92 7.92 16.72 9.12 14.88 7.28z"/>'
-    +'<path class="a" d="M14.88 7.28 16.72 9.12 12.6 12.1z"/>'
+  /* 문서에 붓칠 — 사용자가 그린 아이콘. 자체 viewBox(512)와 선 굵기를 쓴다.
+     색은 우리 변수로: 흰회색 = currentColor, 하늘색 = .a / .fill-a */
+  hybrid:{vb:'0 0 512 512',sw:20,p:
+     '<path d="M302 80H81a25 25 0 0 0-25 25v336a25 25 0 0 0 25 25h276a25 25 0 0 0 25-25V262"/>'
+    +'<path d="M107 146h117M107 194h76"/>'
+    +'<path class="fill-a no-line" d="M132 422C181 477 313 492 474 402C358 456 225 457 151 413C141 407 129 411 132 422Z"/>'
+    +'<g class="a">'
+      +'<path d="M270 268C314 213 425 75 472 43c13-9 19-8 14 8-18 49-127 187-176 239Z"/>'
+      +'<path d="m270 268-30 34 40 35 30-47"/>'
+      +'<path class="fill-a" d="M240 302c-43 0-64 25-72 63-7 33-14 49-36 57 62 23 132 10 148-85"/>'
+    +'</g>'}
 };
 function icon(name){
-  var p=ICONS[name];
-  return p?'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+p+'</svg>':'';
+  var x=ICONS[name];if(!x)return'';
+  /* 문자열이면 기본 24x24 선 아이콘, 객체면 그 아이콘의 viewBox·선 굵기를 따른다 */
+  var vb=x.vb||'0 0 24 24',p=x.p||x,
+      sw=x.sw?' style="stroke-width:'+x.sw+'"':'';
+  return'<svg class="ico" viewBox="'+vb+'"'+sw+' aria-hidden="true" focusable="false">'+p+'</svg>';
 }
 /* data-ico 가 붙은 곳에 아이콘을 한 번씩만 넣는다. */
 function paintIcons(root){
