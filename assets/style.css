@@ -184,6 +184,9 @@ body.on-light{background:var(--bg)}
   stroke-linecap:round;stroke-linejoin:round}
 .arrow:hover{border-color:var(--accent);color:var(--accent)}
 
+/* 그림 두 장 + 바닥 띠·선
+   (띠는 초상화 위·붓 아래에 놓여 그림 밑동을 잘라 준다 — 피그마 순서 그대로) */
+.fx-mask{left:0;top:862px;width:1905px;height:80px;background:var(--bg)}
 /* 그림 두 장 + 바닥 선 */
 .fx-portrait{left:578px;top:56px;width:780px;height:auto}
 .fx-brush{left:1460px;top:487px;width:360px;height:auto}
@@ -238,6 +241,7 @@ body.on-light{background:var(--bg)}
   .fx-panel{width:100%;border-radius:14px}
   .fx-panel:before{left:24px;top:-18px;
     border:9.5px solid transparent;border-bottom:18px solid var(--accent);border-top:0}
+  .fx-mask{display:none}
   .fx-portrait{width:62%;align-self:center}
   .fx-brush{width:38%;align-self:flex-end}
   .fx-ground{width:100%;height:3px}
