@@ -158,10 +158,12 @@ body.on-light{background:var(--bg)}
 .screen-title{display:flex;align-items:baseline;flex-wrap:wrap;
   gap:4px clamp(14px,1.8vw,32px);width:100%;max-width:var(--stage-w);margin:0}
 .t-sm,.t-lg{margin:0}
-.t-sm{display:flex;align-items:center;gap:.3em;color:var(--text);font-size:var(--fs-hero);
-  font-weight:400;line-height:1.1;letter-spacing:-.02em}
-/* 큰 글씨 옆이라 아이콘은 글자보다 조금 작게 */
-.t-sm .ico{width:.92em;height:.92em;stroke-width:1.6}
+/* flex 로 두면 아이콘 아래끝이 문구의 밑선이 되어 이름과 어긋난다.
+   글자 흐름 안에 inline 으로 두어 문구의 글자 밑선을 유지한다. */
+.t-sm{color:var(--text);font-size:var(--fs-hero);font-weight:400;line-height:1.1;
+  letter-spacing:-.02em}
+/* 문구 앞 아이콘은 글자보다 크게 */
+.t-sm .ico{width:1.45em;height:1.45em;margin-right:.18em;vertical-align:-.42em}
 .t-sm b{color:var(--accent);font-weight:800}
 .t-lg{color:#fff;font-size:clamp(20px,2.3vw,38px);font-weight:800;line-height:1.1;
   letter-spacing:-.02em}
