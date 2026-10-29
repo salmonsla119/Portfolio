@@ -11,6 +11,7 @@
   --accent:#a6d9e8;    /* 포인트 하늘색 */
   --accent-ink:#1a1e22;/* 하늘색 바탕 위 글자 */
   --rose:#e8617b;      /* 아주 작게만 쓰는 분홍 (해결 과정 화살표) */
+  --accent-soft:#cfe9f2;/* 하늘색보다 옅은 톤 (도트 아이콘 안쪽) */
   --text:#e7ebee;      /* 본문 글자 */
   --sub:#9aa3ab;       /* 보조 글자 */
   --dim:#6f777f;       /* 흐린 글자·안내 */
@@ -190,6 +191,31 @@ body.on-light{background:var(--bg)}
 .arrow svg{display:block;width:52%;height:52%;fill:none;stroke:currentColor;stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round}
 .arrow:hover{border-color:var(--accent);color:var(--accent)}
+
+/* 메인 가운데 — 특기 사항 (도트 아이콘은 옛 디자인에서 가져오고 색만 새 팔레트) */
+.spec{background:var(--bg);border-top:1px solid var(--line);
+  padding:clamp(44px,6vw,90px) 0}
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:clamp(12px,1.4vw,20px)}
+.spec-card{display:flex;flex-direction:column;align-items:flex-start;
+  padding:clamp(20px,2.2vw,30px);border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--box);transition:border-color .15s ease}
+.spec-card:hover{border-color:var(--accent)}
+.spec-ico{display:block;margin-bottom:clamp(16px,2vw,26px)}
+.spec-eyebrow{color:var(--accent);font-size:var(--fs-label);font-weight:600;
+  letter-spacing:var(--ls)}
+.spec-card h3{margin:8px 0 10px;font-size:var(--fs-lead);font-weight:800}
+.spec-detail{color:var(--sub);font-size:var(--fs-small);line-height:1.75;word-break:keep-all}
+
+/* 도트 아이콘 — 칸마다 선을 두르면 형체가 뭉개지므로 stroke 를 끈다 */
+.pixel{display:block;width:clamp(44px,4.4vw,64px);height:auto;shape-rendering:crispEdges}
+.pixel,.pixel g,.pixel rect{stroke:none}
+.px-ink{fill:var(--text)}
+.px-cream{fill:var(--bg-2)}
+.px-sand,.px-skin{fill:var(--sub)}
+.px-orange,.px-blue{fill:var(--accent)}
+.px-yellow,.px-green{fill:var(--accent-soft)}
+.px-red{fill:var(--rose)}
 
 /* 메인 아래 — 프로젝트 더보기 */
 .more{background:var(--bg);border-top:1px solid var(--line);
