@@ -84,7 +84,7 @@
 
 현재 있는 이름: `doc pen grid film sound mute quote swap clip down back image user badge award case layers tool alert hybrid`
 
-`hybrid`(기획 연필 × 아트 붓)처럼 **아이콘 안에서 일부만 포인트 색을 쓰려면** 그 `path`에 `class="a"`를 준다(`.ico .a{stroke:var(--accent)}`).
+`hybrid`(문서 위에 큰 붓으로 붓질 = 기획 × 아트)처럼 **아이콘 안에서 일부만 포인트 색을 쓰려면** 그 `path`에 `class="a"`를 준다(`.ico .a{stroke:var(--accent)}`). 보조 클래스: `fill-bg`(뒤를 가리는 면), `dot`(꽉 찬 점), `stroke-thick`(붓질처럼 두꺼운 선).
 
 **굵기와 색을 한 줄 안에서 섞는다.** 섹션 제목은 기본 600이고 `<b>`로 감싼 부분만 하늘색 800이다(`해결 과정` → `<b>해결</b> 과정`). 라벨은 11px/600 하늘색, 본문은 14px/400 보조색, 이름·수치는 800 흰색 — 이 대비가 발랄한 인상을 만든다. 주요 버튼(`.btn`)은 하늘색으로 채우고 보조 버튼(`.btn.ghost`)만 선으로 둔다.
 
