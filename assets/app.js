@@ -459,6 +459,21 @@ function sheetTable(key){
 })();
 
 
+/* 메인 무대: 피그마 1905 캔버스를 칸 너비에 맞춰 통째로 축소한다 */
+(function(){
+  var frame=document.querySelector('.frame'),stage=q('stage-fx');
+  if(!frame||!stage)return;
+  function fit(){
+    if(window.matchMedia('(max-width:900px)').matches){
+      frame.style.removeProperty('--k');return;
+    }
+    frame.style.setProperty('--k',(frame.clientWidth/1905).toFixed(5));
+  }
+  fit();
+  window.addEventListener('resize',fit);
+  window.addEventListener('orientationchange',fit);
+})();
+
 /* 모든 페이지 공통: 아이콘 채우기 */
 paintIcons();
 

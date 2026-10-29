@@ -110,140 +110,102 @@ body.on-light{background:var(--bg)}
 .btn.ghost{border-color:var(--line-2);background:transparent;color:var(--text)}
 .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
 
-/* ========== 메인 ==========
-   어두운 무대 / 큰 화면 하나 / 오른쪽 알약 버튼 / 화면 위에 얹은 제목. */
+/* ========== 메인 — 피그마 좌표 그대로 ==========
+   1905x942 캔버스에 요소를 절대 좌표로 놓고, 화면 폭에 맞춰 통째로 축소한다.
+   (--k 는 app.js 가 '칸 너비 ÷ 1905' 로 넣는다) */
 .hero-wrap{padding:0}
-/* 첫 화면은 가운데가 아니라 위쪽에 붙인다 */
-/* 붓 그림이 오른쪽 아래에 깔리므로 기준점과 넘침 처리를 준다 */
-/* 영상이 화면 왼쪽에 더 붙도록 왼쪽 여백만 좁게 */
-.frame{position:relative;overflow:hidden;
-  display:grid;align-items:start;min-height:100vh;min-height:100svh;background:var(--bg);
-  padding:clamp(22px,3.4vh,52px) clamp(24px,4vw,72px) clamp(28px,4vw,64px)
-          clamp(14px,1.6vw,34px)}
-/* 바닥 선 — 붓 그림이 이 선 위에 놓인 것처럼 보이게 */
-.frame:after{content:"";position:absolute;z-index:0;left:0;right:0;bottom:13%;
-  height:clamp(2px,.21vw,4px);background:var(--accent)}
-/* 장식용 붓 그림 — 클릭을 막지 않는다 */
-.frame-deco{position:absolute;z-index:1;right:clamp(8px,3.4vw,86px);
-  bottom:clamp(-90px,-5.5vw,-24px);
-  width:clamp(175px,26vw,470px);height:auto;pointer-events:none;user-select:none}
-.frame-inner{position:relative;z-index:1}
-/* 제목은 윗줄, 영상과 버튼은 아랫줄에 나란히 → 버튼이 영상과 같은 높이에서 시작한다 */
-/* 레퍼런스 비율: 영상 ≒ 40% · 특기(목록+설명판) ≒ 31% · 붓 그림 자리 ≒ 15% */
-.frame-inner{--stage-w:min(100%,calc((100svh - 230px) * 1.6));
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.78fr) clamp(96px,14%,270px);
-  grid-template-rows:auto auto;gap:clamp(8px,1vw,16px) clamp(18px,2.6vw,46px);
-  /* 가운데 정렬 대신 왼쪽에 붙인다 — 영상이 화면 왼쪽으로 간다 */
-  align-items:start;width:min(100%,1760px);margin-inline:0 auto}
-.frame-inner>.screen-title{grid-column:1/-1;grid-row:1;justify-self:start;max-width:62%}
-.frame-left{grid-column:1;grid-row:2}
-.frame-right{grid-column:1/-1;grid-row:1;justify-self:end}
+.frame{position:relative;overflow:hidden;background:var(--bg);
+  height:calc(942px * var(--k,1))}
+.stage-fx{position:absolute;left:0;top:0;width:1905px;height:942px;
+  transform:scale(var(--k,1));transform-origin:0 0}
+.stage-fx>*{position:absolute;margin:0}
 
-/* 오른쪽 알약 버튼 */
-.frame-right{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;align-items:center}
-.frame-pill{flex:0 1 auto}
-.frame-pill{display:flex;align-items:center;justify-content:space-between;gap:12px;
-  min-height:44px;padding:10px 18px;
-  border:1px solid var(--line-2);border-radius:999px;background:transparent;color:var(--text);
-  font-size:var(--fs-small);font-weight:600;letter-spacing:.06em;line-height:1.1;text-align:center;
-  transition:border-color .15s ease,background .15s ease,color .15s ease}
-.frame-pill:hover{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
-/* 아이콘이 먼저 들어가므로 순서를 뒤집어 글자를 왼쪽에 둔다 */
-.frame-pill .ico{order:2;color:var(--accent)}
-.frame-pill:hover .ico{color:var(--accent-ink)}
+/* 제목 줄 — 아이콘(66,25) + 글자 3개 */
+.fx-head{left:66px;top:25px;display:flex;align-items:center;gap:14px}
+.fx-head .ico{width:81px;height:81px}
+.fx-head p{font-size:44px;line-height:1.2;white-space:nowrap}
+.fx-t1{color:var(--accent);font-weight:800}
+.fx-t2{color:var(--text);font-weight:400}
+.fx-t3{color:#fff;font-weight:800}
 
-/* 큰 화면 — 제목과 화살표까지 한 화면에 들어오도록 세로 기준으로도 묶는다
-   (16:10 비율을 지키려면 높이가 아니라 가로폭을 줄여야 한다) */
-.frame-left{min-width:0;max-width:var(--stage-w)}
-.frame-screen{position:relative}
-.screen{position:relative;overflow:hidden;aspect-ratio:16/10;
-  border:clamp(2px,.21vw,4px) solid var(--accent);border-radius:var(--radius-lg);
-  background:var(--screen)}
+/* 바로가기 버튼 (1474,37) */
+.fx-nav{left:1474px;top:37px;display:flex;gap:8px}
+
+/* 특기 사항 목록 (75,139) — 항목 간격 94px */
+.fx-spec{left:75px;top:139px;display:flex;flex-direction:column;gap:28px}
+.spec-item{display:flex;align-items:flex-start;gap:18px;width:280px;height:66px;
+  padding:0;border:0;background:none;color:var(--text);text-align:left;cursor:pointer;
+  transition:color .15s ease}
+.spec-ico{display:grid;place-items:center;flex:0 0 auto;width:66px;height:66px;
+  border-radius:4px;background:#fff}
+.spec-name{flex:1 1 auto;padding:13px 0 14px;border-bottom:2px solid var(--line);
+  font-size:20px;font-weight:800;line-height:24px;white-space:nowrap}
+.spec-item:hover,.spec-item.on{color:var(--accent)}
+.spec-item:hover .spec-name,.spec-item.on .spec-name{border-bottom-color:var(--accent)}
+
+/* 설명판 (383,143) + 왼쪽 꼬리 (355,157) */
+.fx-panel{left:383px;top:143px;width:315px;padding:22px;border-radius:22px;
+  background:var(--accent);color:var(--accent-ink)}
+.fx-panel:before{content:"";position:absolute;left:-28px;top:14px;
+  width:0;height:0;border:9.5px solid transparent;border-right:28px solid var(--accent);border-left:0}
+.fx-panel .spec-eyebrow{color:rgba(26,30,34,.6);font-size:11px;font-weight:700;letter-spacing:.14em}
+.fx-panel h3{margin:8px 0;font-size:16px;font-weight:800;line-height:19px}
+.fx-panel .spec-detail{font-size:12px;line-height:14px}
+
+/* 영상 (1250,126) 570x325 */
+.fx-screen{left:1250px;top:126px;width:570px;height:325px;overflow:hidden;
+  border:4px solid var(--accent);border-radius:8px;background:#000}
+.screen{position:absolute;inset:0;overflow:hidden;background:var(--screen)}
 .screen-media{position:absolute;inset:0;display:block;overflow:hidden}
-/* 16:9 영상을 16:10 화면에 꽉 차게 덮는다. 클릭은 위의 링크가 받는다.
-   칸을 억지로 늘리면 유튜브가 그 안에서 영상을 레터박스로 깔아 테두리에
-   빈 띠가 생긴다. 그래서 iframe 자체를 정확히 16:9로 두고 칸보다 크게 키운다. */
+/* 16:9 영상을 칸에 꽉 차게 덮는다 */
 .screen-video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   width:auto;height:100%;aspect-ratio:16/9;min-width:100%;border:0;background:#000;
   object-fit:cover;pointer-events:none}
 .screen-img{display:block;width:100%;height:100%;object-fit:cover}
 .screen-go{position:absolute;inset:0;z-index:1;display:block;cursor:pointer}
 .screen-empty{display:grid;place-items:center;width:100%;height:100%;padding:5%;
-  color:var(--dim);font-size:var(--fs-small);text-align:center}
+  color:var(--dim);font-size:12px;text-align:center}
+.nav-label{position:absolute;z-index:3;left:20px;top:20px;
+  display:inline-flex;align-items:center;gap:8px;padding:7px 14px;
+  border:1px solid var(--line-2);border-radius:2px;background:rgba(27,31,36,.55);
+  color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  transition:border-color .15s ease,color .15s ease}
+.nav-label .ico{width:15px;height:15px;color:var(--accent)}
+.nav-label:hover{border-color:var(--accent);color:var(--accent)}
 
-/* 제목 — 한 줄: 이름(왼쪽) · 문구(그 옆) · 프로젝트 보기(영상 오른쪽 끝). 밑선 맞춤. */
-.screen-title{display:flex;align-items:baseline;flex-wrap:wrap;
-  gap:4px clamp(14px,1.8vw,32px);width:100%;max-width:var(--stage-w);margin:0}
-.t-sm,.t-lg{margin:0}
-/* flex 로 두면 아이콘 아래끝이 문구의 밑선이 되어 이름과 어긋난다.
-   글자 흐름 안에 inline 으로 두어 문구의 글자 밑선을 유지한다. */
-.t-sm{color:var(--text);font-size:var(--fs-hero);font-weight:400;line-height:1.1;
-  letter-spacing:-.02em}
-/* 문구 앞 아이콘은 글자보다 크게 */
-.t-sm .ico{width:1.45em;height:1.45em;margin-right:.18em;vertical-align:-.42em}
-.t-sm b{color:var(--accent);font-weight:800}
-.t-lg{color:#fff;font-size:clamp(20px,2.3vw,38px);font-weight:800;line-height:1.1;
-  letter-spacing:-.02em}
-
-/* 아래 좌우 화살표 */
-.frame-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;
-  margin:clamp(14px,1.6vw,24px) 0 0}
-.frame-nav:before{content:"";flex:1 1 auto;height:1px;background:var(--line);margin-right:8px}
-.nav-label{display:inline-flex;align-items:center;gap:8px;
-  color:var(--sub);font-size:var(--fs-small);font-weight:600;letter-spacing:.08em;
-  transition:color .15s ease}
-/* 영상 왼쪽 위 모서리에 얹는다 (.frame-screen 은 위에서 position:relative) */
-.frame-screen .nav-label{position:absolute;z-index:3;
-  left:clamp(10px,1.2vw,20px);top:clamp(10px,1.2vw,20px);
-  padding:7px 14px;border:1px solid var(--line-2);border-radius:2px;
-  background:rgba(27,31,36,.55);color:#fff;
-  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-.frame-screen .nav-label:hover{border-color:var(--accent);color:var(--accent)}
-.nav-label .ico{color:var(--accent)}
-.nav-label:hover{color:var(--accent)}
-.arrow{display:grid;place-items:center;flex:0 0 auto;width:36px;aspect-ratio:1;padding:0;
+/* 영상 아래 선 (1250,471) + 화살표 (1757,460)(1788,460) */
+.fx-rail{left:1250px;top:471px;width:500px;height:1px;background:var(--line)}
+.fx-arrows{left:1757px;top:460px;display:flex;gap:6px}
+.arrow{display:grid;place-items:center;width:25px;height:25px;padding:0;
   border:1px solid var(--line-2);border-radius:50%;background:transparent;
   cursor:pointer;color:var(--text);transition:border-color .15s ease,color .15s ease}
-.arrow svg{display:block;width:52%;height:52%;fill:none;stroke:currentColor;stroke-width:1.8;
+.arrow svg{display:block;width:56%;height:56%;fill:none;stroke:currentColor;stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round}
 .arrow:hover{border-color:var(--accent);color:var(--accent)}
 
-/* 첫 화면 오른쪽 — 특기 사항 목록 + 누르면 열리는 설명판 */
-.hero-spec{grid-column:2;grid-row:2;padding-top:clamp(6px,1.6vh,24px);display:grid;
-  grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
-  gap:clamp(10px,1.4vw,22px);align-items:start;min-width:0}
-/* 영상과 같은 높이에서 항목을 고르게 벌린다 (레퍼런스처럼 넉넉하게) */
-/* 항목 간격은 레퍼런스 기준(아이콘 높이 + 50px 안팎) */
-.spec-list{display:flex;flex-direction:column;gap:clamp(14px,2.5vw,48px);min-width:0}
-.spec-item{display:flex;align-items:center;gap:clamp(8px,1.1vw,18px);width:100%;
-  padding:0;border:0;background:none;color:var(--text);text-align:left;cursor:pointer;
-  transition:color .15s ease}
-/* 밑줄은 글자 쪽에만 (아이콘은 선 바깥) */
-.spec-name{flex:1 1 auto;padding:0 0 clamp(8px,1vw,14px);
-  border-bottom:1px solid var(--line);
-  font-size:clamp(13px,1.1vw,19px);font-weight:700;letter-spacing:-.01em;word-break:keep-all;
-  transition:border-color .15s ease}
-.spec-item:hover,.spec-item.on{color:var(--accent)}
-.spec-item:hover .spec-name,.spec-item.on .spec-name{border-bottom-color:var(--accent)}
-.spec-ico{display:block;flex:0 0 auto}
-/* 설명판 — 하늘색 쪽지 */
-.spec-panel{position:relative;padding:clamp(14px,1.4vw,22px);border-radius:var(--radius);
-  background:var(--accent);color:var(--accent-ink)}
-.spec-panel:before{content:"";position:absolute;left:clamp(-10px,-.7vw,-7px);top:clamp(16px,1.6vw,26px);
-  border:7px solid transparent;border-right-color:var(--accent);border-left:0}
-.spec-panel .spec-eyebrow{color:rgba(26,30,34,.6);font-size:var(--fs-label);font-weight:700;
-  letter-spacing:var(--ls)}
-.spec-panel h3{margin:6px 0 8px;font-size:var(--fs-lead);font-weight:800}
-.spec-panel .spec-detail{font-size:var(--fs-small);line-height:1.7;word-break:keep-all}
+/* 그림 두 장 + 바닥 선 */
+.fx-portrait{left:578px;top:56px;width:780px;height:auto}
+.fx-brush{left:1460px;top:487px;width:360px;height:auto}
+.fx-ground{left:0;top:862px;width:1905px;height:4px;background:var(--accent)}
+
+/* 알약 버튼 */
+.frame-pill{display:flex;align-items:center;gap:12px;padding:12px 18px;
+  border:1px solid var(--line-2);border-radius:999px;background:transparent;color:var(--text);
+  font-size:12px;font-weight:700;letter-spacing:.06em;line-height:1;white-space:nowrap;
+  transition:border-color .15s ease,background .15s ease,color .15s ease}
+.frame-pill .ico{order:2;width:15px;height:15px;color:var(--accent)}
+.frame-pill:hover{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.frame-pill:hover .ico{color:var(--accent-ink)}
 
 /* 도트 아이콘 — 칸마다 선을 두르면 형체가 뭉개지므로 stroke 를 끈다 */
-.pixel{display:block;width:clamp(28px,2.9vw,52px);height:auto;shape-rendering:crispEdges}
+.pixel{display:block;width:52px;height:auto;shape-rendering:crispEdges}
 .pixel,.pixel g,.pixel rect{stroke:none}
-.px-ink{fill:var(--text)}
-.px-cream{fill:var(--bg-2)}
-.px-sand,.px-skin{fill:var(--sub)}
-.px-orange,.px-blue{fill:var(--accent)}
-.px-yellow,.px-green{fill:var(--accent-soft)}
+.px-ink{fill:#1b1f24}
+.px-cream{fill:#ffffff}
+.px-sand,.px-skin{fill:#6f777f}
+.px-orange,.px-blue{fill:#3e8ca4}
+.px-yellow,.px-green{fill:#7fb9cc}
 .px-red{fill:var(--rose)}
 
 /* 메인 아래 — 프로젝트 더보기 */
@@ -251,21 +213,34 @@ body.on-light{background:var(--bg)}
   padding:clamp(44px,6vw,96px) 0 clamp(50px,7vw,110px)}
 .more-title{margin-bottom:clamp(18px,2.4vw,30px)}
 
-@media(max-width:760px){
-  .frame{min-height:0;padding:26px var(--side) 30px}
-  .frame-inner{grid-template-columns:1fr;gap:14px}
-  .frame-inner>.screen-title,.frame-left,.frame-right{grid-column:1}
-  .frame-inner>.screen-title{grid-row:1}
-  .frame-left{grid-row:2;max-width:100%}
-  .frame-right{grid-row:3;justify-content:flex-start}
-  .hero-spec{grid-column:1;grid-row:4;grid-template-columns:1fr}
-  .spec-panel:before{left:clamp(14px,4vw,24px);top:-7px;
-    border:7px solid transparent;border-bottom-color:var(--accent);border-top:0}
-  .frame-deco{width:120px;opacity:.5}
-  .frame:after{display:none}
-  .frame-right{flex-direction:row;flex-wrap:wrap;padding-top:0}
-  .frame-pill{flex:1 1 30%}
-  .screen-title{gap:4px 16px}
+/* 좁은 화면 — 캔버스 축소 대신 세로로 쌓는다 */
+@media(max-width:900px){
+  .frame{height:auto;padding:26px var(--side) 34px}
+  .stage-fx{position:static;width:auto;height:auto;transform:none;
+    display:flex;flex-direction:column;gap:18px}
+  .stage-fx>*{position:static;left:auto;top:auto}
+  /* 안쪽에 절대 위치 자식이 있는 칸은 기준점을 유지해야 한다
+     (풀어 두면 .screen-go 가 화면 전체를 덮어 버린다) */
+  .fx-screen,.fx-panel{position:relative}
+  .fx-head{flex-wrap:wrap;gap:8px 12px}
+  .fx-head .ico{width:42px;height:42px}
+  .fx-head p{font-size:24px}
+  .fx-nav{flex-wrap:wrap}
+  .frame-pill{flex:1 1 30%;justify-content:center}
+  .fx-screen{width:100%;height:auto;aspect-ratio:570/325;border-width:2px}
+  .fx-rail{display:none}
+  .fx-arrows{align-self:flex-end}
+  .fx-spec{gap:14px}
+  .spec-item{width:100%;height:auto}
+  .spec-ico{width:46px;height:46px}
+  .pixel{width:36px}
+  .spec-name{font-size:15px;line-height:20px;padding:6px 0 8px;white-space:normal}
+  .fx-panel{width:100%;border-radius:14px}
+  .fx-panel:before{left:24px;top:-18px;
+    border:9.5px solid transparent;border-bottom:18px solid var(--accent);border-top:0}
+  .fx-portrait{width:62%;align-self:center}
+  .fx-brush{width:38%;align-self:flex-end}
+  .fx-ground{width:100%;height:3px}
 }
 
 /* ========== 프로젝트 상세 ==========
