@@ -31,7 +31,12 @@ var ICONS={
   case:'<rect x="3" y="7" width="18" height="13" rx="1"/><path d="M9 7V4.5h6V7"/><path d="M3 12.5h18"/>',
   layers:'<path d="M12 3l9 4.8-9 4.8-9-4.8z"/><path d="M3 12.5l9 4.8 9-4.8"/>',
   tool:'<path d="M3 7.5h9M17 7.5h4M3 16.5h4M12 16.5h9"/><circle cx="14.5" cy="7.5" r="2.4"/><circle cx="8.5" cy="16.5" r="2.4"/>',
-  alert:'<path d="M12 3.2L1.9 20.8h20.2z"/><path d="M12 9.5v4.8M12 17.6h.01"/>'
+  alert:'<path d="M12 3.2L1.9 20.8h20.2z"/><path d="M12 9.5v4.8M12 17.6h.01"/>',
+  /* 기획(연필) × 아트(붓)을 엇갈려 놓은 하이브리드 아이콘. 붓 쪽만 하늘색. */
+  hybrid:'<path d="M4.6 19.4L5.4 16.4 15.2 6.6 17.4 8.8 7.6 18.6z"/>'
+    +'<path d="M15.2 6.6l1.2-1.2a1.55 1.55 0 0 1 2.2 2.2l-1.2 1.2"/>'
+    +'<path class="a" d="M9.6 7.4L19.4 17.2 20 20 17.2 19.4 7.4 9.6z"/>'
+    +'<path class="a" d="M9.6 7.4L4.6 4.6 7.4 9.6z"/>'
 };
 function icon(name){
   var p=ICONS[name];

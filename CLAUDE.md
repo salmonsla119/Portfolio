@@ -82,7 +82,9 @@
 
 **아이콘은 전부 선(벡터) 아이콘이다.** `assets/app.js` 위쪽 `ICONS`에 24x24 path 만 모여 있고, 쓰는 쪽은 **`data-ico="이름"` 한 줄이면 된다**(`paintIcons()`가 채운다). JS로 그리는 곳에서는 `icon('이름')`을 쓴다. 색은 `currentColor`, 굵기는 `.ico`가 정하므로 아이콘마다 색·크기를 따로 지정하지 않는다. 다시 그려지는 화면(프로젝트 상세, 기획서 뷰어)에서는 그린 뒤 `paintIcons(root)`를 호출해야 한다.
 
-현재 있는 이름: `doc pen grid film sound mute quote swap clip down back image user badge award case layers tool alert`
+현재 있는 이름: `doc pen grid film sound mute quote swap clip down back image user badge award case layers tool alert hybrid`
+
+`hybrid`(기획 연필 × 아트 붓)처럼 **아이콘 안에서 일부만 포인트 색을 쓰려면** 그 `path`에 `class="a"`를 준다(`.ico .a{stroke:var(--accent)}`).
 
 **굵기와 색을 한 줄 안에서 섞는다.** 섹션 제목은 기본 600이고 `<b>`로 감싼 부분만 하늘색 800이다(`해결 과정` → `<b>해결</b> 과정`). 라벨은 11px/600 하늘색, 본문은 14px/400 보조색, 이름·수치는 800 흰색 — 이 대비가 발랄한 인상을 만든다. 주요 버튼(`.btn`)은 하늘색으로 채우고 보조 버튼(`.btn.ghost`)만 선으로 둔다.
 

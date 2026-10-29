@@ -80,6 +80,8 @@ body.on-light{background:var(--bg)}
    전부 선 아이콘. 글자 크기를 따라가고 색은 글자색을 따른다. */
 .ico{flex:0 0 auto;width:1.25em;height:1.25em;fill:none;stroke:currentColor;
   stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.2em}
+/* 아이콘 안에서 포인트 색을 쓰는 부분 */
+.ico .a{stroke:var(--accent)}
 
 /* ===== 섹션 제목 — 아이콘 + 글자 + 끝까지 이어지는 가는 선 ===== */
 .sec-title,.pj-solve-title,.pj-extra h2,.rs-block h2,.rs-download h2,.more-title{
@@ -154,8 +156,10 @@ body.on-light{background:var(--bg)}
 .screen-title{display:flex;align-items:baseline;flex-wrap:wrap;
   gap:4px clamp(14px,1.8vw,32px);width:100%;max-width:var(--stage-w);margin:0}
 .t-sm,.t-lg{margin:0}
-.t-sm{color:var(--text);font-size:var(--fs-hero);font-weight:400;line-height:1.1;
-  letter-spacing:-.02em}
+.t-sm{display:flex;align-items:center;gap:.3em;color:var(--text);font-size:var(--fs-hero);
+  font-weight:400;line-height:1.1;letter-spacing:-.02em}
+/* 큰 글씨 옆이라 아이콘은 글자보다 조금 작게 */
+.t-sm .ico{width:.92em;height:.92em;stroke-width:1.6}
 .t-sm b{color:var(--accent);font-weight:800}
 .t-lg{color:#fff;font-size:clamp(20px,2.3vw,38px);font-weight:800;line-height:1.1;
   letter-spacing:-.02em}
