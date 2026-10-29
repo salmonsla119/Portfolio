@@ -30,7 +30,8 @@ var ICONS={
   award:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.2L12 17l-5.4 3 1-6.2L3.2 9.5l6.1-.9z"/>',
   case:'<rect x="3" y="7" width="18" height="13" rx="1"/><path d="M9 7V4.5h6V7"/><path d="M3 12.5h18"/>',
   layers:'<path d="M12 3l9 4.8-9 4.8-9-4.8z"/><path d="M3 12.5l9 4.8 9-4.8"/>',
-  tool:'<path d="M3 7.5h9M17 7.5h4M3 16.5h4M12 16.5h9"/><circle cx="14.5" cy="7.5" r="2.4"/><circle cx="8.5" cy="16.5" r="2.4"/>'
+  tool:'<path d="M3 7.5h9M17 7.5h4M3 16.5h4M12 16.5h9"/><circle cx="14.5" cy="7.5" r="2.4"/><circle cx="8.5" cy="16.5" r="2.4"/>',
+  alert:'<path d="M12 3.2L1.9 20.8h20.2z"/><path d="M12 9.5v4.8M12 17.6h.01"/>'
 };
 function icon(name){
   var p=ICONS[name];
@@ -85,7 +86,7 @@ function sheetTable(key){
    좌우 화살표로 넘기고, 아래 띠를 누르면 상세로 간다. */
 (function(){
   var stage=q('stage');if(!stage)return;
-  var list=projects(),at=0,count=q('stage-count');
+  var list=projects(),at=0,count=q('stage-count'),stageLink=q('stage-link');
   function render(){
     var p=list[at];
     if(!p){stage.innerHTML='<div class="screen-empty">프로젝트를 추가해 주세요</div>';return}
@@ -115,8 +116,10 @@ function sheetTable(key){
       +'<a class="screen-go" href="project.html?id='+encodeURIComponent(p.id)+'" '
       +'aria-label="'+e(p.title)+' 프로젝트 보기"></a>';
     if(count)count.textContent=(at+1)+' / '+list.length;
+    /* 아래 줄의 "프로젝트 보기"도 지금 보고 있는 프로젝트로 */
+    if(stageLink)stageLink.setAttribute('href','project.html?id='+encodeURIComponent(p.id));
   }
-  var arrows=document.querySelectorAll('.stage-arrow');
+  var arrows=document.querySelectorAll('.frame-nav .arrow');
   for(var i=0;i<arrows.length;i++){
     arrows[i].addEventListener('click',function(ev){
       if(!list.length)return;
@@ -223,7 +226,11 @@ function sheetTable(key){
           +'<span>'+e(p.quote||'인용 한마디 입력')+'</span></blockquote>'
       +'</div></section>'
 
-      /* 4) 해결 과정 */
+      /* 4) 발생한 문제 → 해결 과정 */
+      +'<section class="pj-problem"><div class="wrap">'
+        +'<h2 class="sec-title" data-ico="alert"><b>발생한</b> 문제</h2>'
+        +'<p class="pj-issue">'+e(p.problem||'발생한 문제 입력')+'</p>'
+      +'</div></section>'
       +'<section class="pj-solve"><div class="wrap">'
         +'<h2 class="pj-solve-title" data-ico="swap"><b>해결</b> 과정</h2>'
         +'<div class="pj-ba">'
