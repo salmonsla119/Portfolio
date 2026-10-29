@@ -157,8 +157,8 @@ body.on-light{background:var(--bg)}
 .t-sm{color:var(--text);font-size:var(--fs-hero);font-weight:400;line-height:1.1;
   letter-spacing:-.02em}
 .t-sm b{color:var(--accent);font-weight:800}
-.t-lg{color:var(--sub);font-size:clamp(14px,1.3vw,21px);font-weight:700;line-height:1.1;
-  letter-spacing:.02em}
+.t-lg{color:#fff;font-size:clamp(20px,2.3vw,38px);font-weight:800;line-height:1.1;
+  letter-spacing:-.02em}
 
 /* 아래 좌우 화살표 */
 .frame-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;
@@ -167,8 +167,8 @@ body.on-light{background:var(--bg)}
 .nav-label{display:inline-flex;align-items:center;gap:8px;
   color:var(--sub);font-size:var(--fs-small);font-weight:600;letter-spacing:.08em;
   transition:color .15s ease}
-/* 같은 줄 오른쪽 끝으로 민다 */
-.screen-title .nav-label{flex:0 0 auto;margin-left:auto}
+/* 문구·이름 아랫줄에 혼자 놓인다 */
+.screen-title .nav-label{flex:0 0 100%;margin-top:clamp(4px,.7vw,12px)}
 .nav-label .ico{color:var(--accent)}
 .nav-label:hover{color:var(--accent)}
 .arrow{display:grid;place-items:center;flex:0 0 auto;width:36px;aspect-ratio:1;padding:0;
