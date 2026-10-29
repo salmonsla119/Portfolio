@@ -136,8 +136,9 @@ body.on-light{background:var(--bg)}
 .spec-item{display:flex;align-items:flex-start;gap:18px;width:280px;height:66px;
   padding:0;border:0;background:none;color:var(--text);text-align:left;cursor:pointer;
   transition:color .15s ease}
-.spec-ico{display:grid;place-items:center;flex:0 0 auto;width:66px;height:66px;
-  border-radius:4px;background:#fff}
+/* 흰 사각(66x66)을 도트 아이콘이 꽉 채운다 — 피그마와 동일 */
+.spec-ico{display:block;flex:0 0 auto;width:66px;height:66px;background:#fff}
+.spec-ico .pixel{width:66px}
 .spec-name{flex:1 1 auto;padding:13px 0 14px;border-bottom:2px solid var(--line);
   font-size:20px;font-weight:800;line-height:24px;white-space:nowrap}
 .spec-item:hover,.spec-item.on{color:var(--accent)}
@@ -202,7 +203,7 @@ body.on-light{background:var(--bg)}
 .frame-pill:hover .ico{color:var(--accent-ink)}
 
 /* 도트 아이콘 — 칸마다 선을 두르면 형체가 뭉개지므로 stroke 를 끈다 */
-.pixel{display:block;width:52px;height:auto;shape-rendering:crispEdges}
+.pixel{display:block;width:66px;height:auto;shape-rendering:crispEdges}
 .pixel,.pixel g,.pixel rect{stroke:none}
 .px-ink{fill:#1b1f24}
 .px-cream{fill:#ffffff}
@@ -236,7 +237,7 @@ body.on-light{background:var(--bg)}
   .fx-spec{gap:14px}
   .spec-item{width:100%;height:auto}
   .spec-ico{width:46px;height:46px}
-  .pixel{width:36px}
+  .spec-ico .pixel{width:46px}
   .spec-name{font-size:15px;line-height:20px;padding:6px 0 8px;white-space:normal}
   .fx-panel{width:100%;border-radius:14px}
   .fx-panel:before{left:24px;top:-18px;
