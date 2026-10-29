@@ -189,7 +189,11 @@ body.on-light{background:var(--bg)}
    (띠는 초상화 위·붓 아래에 놓여 그림 밑동을 잘라 준다 — 피그마 순서 그대로) */
 .fx-mask{left:0;top:862px;width:1905px;height:80px;background:var(--bg)}
 /* 그림 두 장 + 바닥 선 */
-.fx-portrait{left:578px;top:56px;width:780px;height:auto}
+/* 초상화 — 누르면 이력서로 */
+.fx-portrait{left:578px;top:56px;width:780px;display:block;cursor:pointer}
+.fx-portrait img{display:block;width:100%;height:auto;
+  transition:filter .15s ease,transform .15s ease}
+.fx-portrait:hover img{filter:brightness(1.06)}
 .fx-brush{left:1460px;top:487px;width:360px;height:auto}
 .fx-ground{left:0;top:862px;width:1905px;height:4px;background:var(--accent)}
 
