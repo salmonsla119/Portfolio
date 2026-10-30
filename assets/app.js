@@ -237,7 +237,7 @@ function sheetTable(key){
    칸은 둘로 나뉜다.
    - BLOCK_KEY : 양식 전체를 설정하는 칸. 블록 안 어디에 적어도 되고 본문에서는 빠진다.
    - FLOW_KEY  : 본문에서 **적은 자리에 그대로 그려지는** 칸(인용 상자, 전·후 이미지). */
-var BLOCK_KEY=/^[ \t]*(그림|사진|제목|아이콘|이름|설명|구역|포지션|역량|작업[ \t]*기간|기간|장르)[ \t]*:[ \t]*(.*)$/,
+var BLOCK_KEY=/^[ \t]*(그림|사진|제목|아이콘|이름|설명|구역|포지션|역량|작업[ \t]*기간|기간|장르|링크)[ \t]*:[ \t]*(.*)$/,
     FLOW_KEY=/^[ \t]*(전|후|인용)[ \t]*:[ \t]*(.*)$/,
     RE_CALL=/^[ \t]*@@[ \t]*(.*?)[ \t]*$/,
     RE_RULE=/^[ \t]*-{3,}[ \t]*$/;
@@ -363,6 +363,15 @@ var BLOCKS={
           +row('획득 역량',gains.length
             ?'<span class="pj-gain">'+gains.map(function(t){return'<em>'+e(t)+'</em>'}).join('')+'</span>'
             :hint('획득 역량 입력'))
+          /* `링크: 이름 | 주소` — 주소만 적으면 이름은 "링크 열기" */
+          +(function(v){
+              if(!v)return'';
+              var i=v.lastIndexOf('|'),
+                  name=i>0?v.slice(0,i).trim():'링크 열기',
+                  url=(i>0?v.slice(i+1):v).trim();
+              return url?row('링크','<a class="btn pj-link" href="'+e(url)
+                +'" target="_blank" rel="noopener" data-ico="doc">'+e(name)+'</a>'):'';
+            }(b.fields['링크']))
         +'</dl>'
         +'<h2>'+mdLine(b.fields['제목']||c.p.summary||'한 줄 설명 입력')+'</h2>'
         /* 본문이 없으면 칸 자체를 넣지 않는다 */
@@ -395,12 +404,17 @@ var BLOCKS={
   }},
 
   '기획서':{cls:'pj-extra',tone:'light',make:function(c,b){
+    /* `이름:` 을 적으면 그 말이 들어간 문서만 보여 준다.
+       단추의 data-doc 은 원래 documents 배열의 자리여야 뷰어가 같은 문서를 연다 */
+    var pick=b.fields['이름']||'',
+        docs=c.docs.map(function(x,i){return{doc:x,at:i}}).filter(function(r){
+          return!pick||String(r.doc.title||'').indexOf(pick)>=0});
     return'<div class="docs">'
       +'<h2 data-ico="'+e(b.fields['아이콘']||'clip')+'">'+mdLine(b.fields['제목']||'**상세** 기획서')+'</h2>'
-      +(c.docs.length
-        ?'<div class="doc-tabs" role="tablist">'+c.docs.map(function(x,i){
-            return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'
-              +e(x.title||('기획서 '+(i+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
+      +(docs.length
+        ?'<div class="doc-tabs" role="tablist">'+docs.map(function(r,i){
+            return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+r.at+'">'
+              +e(r.doc.title||('기획서 '+(r.at+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
         :'<div class="media-empty">'+icon('clip')+'상세 기획서 추가 영역</div>')
       +'</div>'
       +(b.body?'<div class="md-body">'+bodyHtml(b.body)+'</div>':'');
@@ -634,13 +648,16 @@ function renderBlocks(md,c){
           +'<a class="btn" href="'+e(src)+'" download data-ico="down">'
           +(hasSheet?'엑셀 파일 다운로드':'다운로드')+'</a></div>';
         paintIcons(docView);
-        for(var t=0;t<tabs.length;t++){tabs[t].classList.toggle('on',t===n)}
+        /* 단추의 data-doc 은 documents 배열의 자리다(양식이 일부만 보여 줄 수 있다) */
+        for(var t=0;t<tabs.length;t++){
+          tabs[t].classList.toggle('on',parseInt(tabs[t].getAttribute('data-doc'),10)===n);
+        }
       };
       for(var t=0;t<tabs.length;t++){
         tabs[t].addEventListener('click',function(ev){
           showDoc(parseInt(ev.currentTarget.getAttribute('data-doc'),10)||0)});
       }
-      showDoc(0);
+      if(tabs.length)showDoc(parseInt(tabs[0].getAttribute('data-doc'),10)||0);
     }
   }
 

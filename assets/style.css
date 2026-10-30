@@ -339,6 +339,8 @@ iframe.pj-player{pointer-events:none}
   white-space:nowrap}
 .pj-meta dd{margin:0;color:var(--text);font-size:var(--fs-body);font-weight:700}
 .pj-hint{color:var(--dim);font-size:var(--fs-small);font-weight:400;font-style:normal}
+.pj-link{display:inline-flex;align-items:center;gap:8px}
+.pj-link .ico{width:16px;height:16px}
 /* 참여 포지션 — 숫자 한두 자리면 크게, "부팀장, PM" 같은 글자면 본문 크기로 */
 .pj-position{color:var(--accent);font-weight:800}
 .pj-position.num{font-size:26px;line-height:1}
