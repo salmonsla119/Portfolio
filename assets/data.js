@@ -592,7 +592,19 @@ projects:[
 
 이것으로 일주일 늦어졌던 개발 일정을 효율화시켜 ==제 시간에 맞출 수 있었습니다==.
 `,shortVideos:[{src:"https://www.youtube.com/watch?v=mYlwMKpCUC0&t=1s",title:"High Num 소개 영상"}],images:[],documents:[{title:"2026년 8월 작업 캘린더",src:"assets/documents/work-calendar-2026-08.xlsx",sheet:"work-calendar-2026-08"},{title:"컨셉 기획서 Ver 1.1.2",src:"assets/documents/highnum-concept-ver1.1.2.pdf"}]},
-  {id:"project-02",year:"연도 입력",title:"하늘 타일 공사",genre:"캐주얼 클리커",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"assets/images/project-02-logo.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[{src:"assets/videos/project-02-hero.mp4",title:"하늘 타일 공사 소개 영상"}],images:[],documents:[]},
+  {id:"project-02",year:"연도 입력",title:"하늘 타일 공사",genre:"캐주얼 클리커",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"assets/images/project-02-logo.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+
+@@이미지
+그림: assets/images/project-02-screen.webp
+
+@@인용
+
+@@문제
+
+@@해결
+
+@@기획서
+`,shortVideos:[{src:"assets/videos/project-02-hero.mp4",title:"하늘 타일 공사 소개 영상"}],images:[],documents:[]},
   {id:"project-03",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-04",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-05",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},

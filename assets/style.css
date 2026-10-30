@@ -440,6 +440,13 @@ iframe.pj-player{pointer-events:none}
 .pj-figs.n3{grid-template-columns:1fr 1fr 1fr}
 .pj-figs.n4{grid-template-columns:1fr 1fr 1fr 1fr}
 .pj-figs.n2 img,.pj-figs.n3 img,.pj-figs.n4 img{aspect-ratio:4/3;object-fit:cover}
+/* 한 장짜리 그림이 세로로 길면(모바일 게임 화면 등) 화면 높이에 맞춰 줄인다.
+   자르지는 않으므로 좌우에 칸 바탕이 남는다 */
+/* 세로로 긴 그림(모바일 게임 화면 등)이 한 장 들어오면 칸 안에서 높이를 묶는다.
+   자르지 않고 가운데에 놓이며 좌우는 칸 바탕이 된다.
+   폭은 100% 로 두어야 아직 안 불러온 그림도 자리를 잡는다(안 그러면 2px 로 쪼그라든다).
+   글 옆에 붙는 .pj-cols 의 옆그림도 n1 이므로 칸 바로 아래 것만 고른다 */
+.wrap>.pj-figs.n1 img{max-height:72vh;object-fit:contain}
 /* `비율: 원본` — 자르지 않고 원본 비율 그대로 */
 .pj-figs.as-is img{aspect-ratio:auto;object-fit:contain;min-height:0;max-height:none}
 .pj-figs img{display:block;width:100%;height:auto;border:1px solid var(--line-2);
