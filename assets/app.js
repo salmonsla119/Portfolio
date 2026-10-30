@@ -346,7 +346,9 @@ function cardGrid(v,items){
   if(!items.length)return'';
   var pics=String(v||'').split(',').map(function(t){return t.trim()}).filter(Boolean);
   return'<ol class="pj-cards n'+Math.min(items.length,4)+'">'+items.map(function(t,i){
-    return'<li class="pj-card">'
+    /* 카드는 흰 상자다 — on-light 를 붙여 안쪽 색을 통째로 뒤집는다
+       (손그림의 선 색도 이 규칙을 따라 검게 돌아간다) */
+    return'<li class="pj-card on-light">'
       +(pics[i]?'<span class="pj-card-ink"><img class="ink" src="'+e(pics[i])
         +'" alt="" loading="lazy"></span>':'')
       +'<b class="pj-card-n">'+('0'+(i+1)).slice(-2)+'</b>'

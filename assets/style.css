@@ -445,19 +445,20 @@ iframe.pj-player{pointer-events:none}
 .md-body img.ink,.pj-card img.ink{margin:0;border:0;border-radius:0}
 .on-light .ink{filter:invert(1)}
 /* 높이를 묶어 두면 가로로 긴 그림은 넓게, 정사각에 가까운 그림은 좁게 앉는다 */
-.pj-ink{display:flex;flex-wrap:wrap;align-items:flex-end;
-  gap:clamp(10px,1.4vw,18px);margin:clamp(18px,2.6vw,32px) 0}
+.pj-ink{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:center;
+  gap:clamp(10px,1.4vw,18px);margin:clamp(16px,2vw,26px) 0}
 .pj-ink .ink{max-height:clamp(96px,13vw,190px)}
 .md-body>.pj-ink:first-child{margin-top:0}
 
 /* 카드 — `카드:` 줄 아래 목록 항목 하나가 카드 한 장. 그림은 적은 차례대로 들어간다 */
-.pj-cards{display:grid;gap:clamp(12px,1.6vw,22px);margin:clamp(20px,2.8vw,34px) 0;
-  padding:0;list-style:none}
-.md-body>.pj-cards{max-width:none}
+/* 본문 목록 여백(.md-body ol)보다 특이도가 높아야 이 값이 산다 */
+.pj-cards,.md-body .pj-cards{display:grid;gap:clamp(12px,1.6vw,22px);
+  margin:clamp(16px,2vw,26px) 0;padding:0;list-style:none;max-width:none}
 .pj-cards.n2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .pj-cards.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .pj-cards.n4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.pj-card{display:flex;flex-direction:column;gap:10px;
+/* 카드만 흰 바탕을 쓴다(엑셀 표와 같은 예외). on-light 가 안쪽 색을 뒤집는다 */
+.pj-card{display:flex;flex-direction:column;gap:10px;background:#fff;
   padding:clamp(14px,1.7vw,22px);border:1px solid var(--line-2);border-radius:var(--radius)}
 .pj-card-ink{display:block}
 .pj-card-ink .ink{width:100%;aspect-ratio:3/2;object-fit:contain;max-height:none}
