@@ -234,7 +234,7 @@ function sheetTable(key){
    양식을 새로 만들려면 BLOCKS 에 한 줄 더하면 된다. */
 
 /* 양식 칸으로 인정하는 키. 여기 없는 `낱말:` 줄은 그냥 본문이다. */
-var FIELD_KEY=/^[ \t]*(그림|사진|전|후|제목|아이콘|이름|설명|구역)[ \t]*:[ \t]*(.*)$/,
+var FIELD_KEY=/^[ \t]*(그림|사진|전|후|제목|아이콘|이름|설명|구역|포지션|역량)[ \t]*:[ \t]*(.*)$/,
     RE_CALL=/^[ \t]*@@[ \t]*(.*?)[ \t]*$/,
     RE_RULE=/^[ \t]*-{3,}[ \t]*$/;
 
@@ -276,8 +276,7 @@ function fill(src,alt,empty){
 
 /* 부르는 이름 → 양식. 같은 양식을 여러 이름으로 부를 수 있다. */
 var BLOCK_ALIAS={
-  '포지션':'포지션','참여포지션':'포지션',
-  '소개':'소개','개요':'소개','대표':'소개',
+  '소개':'소개','개요':'소개','대표':'소개','포지션':'소개',
   '인용':'인용','한마디':'인용',
   '문제':'문제','발생한문제':'문제','문제점':'문제',
   '해결':'해결','해결과정':'해결','해결방법':'해결',
@@ -289,15 +288,21 @@ var BLOCK_ALIAS={
 
 /* cls = 구역 클래스, tone = 기본 밝기(light/dark), make = 안쪽 내용 */
 var BLOCKS={
-  '포지션':{cls:'pj-intro',tone:'light',make:function(c,b){
-    return'<p class="pj-position">참여 포지션: <b>'+e(b.body||c.p.position||'00')+'</b></p>';
-  }},
-
+  /* 소개 — 대표 이미지 + (참여 포지션·획득 역량) + 한 줄 설명 + 본문 */
   '소개':{cls:'pj-band',tone:'light',make:function(c,b){
+    var gains=String(b.fields['역량']||c.p.gains||'').split(/[,·]/)
+                .map(function(t){return t.trim()}).filter(Boolean);
     return'<div class="pj-row">'
       +'<figure class="pj-shot">'
         +fill(b.fields['그림']||c.p.image||(c.slides[0]||{}).src,c.p.title,'대표 이미지 추가 영역')+'</figure>'
       +'<div class="pj-copy">'
+        +'<div class="pj-meta">'
+          +'<p class="pj-position"><span>참여 포지션</span><b>'
+            +e(b.fields['포지션']||c.p.position||'00')+'</b></p>'
+          +'<p class="pj-gain"><span>획득 역량</span>'
+            +(gains.length?gains.map(function(t){return'<em>'+e(t)+'</em>'}).join('')
+                          :'<i>획득 역량 입력</i>')+'</p>'
+        +'</div>'
         +'<h2>'+mdLine(b.fields['제목']||c.p.summary||'한 줄 설명 입력')+'</h2>'
         +'<div class="md-body">'+mdHtml(b.body||c.p.body||'상세 설명 입력')+'</div>'
       +'</div>'
@@ -365,7 +370,7 @@ var BLOCKS={
 };
 
 /* md 칸이 비어 있을 때 쓰는 기본 구성 */
-var DEFAULT_MD='@@포지션\n@@소개\n@@인용\n@@문제\n@@해결\n@@기획서\n';
+var DEFAULT_MD='@@소개\n@@인용\n@@문제\n@@해결\n@@기획서\n';
 
 function renderBlocks(md,c){
   var blocks=parseBlocks(md);
