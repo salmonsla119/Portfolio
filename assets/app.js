@@ -325,8 +325,10 @@ function figures(v,caption,ratio){
   var list=String(v||'').split(',').map(function(t){return t.trim()}).filter(Boolean);
   if(!list.length)return'';
   /* `비율: 원본` 이면 4:3 으로 맞추지 않고 원본 비율 그대로 건다 */
-  var asIs=/원본|그대로|auto/i.test(ratio||'')?' as-is':'';
-  return'<figure class="pj-figs n'+Math.min(list.length,4)+asIs+'">'
+  var asIs=/원본|그대로|auto/i.test(ratio||'')?' as-is':'',
+      /* 다섯 장이 넘으면 칸 수를 --cols 로 넘겨 한 줄에 그대로 건다 */
+      many=list.length>4?' many" style="--cols:'+list.length:'';
+  return'<figure class="pj-figs n'+Math.min(list.length,4)+asIs+many+'">'
     +list.map(function(src){return'<img src="'+e(src)+'" alt="" loading="lazy">'}).join('')
     +(caption?'<figcaption>'+mdLine(caption)+'</figcaption>':'')+'</figure>';
 }

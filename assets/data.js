@@ -594,17 +594,157 @@ projects:[
 `,shortVideos:[{src:"https://www.youtube.com/watch?v=mYlwMKpCUC0&t=1s",title:"High Num 소개 영상"}],images:[],documents:[{title:"2026년 8월 작업 캘린더",src:"assets/documents/work-calendar-2026-08.xlsx",sheet:"work-calendar-2026-08"},{title:"컨셉 기획서 Ver 1.1.2",src:"assets/documents/highnum-concept-ver1.1.2.pdf"}]},
   {id:"project-02",year:"연도 입력",title:"하늘 타일 공사",genre:"캐주얼 클리커",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"assets/images/project-02-logo.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
+@@탭 프로젝트
+
+@@원 페이지 기획서
+그림: assets/images/project-02-play-1.webp
+그림위치: 왼쪽
+
+==**낡은 타일을 부수고, 새로 칠하고, 완성하자!**==
+
+- 게임명: 타일 시공 마스터
+- 장르: 캐주얼 퍼즐 게임
+- 타겟 유저: 자투리 시간에 캐주얼 퍼즐 게임을 즐기는 모바일 게임 유저
+
+### 핵심 재미요소
+
+- 블록을 파괴할 때의 시각적 자극과 타격감
+- 빈 공간을 칠하고 퍼즐로 채울 때 성취감
+
+### 코어 루프
+
+==퍼즐 클리어 → 보상 획득 → 레벨 상승==
+
 @@이미지
-그림: assets/images/project-02-screen.webp
+그림: assets/images/tiledoc/loop.png, assets/images/tiledoc/mech.png
+비율: 원본
+설명: 코어 루프와 핵심 메카닉스
 
-@@인용
+@@게임 컨셉
+그림: assets/images/tiledoc/keyart.jpg
+구역: 어둡게
 
-@@문제
+### 핵심 컨셉
 
-@@해결
+==**손끝에서 완성하는 타일 리모델링!**==
+
+- 캐주얼 퍼즐과 낡고 지저분한 공간을 리모델링하는 과정의 조화
+- 낡고 칙칙한 공간을 세련되고 깔끔하게 리모델링
+- 직관적인 조작과 경쾌한 사운드&이펙트로 스트레스 해소
+
+### 시놉시스
+
+- 신입 타일 시공자가 도시 곳곳의 리모델링 의뢰를 해결하며 최고의 시공 마스터로 거듭나는 이야기
+
+@@이미지
+그림: assets/images/tiledoc/remodel.jpg
+설명: 낡고 칙칙한 공간을 세련되고 깔끔하게 리모델링
+
+@@주요 컨텐츠
+그림: assets/images/project-02-play-2.webp
+
+- 의뢰 수행: 의뢰를 받고 타일 시공 작업을 한다 (인게임: 스테이지 진행)
+- 도구 구매: 시공 작업 도구를 상점에서 구매한다 (아웃게임: 아이템 상점)
+- 이벤트 발생: 타일 시공 작업에 영향을 주는 이벤트가 발생한다 (아웃게임: 5스테이지 간격 이벤트)
+
+@@이미지
+그림: assets/images/tiledoc/quest.jpg, assets/images/tiledoc/shop.jpg, assets/images/tiledoc/event.jpg
+비율: 원본
+설명: 의뢰 수행 · 도구 구매 · 이벤트 발생
+
+@@컨텐츠 플로우
+
+==스테이지 진입 → 철거 → 도색 → 시공 → 스테이지 클리어==
+
+@@이미지
+그림: assets/images/tiledoc/flow.png
+
+@@철거
+그림: assets/images/project-02-play-3.webp
+그림위치: 왼쪽
+구역: 어둡게
+
+### 핵심 메카닉스: 클리커 게임
+
+- 화면의 타일을 연속으로 터치해 파괴한다
+- 터치할 때마다 효과음이 재생되고 타일에 금이 생긴다
+- 계속 클릭하면 파괴 효과음과 함께 파편이 튀며 부숴진다
+
+### 주요 오브젝트
+
+- **타일**
+  - HP: (파괴에 필요한 클릭 수)
+  - 등급: 일반 타일, 강화 타일 등
+  - 상태: 정상, 금이 감, 파괴됨
+- **아이템**
+  - 개수: (현재 보유 수량 확인)
+  - 종류: 망치(클릭 파괴력 증가), 타일 절단기(패널티 무효화)
+
+### 클리어 조건
+
+- 모든 타일을 파괴한다
+
+@@도포
+그림: assets/images/project-02-play-4.webp
+
+### 핵심 메카닉스: 컬러링 게임
+
+- 화면의 빈 콘크리트 바닥을 스와이프하여 시멘트를 도포한다
+- 화면을 문지를 때마다 꾸덕하게 시멘트가 발리는 효과음과 함께 시멘트 질감이 화면을 문지른 범위만큼 채워진다
+- 빈 화면이 없도록 화면을 꼼꼼하게 문지른다
+
+### 주요 오브젝트
+
+- **시멘트**
+  - 면적: (클릭 당 면적 범위)
+  - 상태: 미도포, 도포 중, 완료
+- **아이템**
+  - 개수: (현재 보유 수량 확인)
+  - 종류: 흙손(도포 범위 증가)
+
+### 클리어 조건
+
+- 목표 영역에 시멘트를 100% 도포한다
+
+@@시공
+그림: assets/images/project-02-play-5.webp
+그림위치: 왼쪽
+구역: 어둡게
+
+### 핵심 메카닉스: 칠교 놀이
+
+- 하단에 제공된 다양한 칠교 조각을 터치하여 회전시키고 드래그한다
+- 시멘트가 발린 빈 공간의 알맞은 위치에 알맞은 각도로 드롭하여 타일을 부착한다
+- 정확한 위치에 끼워 넣으면 경쾌한 장착 효과음이 재생되며 타일이 고정된다
+
+### 주요 오브젝트
+
+- **타일 퍼즐**
+  - 형태: 블록 조각 및 회전 각도
+  - 상태: 대기, 부착됨
+- **아이템**
+  - 개수: (현재 보유 수량 확인)
+  - 종류: 타일 커터기(자동으로 1개의 조각 부착)
+
+### 클리어 조건
+
+- 제공된 모든 타일 퍼즐을 완벽하게 배치하여 완성시킨다
+
+@@화면 구성
+그림: assets/images/tiledoc/screen.jpg
+
+- 게임 필드: 게임의 핵심 인게임 메카닉스를 수행하는 영역
+- UI 필드: 스테이지 정보, 페이즈 정보, 점수 등 정보를 시각화하는 영역
+- 덱 필드: 도포율 확인, 칠교 조각 전개 등 게임 플레이를 위한 보조 영역
+- 아이템 필드: 게임 지원 아이템 또는 게임 설정 관련 버튼을 배치한 영역
+
+@@이미지
+그림: assets/images/project-02-play-6.png, assets/images/project-02-play-7.png
+비율: 원본
+설명: 의뢰 실패 · 의뢰 완료
 
 @@기획서
-`,shortVideos:[{src:"assets/videos/project-02-hero.mp4",title:"하늘 타일 공사 소개 영상"}],images:[],documents:[]},
+`,shortVideos:[{src:"assets/videos/project-02-hero.mp4",title:"하늘 타일 공사 소개 영상"}],images:[],documents:[{title:"타일 시공 마스터 컨셉 기획서",src:"assets/documents/tile-master-concept.pdf"}]},
   {id:"project-03",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-04",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-05",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
