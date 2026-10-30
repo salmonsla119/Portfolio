@@ -367,10 +367,13 @@ function bodyHtml(t){
   for(i=0;i<lines.length;i++){
     f=FLOW_KEY.exec(lines[i]);
     if(f){
-      text();row();cards();
-      if(f[1]==='인용'){out+=quoteBox(f[2].trim());continue}
-      if(f[1]==='손그림'){out+=inkFigs(f[2].trim());continue}
-      if(f[1]==='카드'){cd=f[2].trim();items=[];continue}
+      text();
+      if(f[1]==='인용'){row();cards();out+=quoteBox(f[2].trim());continue}
+      if(f[1]==='손그림'){row();cards();out+=inkFigs(f[2].trim());continue}
+      if(f[1]==='카드'){row();cards();cd=f[2].trim();items=[];continue}
+      /* 전·후는 한 벌로 묶어야 하므로 여기서 row() 를 부르지 않는다
+         (부르면 전 → 후가 한 장짜리 칸 두 개로 쪼개진다) */
+      cards();
       if(!ba)ba=['',''];
       if(f[1]==='전'){if(ba[0]){row();ba=['','']}ba[0]=f[2].trim()}
       else ba[1]=f[2].trim();
