@@ -11,6 +11,7 @@ function inline(s){
   s=s.replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
   s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
   s=s.replace(/(^|[^*])\*(?!\*)(.+?)\*(?!\*)/g,'$1<em>$2</em>');
+  s=s.replace(/==(.+?)==/g,'<mark>$1</mark>');
   s=s.replace(/`(.+?)`/g,'<code>$1</code>');
   return s;
 }
@@ -19,6 +20,14 @@ var RE_HEAD=/^(#{1,6})\s+(.*)$/,
     RE_UL=/^\s*[-*]\s+/,
     RE_OL=/^\s*\d+[.)]\s+/,
     RE_HR=/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/;
+/* 목록 항목이 `낱말: 내용` 꼴이면 앞의 낱말을 라벨로 떼어 강조한다
+   (플랫폼: PC / 특징: ... 처럼 쓰는 줄이 많다) */
+var RE_KEY=/^([^\s:][^:]{0,13}):[ \t]+(.+)$/;
+function itemHtml(text){
+  var m=RE_KEY.exec(text);
+  return m?'<b class="k">'+inline(m[1])+':</b> '+inline(m[2]):inline(text);
+}
+
 /* 들여쓴 목록 항목은 바로 앞 항목 안으로 들어간다 */
 function buildList(items,at,depth){
   var ordered=items[at].ordered,out=[],k=at,sub;
@@ -29,7 +38,7 @@ function buildList(items,at,depth){
       else out.push('<li>'+sub.html+'</li>');
       k=sub.next;
     }else{
-      out.push('<li>'+inline(items[k].text)+'</li>');
+      out.push('<li>'+itemHtml(items[k].text)+'</li>');
       k++;
     }
   }

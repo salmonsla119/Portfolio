@@ -13,6 +13,7 @@
   --rose:#e8617b;      /* 아주 작게만 쓰는 분홍 (해결 과정 화살표) */
   --accent-soft:#cfe9f2;/* 하늘색보다 옅은 톤 (도트 아이콘 안쪽) */
   --light-bg:#eceef1;  /* 밝은 구역 배경 — 어두운 구역에서 이 색을 써야 할 때도 여기서 가져간다 */
+  --mark:rgba(166,217,232,.30); /* 형광펜 (==글== 과 인용) */
   --text:#e7ebee;      /* 본문 글자 */
   --sub:#9aa3ab;       /* 보조 글자 */
   --dim:#6f777f;       /* 흐린 글자·안내 */
@@ -73,6 +74,7 @@ ul{margin:0;padding:0;list-style:none}
   --dim:#8a9299;
   --line:rgba(0,0,0,.14);
   --line-2:rgba(0,0,0,.34);
+  --mark:rgba(62,140,164,.22);
   background:var(--bg);
   color:var(--text);
 }
@@ -358,8 +360,11 @@ iframe.pj-player{pointer-events:none}
 .md-body .pj-quote{padding:clamp(22px,3vw,40px) 0;border-left:0}
 .pj-quote{display:grid;justify-items:center;gap:14px;width:min(100%,780px);margin:0 auto;
   padding:clamp(22px,3vw,40px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  color:var(--text);font-size:var(--fs-lead);font-weight:400;line-height:1.8;
+  color:var(--text);font-size:var(--fs-lead);font-weight:600;line-height:1.9;
   text-align:center;word-break:keep-all}
+/* 인용문 뒤에 형광펜을 한 줄 긋는다 */
+.pj-quote span{padding:0 .2em;
+  background:linear-gradient(transparent 38%,var(--mark) 38%,var(--mark) 94%,transparent 94%)}
 .pj-quote .ico{width:26px;height:26px;color:var(--accent)}
 
 /* 발생한 문제 → 해결 과정. 둘을 이어서 부르면 같은 어두운 구역으로 붙는다 */
@@ -537,6 +542,11 @@ iframe.pj-player{pointer-events:none}
 .cover-body li,.md-body li{margin:4px 0}
 /* 겹친 목록 */
 .cover-body li>ul,.cover-body li>ol,.md-body li>ul,.md-body li>ol{margin:4px 0 0}
+/* `낱말: 내용` 목록의 앞 낱말 — 하늘색 라벨로 */
+.md-body b.k{color:var(--accent);font-weight:700}
+/* ==형광펜== */
+.cover-body mark,.md-body mark{padding:0 .2em;border-radius:2px;
+  background:var(--mark);color:inherit}
 /* 프로젝트 쪽 본문은 줄 간격을 조금 좁게 */
 .md-body{line-height:1.85}
 .md-body>*:last-child{margin-bottom:0}
