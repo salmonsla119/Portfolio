@@ -48,8 +48,10 @@ function buildList(items,at,depth){
 function renderMarkdown(md){
   var lines=String(md||'').replace(/\r\n?/g,'\n').split('\n');
   var html='',i=0,n=lines.length,para=[];
+  /* 한 문단 안에서 줄을 바꾼 자리는 그대로 살린다.
+     사용자가 문장마다 줄을 끊어 쓰므로 공백으로 이어 붙이면 글이 뭉친다 */
   function flushPara(){
-    if(para.length){html+='<p>'+inline(para.join(' '))+'</p>';para=[]}
+    if(para.length){html+='<p>'+inline(para.join('\n')).replace(/\n/g,'<br>')+'</p>';para=[]}
   }
   while(i<n){
     var line=lines[i];
