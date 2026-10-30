@@ -213,9 +213,185 @@ function sheetTable(key){
   }).join('')||'<p class="rs-empty">프로젝트를 추가해 주세요</p>';
 })();
 
+/* ================= 양식(블록) 호출 =================
+   프로젝트 상세 페이지의 "순서와 구성"은 data.js 의 md 칸이 정한다.
+
+     @@해결
+     ---
+     전: assets/images/before.png
+     후: assets/images/after.png
+
+     설명을 마크다운으로 적는다. **굵게**, - 목록, > 인용 모두 쓸 수 있다.
+
+   규칙
+   1) `@@이름` 한 줄이 양식 호출이다. 다음 `@@` 줄(또는 글 끝)까지가 그 양식의 내용.
+   2) 이름 바로 아래 `---` 한 줄은 보기 좋게 넣는 구분선으로 보고 그냥 넘긴다.
+   3) 내용 맨 위의 `키: 값` 줄은 그 양식의 칸을 채운다(FIELD_KEY 에 있는 이름만).
+   4) 내용을 비워 두면 data.js 의 원래 항목(summary·body·problem·solution…)을 쓴다.
+   5) 목록에 없는 이름은 `글` 양식으로 그리고 그 이름을 제목으로 쓴다 (@@기획 의도 → 제목이 "기획 의도").
+   6) md 칸이 비어 있으면 DEFAULT_MD 순서(= 지금까지 쓰던 기본 구성)로 그린다.
+
+   양식을 새로 만들려면 BLOCKS 에 한 줄 더하면 된다. */
+
+/* 양식 칸으로 인정하는 키. 여기 없는 `낱말:` 줄은 그냥 본문이다. */
+var FIELD_KEY=/^[ \t]*(그림|사진|전|후|제목|아이콘|이름|설명|구역)[ \t]*:[ \t]*(.*)$/,
+    RE_CALL=/^[ \t]*@@[ \t]*(.*?)[ \t]*$/,
+    RE_RULE=/^[ \t]*-{3,}[ \t]*$/;
+
+function parseBlocks(md){
+  var lines=String(md||'').replace(/\r\n?/g,'\n').split('\n'),out=[],cur=null,i;
+  for(i=0;i<lines.length;i++){
+    var call=RE_CALL.exec(lines[i]);
+    if(call){out.push(cur={name:call[1],fields:{},lines:[]});continue}
+    if(cur)cur.lines.push(lines[i]);
+  }
+  for(i=0;i<out.length;i++){
+    var b=out[i],ls=b.lines,k=0,f;
+    while(k<ls.length&&(ls[k].trim()===''||RE_RULE.test(ls[k])))k++;
+    for(;k<ls.length;k++){
+      f=FIELD_KEY.exec(ls[k]);
+      if(!f)break;
+      b.fields[f[1]]=f[2].trim();
+    }
+    b.body=ls.slice(k).join('\n').replace(/^\n+|\n+$/g,'');
+  }
+  return out;
+}
+
+/* 마크다운 한 덩어리 / 한 줄 */
+function mdHtml(t){
+  t=String(t==null?'':t);
+  if(!t.trim())return'';
+  return window.renderMarkdown?window.renderMarkdown(t):'<p>'+e(t)+'</p>';
+}
+/* 제목 한 줄 — **굵게** 부분만 하늘색 <b> 로 바꾼다 */
+function mdLine(t){
+  return e(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+}
+/* 그림 칸: 주소가 있으면 그림, 없으면 안내 자리 */
+function fill(src,alt,empty){
+  return src?'<img src="'+e(src)+'" alt="'+e(alt||'')+'" loading="lazy">'
+            :'<span class="pj-empty">'+icon('image')+e(empty||'이미지 추가 영역')+'</span>';
+}
+
+/* 부르는 이름 → 양식. 같은 양식을 여러 이름으로 부를 수 있다. */
+var BLOCK_ALIAS={
+  '포지션':'포지션','참여포지션':'포지션',
+  '소개':'소개','개요':'소개','대표':'소개',
+  '인용':'인용','한마디':'인용',
+  '문제':'문제','발생한문제':'문제','문제점':'문제',
+  '해결':'해결','해결과정':'해결','해결방법':'해결',
+  '기획서':'기획서','상세기획서':'기획서','문서':'기획서',
+  '글':'글','본문':'글',
+  '이미지':'이미지','그림':'이미지','사진':'이미지',
+  '표':'표','엑셀':'표'
+};
+
+/* cls = 구역 클래스, tone = 기본 밝기(light/dark), make = 안쪽 내용 */
+var BLOCKS={
+  '포지션':{cls:'pj-intro',tone:'light',make:function(c,b){
+    return'<p class="pj-position">참여 포지션: <b>'+e(b.body||c.p.position||'00')+'</b></p>';
+  }},
+
+  '소개':{cls:'pj-band',tone:'light',make:function(c,b){
+    return'<div class="pj-row">'
+      +'<figure class="pj-shot">'
+        +fill(b.fields['그림']||c.p.image||(c.slides[0]||{}).src,c.p.title,'대표 이미지 추가 영역')+'</figure>'
+      +'<div class="pj-copy">'
+        +'<h2>'+mdLine(b.fields['제목']||c.p.summary||'한 줄 설명 입력')+'</h2>'
+        +'<div class="md-body">'+mdHtml(b.body||c.p.body||'상세 설명 입력')+'</div>'
+      +'</div>'
+    +'</div>';
+  }},
+
+  '인용':{cls:'pj-quote-sec',tone:'light',make:function(c,b){
+    return'<blockquote class="pj-quote">'+icon('quote')
+      +'<span>'+mdLine(b.body||c.p.quote||'인용 한마디 입력')+'</span></blockquote>';
+  }},
+
+  '문제':{cls:'pj-problem',tone:'dark',make:function(c,b){
+    return'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'alert')+'">'
+        +mdLine(b.fields['제목']||'**발생한** 문제')+'</h2>'
+      +'<div class="md-body pj-issue">'+mdHtml(b.body||c.p.problem||'발생한 문제 입력')+'</div>';
+  }},
+
+  '해결':{cls:'pj-solve',tone:'dark',make:function(c,b){
+    var s=c.p.solution||{};
+    return'<h2 class="pj-solve-title" data-ico="'+e(b.fields['아이콘']||'swap')+'">'
+        +mdLine(b.fields['제목']||'**해결** 과정')+'</h2>'
+      +'<div class="pj-ba">'
+        +'<div class="pj-ba-box">'+fill(b.fields['전']||s.before,'해결 전','전 이미지 추가 영역')+'</div>'
+        +'<span class="pj-arrow" aria-hidden="true"></span>'
+        +'<div class="pj-ba-box">'+fill(b.fields['후']||s.after,'해결 후','후 이미지 추가 영역')+'</div>'
+      +'</div>'
+      +'<div class="md-body pj-note">'+mdHtml(b.body||s.note||'해결 과정 설명 입력')+'</div>';
+  }},
+
+  '기획서':{cls:'pj-extra',tone:'light',make:function(c,b){
+    return'<div class="docs">'
+      +'<h2 data-ico="'+e(b.fields['아이콘']||'clip')+'">'+mdLine(b.fields['제목']||'**상세** 기획서')+'</h2>'
+      +(c.docs.length
+        ?'<div class="doc-tabs" role="tablist">'+c.docs.map(function(x,i){
+            return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'
+              +e(x.title||('기획서 '+(i+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
+        :'<div class="media-empty">'+icon('clip')+'상세 기획서 추가 영역</div>')
+      +'</div>'
+      +(b.body?'<div class="md-body">'+mdHtml(b.body)+'</div>':'');
+  }},
+
+  /* 자유 서술 — 제목(없으면 생략) + 마크다운 본문 */
+  '글':{cls:'pj-free',tone:'light',make:function(c,b){
+    var t=b.fields['제목']||'';
+    return(t?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'doc')+'">'+mdLine(t)+'</h2>':'')
+      +'<div class="md-body">'+mdHtml(b.body)+'</div>';
+  }},
+
+  '이미지':{cls:'pj-free',tone:'light',make:function(c,b){
+    var cap=b.fields['설명']||b.body;
+    return(b.fields['제목']?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'image')+'">'
+          +mdLine(b.fields['제목'])+'</h2>':'')
+      +'<figure class="pj-figure">'+fill(b.fields['그림']||b.fields['사진'],b.fields['제목'],'이미지 추가 영역')
+      +(cap?'<figcaption class="md-body">'+mdHtml(cap)+'</figcaption>':'')+'</figure>';
+  }},
+
+  /* 엑셀 표 — assets/sheets.js 의 이름을 적는다 */
+  '표':{cls:'pj-free',tone:'light',make:function(c,b){
+    var t=sheetTable(b.fields['이름']||String(b.body||'').trim());
+    return(b.fields['제목']?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'grid')+'">'
+          +mdLine(b.fields['제목'])+'</h2>':'')
+      +(t||'<div class="media-empty">'+icon('grid')
+        +'표를 찾을 수 없습니다 — assets/sheets.js 의 이름을 확인해 주세요</div>');
+  }}
+};
+
+/* md 칸이 비어 있을 때 쓰는 기본 구성 */
+var DEFAULT_MD='@@포지션\n@@소개\n@@인용\n@@문제\n@@해결\n@@기획서\n';
+
+function renderBlocks(md,c){
+  var blocks=parseBlocks(md);
+  if(!blocks.length)blocks=parseBlocks(DEFAULT_MD);
+  var html='',prev='';
+  for(var i=0;i<blocks.length;i++){
+    var b=blocks[i],key=BLOCK_ALIAS[String(b.name).replace(/\s+/g,'')];
+    /* 모르는 이름은 글 양식 + 그 이름을 제목으로 */
+    if(!key){key='글';if(!b.fields['제목'])b.fields['제목']=b.name}
+    var spec=BLOCKS[key],
+        set=b.fields['구역'],
+        tone=set?(/어둡|검|dark/i.test(set)?'dark':'light'):spec.tone,
+        /* 같은 밝기가 이어지면 위 패딩을 뺀다(구역이 두 번 겹쳐 보이지 않게) */
+        tight=prev===tone?' is-tight':'';
+    html+='<section class="'+spec.cls+(tone==='light'?' on-light':'')+tight+'">'
+      +'<div class="wrap">'+spec.make(c,b)+'</div></section>';
+    prev=tone;
+  }
+  /* 맨 아래 "메인으로" — 마지막 구역의 밝기를 그대로 이어 간다 */
+  return html+'<section class="pj-foot'+(prev==='light'?' on-light':'')+'"><div class="wrap">'
+    +'<a class="back" href="index.html" data-ico="back">메인으로</a></div></section>';
+}
+
 /* ================= 프로젝트 상세 =================
-   16:9 화면(영상 재생) → 참여 포지션 → 어두운 띠(이미지 + 글 + 인용) → 해결 과정
-   → 상세 기획서
+   맨 위 16:9 화면(영상 재생)만 고정이고, 그 아래는 data.js 의 md 칸이 부르는
+   양식 순서대로 그린다(위 "양식 호출" 참고). md 칸이 비어 있으면 기본 구성대로 나온다.
    오른쪽 위 작은 사각형들은 "다른 프로젝트" 썸네일이고, 누르면 내용이 통째로 바뀐다. */
 (function(){
   var root=q('project');if(!root)return;
@@ -227,15 +403,9 @@ function sheetTable(key){
   function render(p){
     var slides=(p.images||[]).filter(function(x){return x&&x.src}),
         tags=String(p.genre||'').split(/[,·]/).map(function(t){return t.trim()}).filter(Boolean),
-        solve=p.solution||{},
         docs=(p.documents||[]).filter(function(x){return x&&x.src}),
         hero=coverOf(p),
         others=list.filter(function(x){return x.id!==p.id});
-
-    function fill(src,alt,empty){
-      return src?'<img src="'+e(src)+'" alt="'+e(alt||'')+'" loading="lazy">'
-                :'<span class="pj-empty">'+icon('image')+e(empty)+'</span>';
-    }
 
     /* 맨 위 16:9 칸: 영상이 있으면 영상을 틀고, 없으면 대표 이미지.
        유튜브 UI(제목·로고·추천 영상·컨트롤)는 전부 끄고 화면만 남긴다.
@@ -265,7 +435,7 @@ function sheetTable(key){
     }
 
     root.innerHTML=
-      /* 1) 16:9 화면 — 영상 재생 */
+      /* 1) 16:9 화면 — 영상 재생. 여기는 늘 맨 위에 고정이다 */
       '<section class="pj-hero">'
         +'<div class="pj-slide">'+stageMedia+'</div>'
         +'<div class="pj-head"><h1>'+e(p.title)+'</h1>'
@@ -282,48 +452,8 @@ function sheetTable(key){
         +'</div>'
       +'</section>'
 
-      /* 2) 참여 포지션 */
-      +'<section class="pj-intro on-light"><div class="wrap">'
-        +'<p class="pj-position">참여 포지션: <b>'+e(p.position||'00')+'</b></p>'
-      +'</div></section>'
-
-      /* 3) 회색 띠 */
-      +'<section class="pj-band on-light"><div class="wrap">'
-        +'<div class="pj-row">'
-          +'<figure class="pj-shot">'+fill(p.image||(slides[0]||{}).src,p.title,'대표 이미지 추가 영역')+'</figure>'
-          +'<div class="pj-copy"><h2>'+e(p.summary||'한 줄 설명 입력')+'</h2>'
-            +'<p>'+e(p.body||'상세 설명 입력')+'</p></div>'
-        +'</div>'
-        +'<blockquote class="pj-quote">'+icon('quote')
-          +'<span>'+e(p.quote||'인용 한마디 입력')+'</span></blockquote>'
-      +'</div></section>'
-
-      /* 4) 발생한 문제 → 해결 과정 */
-      +'<section class="pj-problem"><div class="wrap">'
-        +'<h2 class="sec-title" data-ico="alert"><b>발생한</b> 문제</h2>'
-        +'<p class="pj-issue">'+e(p.problem||'발생한 문제 입력')+'</p>'
-      +'</div></section>'
-      +'<section class="pj-solve"><div class="wrap">'
-        +'<h2 class="pj-solve-title" data-ico="swap"><b>해결</b> 과정</h2>'
-        +'<div class="pj-ba">'
-          +'<div class="pj-ba-box">'+fill(solve.before,'해결 전','전 이미지 추가 영역')+'</div>'
-          +'<span class="pj-arrow" aria-hidden="true"></span>'
-          +'<div class="pj-ba-box">'+fill(solve.after,'해결 후','후 이미지 추가 영역')+'</div>'
-        +'</div>'
-        +'<p class="pj-note">'+e(solve.note||'해결 과정 설명 입력')+'</p>'
-      +'</div></section>'
-
-      /* 5) 상세 기획서 */
-      +'<section class="pj-extra on-light"><div class="wrap">'
-        +'<div class="docs"><h2 data-ico="clip"><b>상세</b> 기획서</h2>'
-          +(docs.length
-            ?'<div class="doc-tabs" role="tablist">'+docs.map(function(x,i){
-                return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+i+'">'
-                  +e(x.title||('기획서 '+(i+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
-            :'<div class="media-empty">'+icon('clip')+'상세 기획서 추가 영역</div>')
-        +'</div>'
-        +'<a class="back" href="index.html" data-ico="back">메인으로</a>'
-      +'</div></section>';
+      /* 2) 그 아래는 전부 양식 호출 — 순서·구성은 data.js 의 md 칸이 정한다 */
+      +renderBlocks(p.md,{p:p,slides:slides,docs:docs});
 
     paintIcons(root);
 

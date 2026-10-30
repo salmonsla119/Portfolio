@@ -12,6 +12,7 @@
   --accent-ink:#1a1e22;/* 하늘색 바탕 위 글자 */
   --rose:#e8617b;      /* 아주 작게만 쓰는 분홍 (해결 과정 화살표) */
   --accent-soft:#cfe9f2;/* 하늘색보다 옅은 톤 (도트 아이콘 안쪽) */
+  --light-bg:#eceef1;  /* 밝은 구역 배경 — 어두운 구역에서 이 색을 써야 할 때도 여기서 가져간다 */
   --text:#e7ebee;      /* 본문 글자 */
   --sub:#9aa3ab;       /* 보조 글자 */
   --dim:#6f777f;       /* 흐린 글자·안내 */
@@ -61,7 +62,7 @@ ul{margin:0;padding:0;list-style:none}
    레퍼런스처럼 어두운 구역과 번갈아 쓴다. 변수만 뒤집으므로
    안에 있는 상자·선·버튼은 따로 고칠 필요가 없다. */
 .on-light{
-  --bg:#eceef1;
+  --bg:var(--light-bg);
   --bg-2:#e3e6ea;
   --box:#ffffff;
   --screen:#dde1e6;
@@ -192,7 +193,7 @@ body.on-light{background:var(--bg)}
 
 /* 그림 두 장 + 바닥 띠·선
    (띠는 초상화 위·붓 아래에 놓여 그림 밑동을 잘라 준다 — 피그마 순서 그대로) */
-.fx-mask{left:0;top:862px;width:1905px;height:80px;background:var(--bg)}
+.fx-mask{left:0;top:862px;width:1905px;height:80px;background:var(--light-bg)}
 /* 그림 두 장 + 바닥 선 */
 /* 초상화 — 누르면 이력서로 */
 .fx-portrait{left:561px;top:56px;width:780px;display:block;cursor:pointer}
@@ -222,7 +223,7 @@ body.on-light{background:var(--bg)}
 .px-red{fill:var(--rose)}
 
 /* 메인 아래 — 프로젝트 더보기 */
-.more{background:var(--bg);border-top:1px solid var(--line);
+.more{background:var(--bg);
   padding:clamp(44px,6vw,96px) 0 clamp(50px,7vw,110px)}
 .more-title{margin-bottom:clamp(18px,2.4vw,30px)}
 
@@ -313,39 +314,43 @@ iframe.pj-player{pointer-events:none}
 .pj-thumb-empty{display:grid;place-items:center;width:100%;height:100%;padding:8%;
   color:var(--dim);font-size:9px;line-height:1.25;text-align:center;word-break:keep-all}
 
-/* 2) 참여 포지션 */
+/* 아래 구역들은 모두 "양식"이다. data.js 의 md 칸이 부르는 순서대로 쌓인다.
+   같은 밝기가 이어질 때는 JS 가 .is-tight 를 붙여 위 패딩을 뺀다
+   (구역 사이를 margin 으로 띄우면 그 틈으로 바디의 어두운 바탕이 비친다). */
+.pj-intro.is-tight,.pj-band.is-tight,.pj-quote-sec.is-tight,
+.pj-problem.is-tight,.pj-solve.is-tight,.pj-extra.is-tight,.pj-free.is-tight{padding-top:0}
+
+/* 참여 포지션 */
 .pj-intro{background:var(--bg);padding:clamp(34px,4.5vw,70px) 0 clamp(26px,4vw,64px)}
 .pj-position{text-align:right;color:var(--dim);font-size:var(--fs-label);font-weight:600;
   letter-spacing:var(--ls)}
 .pj-position b{margin-left:.5em;color:var(--accent);font-size:26px;font-weight:800;letter-spacing:0}
 
-/* 3) 어두운 띠 — 이미지 + 글, 그 아래 인용 */
-/* 소개 구역과 바로 붙는다. 사이를 margin 으로 띄우면 그 틈으로
-   어두운 바탕이 비쳐 구역이 끊겨 보인다. */
-.pj-band{position:relative;padding-bottom:clamp(40px,5.5vw,88px);background:var(--bg)}
+/* 소개 — 대표 이미지 + 한 줄 설명 + 본문.
+   포지션 바로 뒤(.is-tight)에 올 때만 이미지를 위로 끌어올려 겹친다. */
+.pj-band{position:relative;background:var(--bg);
+  padding:clamp(34px,4.5vw,70px) 0 clamp(40px,5.5vw,88px)}
 .pj-row{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);
   gap:clamp(20px,3.5vw,56px);align-items:start}
-.pj-shot{margin:clamp(-26px,-3.5vw,-56px) 0 0;overflow:hidden;aspect-ratio:613/547;
+.pj-shot{margin:0;overflow:hidden;aspect-ratio:613/547;
   border:1px solid var(--line-2);border-radius:var(--radius);background:var(--screen);
   display:grid;place-items:center}
 .pj-shot img{width:100%;height:100%;object-fit:cover}
+.pj-band.is-tight .pj-shot{margin-top:clamp(-26px,-3.5vw,-56px)}
 .pj-copy{padding-top:clamp(18px,3vw,56px)}
 .pj-copy h2{font-size:var(--fs-h2);font-weight:800;color:var(--text);word-break:keep-all}
-.pj-copy p{margin-top:14px;font-size:var(--fs-body);line-height:1.85;color:var(--sub);
-  white-space:pre-line;word-break:keep-all}
+.pj-copy .md-body{margin-top:14px}
 /* 인용 — 상자가 아니라 가는 선 사이에 */
-.pj-quote{display:grid;justify-items:center;gap:14px;width:min(100%,780px);
-  margin:clamp(30px,4.5vw,72px) auto 0;
+.pj-quote-sec{background:var(--bg);padding:clamp(30px,4.5vw,72px) 0 clamp(40px,5.5vw,88px)}
+.pj-quote{display:grid;justify-items:center;gap:14px;width:min(100%,780px);margin:0 auto;
   padding:clamp(22px,3vw,40px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   color:var(--text);font-size:var(--fs-lead);font-weight:400;line-height:1.8;
   text-align:center;word-break:keep-all}
 .pj-quote .ico{width:26px;height:26px;color:var(--accent)}
 
-/* 4) 해결 과정 */
-/* 4) 발생한 문제 → 해결 과정. 두 칸은 같은 어두운 구역으로 이어진다 */
-.pj-problem{background:var(--bg);padding:clamp(40px,5vw,84px) 0 0}
-.pj-issue{font-size:var(--fs-body);line-height:1.85;color:var(--sub);
-  white-space:pre-line;word-break:keep-all}
+/* 발생한 문제 → 해결 과정. 둘을 이어서 부르면 같은 어두운 구역으로 붙는다 */
+.pj-problem{background:var(--bg);padding:clamp(40px,5vw,84px) 0 clamp(34px,4.2vw,70px)}
+.pj-issue{margin-top:clamp(14px,2vw,24px)}
 .pj-solve{background:var(--bg);padding:clamp(34px,4.2vw,70px) 0 clamp(24px,3vw,48px)}
 .pj-ba{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr);
   gap:clamp(10px,1.5vw,20px);align-items:center;margin-top:clamp(18px,2.5vw,36px)}
@@ -356,20 +361,31 @@ iframe.pj-player{pointer-events:none}
 .pj-arrow{color:var(--rose);font-size:20px;text-align:center;line-height:1}
 .pj-arrow:before{content:"→"}
 .pj-note{margin-top:clamp(18px,2.5vw,36px);padding-top:clamp(16px,2vw,26px);
-  border-top:1px solid var(--line);font-size:var(--fs-body);line-height:1.85;
-  color:var(--sub);white-space:pre-line;word-break:keep-all}
+  border-top:1px solid var(--line)}
 
-/* 5) 상세 기획서 */
-.pj-extra{display:block;background:var(--bg);padding:clamp(40px,5vw,84px) 0 clamp(50px,7vh,100px)}
-.pj-extra .back{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:11px 24px;
+/* 상세 기획서 */
+.pj-extra{display:block;background:var(--bg);padding:clamp(40px,5vw,84px) 0 0}
+
+/* 자유 양식(글·이미지·표) */
+.pj-free{background:var(--bg);padding:clamp(40px,5vw,84px) 0 clamp(24px,3vw,48px)}
+.pj-figure{margin:clamp(16px,2.4vw,30px) 0 0;overflow:hidden;border:1px solid var(--line-2);
+  border-radius:var(--radius);background:var(--screen);display:grid;place-items:center}
+.pj-figure img{display:block;width:100%;height:auto}
+.pj-figure figcaption{width:100%;padding:14px 18px;border-top:1px solid var(--line);
+  color:var(--dim);font-size:var(--fs-small)}
+
+/* 맨 아래 "메인으로" — 마지막 양식의 밝기를 그대로 이어 간다 */
+.pj-foot{background:var(--bg);padding:0 0 clamp(50px,7vh,100px)}
+.pj-foot .back{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:11px 24px;
   margin-top:clamp(30px,4vw,56px);border:1px solid var(--line);border-radius:2px;
   background:transparent;color:var(--sub);font-size:var(--fs-small);font-weight:600;
   letter-spacing:.08em;transition:border-color .15s ease,color .15s ease}
-.pj-extra .back:hover{border-color:var(--accent);color:var(--accent)}
+.pj-foot .back:hover{border-color:var(--accent);color:var(--accent)}
 
 @media(max-width:760px){
   .pj-row{grid-template-columns:1fr}
-  .pj-shot{margin-top:-24px}
+  .pj-shot{margin-top:0}
+  .pj-band.is-tight .pj-shot{margin-top:-24px}
   .pj-ba{grid-template-columns:1fr;gap:10px}
   .pj-arrow:before{content:"↓"}
   .pj-thumbs-wrap{max-width:46%}
@@ -458,18 +474,26 @@ iframe.pj-player{pointer-events:none}
 /* ========== 자기소개서 ========== */
 .cover-page{position:relative;padding:clamp(26px,4vw,56px)}
 .cover-page h1{margin:2px 0 clamp(22px,3vw,36px);font-size:var(--fs-h1);font-weight:800}
-.cover-body{font-size:var(--fs-body);line-height:2;color:var(--sub);word-break:keep-all}
-.cover-body h2{margin:34px 0 14px;padding-top:24px;border-top:1px solid var(--line);
+.cover-body,.md-body{font-size:var(--fs-body);line-height:2;color:var(--sub);word-break:keep-all}
+.cover-body h2,.md-body h2{margin:34px 0 14px;padding-top:24px;border-top:1px solid var(--line);
   font-size:clamp(16px,1.7vw,20px);color:var(--text)}
-.cover-body h2:first-child{margin-top:0;padding-top:0;border-top:0}
-.cover-body p{margin:0 0 14px}
-.cover-body strong{color:var(--text);font-weight:700}
-.cover-body blockquote{margin:0 0 18px;padding:2px 0 2px 18px;border-left:2px solid var(--accent);
+.cover-body h2:first-child,.md-body h2:first-child{margin-top:0;padding-top:0;border-top:0}
+.cover-body p,.md-body p{margin:0 0 14px}
+.cover-body strong,.md-body strong{color:var(--text);font-weight:700}
+.cover-body blockquote,.md-body blockquote{margin:0 0 18px;padding:2px 0 2px 18px;border-left:2px solid var(--accent);
   color:var(--text)}
-.cover-body blockquote p:last-child{margin-bottom:0}
-.cover-body hr{height:0;margin:28px 0;border:0;border-top:1px solid var(--line)}
-.cover-body ul,.cover-body ol{margin:0 0 14px;padding-left:20px}
-.cover-body li{margin:4px 0}
+.cover-body blockquote p:last-child,.md-body blockquote p:last-child{margin-bottom:0}
+.cover-body hr,.md-body hr{height:0;margin:28px 0;border:0;border-top:1px solid var(--line)}
+.cover-body ul,.cover-body ol,.md-body ul,.md-body ol{margin:0 0 14px;padding-left:20px}
+.cover-body li,.md-body li{margin:4px 0}
+/* 프로젝트 쪽 본문은 줄 간격을 조금 좁게 */
+.md-body{line-height:1.85}
+.md-body>*:last-child{margin-bottom:0}
+.md-body h3{margin:1.6em 0 .5em;color:var(--text);font-size:var(--fs-lead);font-weight:800}
+.md-body img{display:block;margin:18px 0;border:1px solid var(--line);border-radius:var(--radius)}
+.md-body a{color:var(--accent);text-decoration:underline}
+.md-body code{padding:1px 5px;border:1px solid var(--line);border-radius:3px;
+  background:var(--bg-2);font-size:13px}
 
 @media(max-width:900px){
   .with-menu{grid-template-columns:minmax(0,1fr)}
