@@ -553,6 +553,7 @@ projects:[
 
 그리하여 1차적으로 팀장과의 면담을 진행했습니다. 정해진 것은 다음과 같습니다.
 
+카드: assets/images/project-01-rule-decide.png, assets/images/project-01-rule-follow.png
 - 팀장은 결정과 검수의 역할만 하고 앞으로 결정해야 하는 사항은 부팀장이 정한다.
 - 팀장의 결정은 절대적이며 팀원들은 의견 제시 시간에만 문서로 정리하여 의견을 낼 수 있다.
 

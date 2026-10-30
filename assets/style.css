@@ -445,7 +445,9 @@ iframe.pj-player{pointer-events:none}
 .md-body img.ink,.pj-card img.ink{margin:0;border:0;border-radius:0}
 .on-light .ink{filter:invert(1)}
 /* 높이를 묶어 두면 가로로 긴 그림은 넓게, 정사각에 가까운 그림은 좁게 앉는다 */
-/* 글·카드 사이에 묻히지 않게 위아래를 넉넉히 띄운다 */
+/* 글·카드 사이에 묻히지 않게 위아래를 넉넉히 띄운다.
+   카드 바로 뒤는 특히 붙어 보여 더 띄운다 */
+.pj-cards+.pj-ink{margin-top:clamp(44px,5.6vw,78px)}
 .pj-ink{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:center;
   gap:clamp(10px,1.4vw,18px);margin:clamp(28px,3.6vw,48px) 0}
 .pj-ink .ink{max-height:clamp(96px,13vw,190px)}
@@ -455,14 +457,15 @@ iframe.pj-player{pointer-events:none}
 /* 본문 목록 여백(.md-body ol)보다 특이도가 높아야 이 값이 산다 */
 .pj-cards,.md-body .pj-cards{display:grid;gap:clamp(12px,1.6vw,22px);
   margin:clamp(16px,2vw,26px) 0;padding:0;list-style:none;max-width:none}
-.pj-cards.n2{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* 두 장일 때도 세 장과 같은 크기로 묶는다 — 칸을 반씩 나누면 너무 커진다 */
+.pj-cards.n2{grid-template-columns:repeat(2,minmax(0,374px));justify-content:center}
 .pj-cards.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .pj-cards.n4{grid-template-columns:repeat(4,minmax(0,1fr))}
 /* 카드만 흰 바탕을 쓴다(엑셀 표와 같은 예외). on-light 가 안쪽 색을 뒤집는다 */
 .pj-card{display:flex;flex-direction:column;gap:10px;background:#fff;
   padding:clamp(14px,1.7vw,22px);border:1px solid var(--line-2);border-radius:var(--radius)}
 .pj-card-ink{display:block}
-.pj-card-ink .ink{width:100%;aspect-ratio:3/2;object-fit:contain;max-height:none}
+.pj-card-ink .ink{width:100%;aspect-ratio:3/2;object-fit:contain;max-height:clamp(110px,13vw,168px)}
 .pj-card-n{color:var(--accent);font-size:var(--fs-label);font-weight:800;letter-spacing:var(--ls)}
 .pj-card p{margin:0;color:var(--read);font-size:var(--fs-body);line-height:1.7}
 @media(max-width:860px){
