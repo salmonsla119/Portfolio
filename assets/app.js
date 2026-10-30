@@ -382,7 +382,7 @@ var BLOCKS={
       +'<div class="md-body pj-issue">'+bodyHtml(b.body||c.p.problem||'발생한 문제 입력')+'</div>';
   }},
 
-  '해결':{cls:'pj-solve',tone:'dark',make:function(c,b){
+  '해결':{cls:'pj-solve',tone:'light',make:function(c,b){
     var s=c.p.solution||{},
         body=b.body||s.note||'해결 과정 설명 입력',
         /* 본문에 전·후를 적었으면 그 자리에 그리고, 안 적었을 때만
