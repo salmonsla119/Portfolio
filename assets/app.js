@@ -447,7 +447,8 @@ var BLOCKS={
       +body;
   }},
 
-  '이미지':{cls:'pj-free',tone:'light',make:function(c,b){
+  /* tone:'이어받기' — 바로 위 칸과 같은 밝기로 붙는다(띠가 따로 생기지 않게) */
+  '이미지':{cls:'pj-free',tone:'이어받기',make:function(c,b){
     var src=b.fields['그림']||b.fields['사진']||'',cap=b.fields['설명']||b.body;
     return(b.fields['제목']?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'image')+'">'
           +mdLine(b.fields['제목'])+'</h2>':'')
@@ -456,7 +457,7 @@ var BLOCKS={
   }},
 
   /* 엑셀 표 — assets/sheets.js 의 이름을 적는다 */
-  '표':{cls:'pj-free',tone:'light',make:function(c,b){
+  '표':{cls:'pj-free',tone:'이어받기',make:function(c,b){
     var t=sheetTable(b.fields['이름']||String(b.body||'').trim());
     return(b.fields['제목']?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'grid')+'">'
           +mdLine(b.fields['제목'])+'</h2>':'')
@@ -475,7 +476,8 @@ function blockSection(b,c,prev){
   if(!key){key='글';if(!b.fields['제목'])b.fields['제목']=b.name}
   var spec=BLOCKS[key],
       set=b.fields['구역'],
-      tone=set?(/어둡|검|dark/i.test(set)?'dark':'light'):spec.tone,
+      tone=set?(/어둡|검|dark/i.test(set)?'dark':'light')
+             :(spec.tone==='이어받기'?(prev||'light'):spec.tone),
       /* 같은 밝기가 이어지면 위 패딩을 뺀다(구역이 두 번 겹쳐 보이지 않게) */
       tight=prev===tone?' is-tight':'';
   return{tone:tone,html:'<section class="'+spec.cls+(tone==='light'?' on-light':'')+tight+'">'

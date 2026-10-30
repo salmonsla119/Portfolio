@@ -402,6 +402,9 @@ iframe.pj-player{pointer-events:none}
 /* 여러 장은 한 줄로 */
 .pj-figs{display:grid;gap:clamp(10px,1.4vw,18px);margin:clamp(16px,2.4vw,30px) 0 0}
 .pj-cols .pj-figs{margin:0}
+/* 구역의 첫 요소면 위 margin 을 뺀다.
+   그대로 두면 margin 이 구역 밖으로 빠져나가 그 틈으로 어두운 바탕이 띠처럼 비친다 */
+.wrap>.pj-figs:first-child,.wrap>.pj-figure:first-child{margin-top:0}
 .pj-figs.n2{grid-template-columns:1fr 1fr}
 .pj-figs.n3{grid-template-columns:1fr 1fr 1fr}
 .pj-figs.n4{grid-template-columns:1fr 1fr 1fr 1fr}
