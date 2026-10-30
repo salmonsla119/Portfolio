@@ -28,6 +28,8 @@
 | `assets/style.css` | 전체 스타일 |
 | `assets/sheets.js` | 엑셀(.xlsx) 표 데이터. `tools/xlsx-to-sheets.py`가 생성 |
 | `tools/xlsx-to-sheets.py` | 엑셀을 위 JS로 바꾸는 보조 스크립트 (사이트 실행에는 불필요) |
+| `tools/guide-shots.js` | `편집방법.md`의 양식 예시 그림을 다시 만드는 보조 스크립트 (사이트 실행에는 불필요) |
+| `docs/blocks/` | 위 스크립트가 만든 양식 예시 그림. **양식의 생김새를 바꿨으면 다시 돌릴 것** |
 | `편집방법.md` | 사용자용 한국어 편집 안내 (구조를 바꾸면 여기도 갱신할 것) |
 
 프로젝트 항목에는 `problem`(발생한 문제)과 `solution`(해결 과정)이 따로 있다.

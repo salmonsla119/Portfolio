@@ -341,6 +341,7 @@ iframe.pj-player{pointer-events:none}
   color:var(--text);font-size:var(--fs-small);font-weight:600;font-style:normal;line-height:1.4}
 .pj-gain i{color:var(--dim);font-size:var(--fs-small);font-style:normal}
 .pj-copy h2{font-size:var(--fs-h2);font-weight:800;color:var(--text);word-break:keep-all}
+.pj-copy h2 b{color:var(--accent)}
 .pj-copy .md-body{margin-top:14px}
 /* 인용 — 상자가 아니라 가는 선 사이에 */
 .pj-quote-sec{background:var(--bg);padding:clamp(30px,4.5vw,72px) 0 clamp(40px,5.5vw,88px)}
