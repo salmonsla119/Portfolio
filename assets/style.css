@@ -14,9 +14,10 @@
   --accent-soft:#cfe9f2;/* 하늘색보다 옅은 톤 (도트 아이콘 안쪽) */
   --light-bg:#eceef1;  /* 밝은 구역 배경 — 어두운 구역에서 이 색을 써야 할 때도 여기서 가져간다 */
   --mark:rgba(166,217,232,.30); /* 형광펜 (==글== 과 인용) */
+  --read:#c8d0d7;      /* 읽는 글(본문) — 보조색보다 또렷하게 */
   --text:#e7ebee;      /* 본문 글자 */
   --sub:#9aa3ab;       /* 보조 글자 */
-  --dim:#6f777f;       /* 흐린 글자·안내 */
+  --dim:#959ea6;       /* 흐린 글자·안내 */
   --line:rgba(255,255,255,.24);   /* 가는 선 */
   --line-2:rgba(255,255,255,.5);  /* 조금 더 또렷한 선 */
   --radius:6px;
@@ -25,8 +26,8 @@
   --side:max(20px,env(safe-area-inset-left));
   /* 글씨 크기 — 큰 제목 하나만 크고 나머지는 작게 */
   --fs-label:11px;
-  --fs-small:12px;
-  --fs-body:14px;
+  --fs-small:13px;
+  --fs-body:15px;
   --fs-lead:16px;
   --fs-h2:clamp(19px,2vw,30px);
   --fs-h1:clamp(25px,3vw,44px);
@@ -67,14 +68,15 @@ ul{margin:0;padding:0;list-style:none}
   --bg-2:#e3e6ea;
   --box:#ffffff;
   --screen:#dde1e6;
-  --accent:#3e8ca4;
+  --accent:#2f6b80;
   --accent-ink:#ffffff;
   --text:#1b1f24;
   --sub:#5d666e;
-  --dim:#8a9299;
+  --dim:#5f686f;
   --line:rgba(0,0,0,.14);
   --line-2:rgba(0,0,0,.34);
   --mark:rgba(62,140,164,.22);
+  --read:#39424a;
   background:var(--bg);
   color:var(--text);
 }
@@ -501,13 +503,13 @@ iframe.pj-player{pointer-events:none}
 .rs-rail time{display:block;color:var(--accent);font-size:var(--fs-label);letter-spacing:.06em}
 .rs-rail h3{margin:6px 0;font-size:var(--fs-lead);font-weight:800}
 .rs-rail b{display:block;color:var(--accent);font-size:var(--fs-label);font-weight:600}
-.rs-rail p{margin-top:8px;color:var(--sub);font-size:var(--fs-small);line-height:1.7}
+.rs-rail p{margin-top:8px;color:var(--read);font-size:var(--fs-body);line-height:1.75}
 
 .rs-list>li{padding:14px 0;border-top:1px solid var(--line)}
 .rs-list>li:first-child{border-top:0;padding-top:0}
 .rs-list time{display:block;color:var(--accent);font-size:var(--fs-label);letter-spacing:.06em}
 .rs-list strong{font-size:var(--fs-body);font-weight:800}
-.rs-list p{margin-top:4px;color:var(--sub);font-size:var(--fs-small)}
+.rs-list p{margin-top:4px;color:var(--read);font-size:var(--fs-body);line-height:1.75}
 
 .personal-list>div{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:12px 0;
   border-top:1px solid var(--line)}
@@ -526,7 +528,7 @@ iframe.pj-player{pointer-events:none}
 /* ========== 자기소개서 ========== */
 .cover-page{position:relative;padding:clamp(26px,4vw,56px)}
 .cover-page h1{margin:2px 0 clamp(22px,3vw,36px);font-size:var(--fs-h1);font-weight:800}
-.cover-body,.md-body{font-size:var(--fs-body);line-height:2;color:var(--sub);word-break:keep-all}
+.cover-body,.md-body{font-size:var(--fs-body);line-height:2;color:var(--read);word-break:keep-all}
 .cover-body h2,.md-body h2{margin:34px 0 14px;padding-top:24px;border-top:1px solid var(--line);
   font-size:clamp(16px,1.7vw,20px);color:var(--text)}
 .cover-body h2:first-child,.md-body h2:first-child{margin-top:0;padding-top:0;border-top:0}
@@ -548,7 +550,7 @@ iframe.pj-player{pointer-events:none}
 .cover-body mark,.md-body mark{padding:0 .2em;border-radius:2px;
   background:var(--mark);color:inherit}
 /* 프로젝트 쪽 본문은 줄 간격을 조금 좁게 */
-.md-body{line-height:1.85}
+.md-body{line-height:1.9}
 .md-body>*:first-child{margin-top:0}
 .md-body>*:last-child{margin-bottom:0}
 .md-body h3{display:flex;align-items:center;gap:10px;margin:1.9em 0 .7em;
@@ -587,7 +589,7 @@ iframe.pj-player{pointer-events:none}
 .proj-card-meta{padding:14px 16px 16px}
 .proj-card-meta span{color:var(--accent);font-size:var(--fs-label);letter-spacing:.06em}
 .proj-card-meta h2{margin:5px 0;font-size:var(--fs-lead);font-weight:800}
-.proj-card-meta p{color:var(--sub);font-size:var(--fs-small)}
+.proj-card-meta p{color:var(--read);font-size:var(--fs-body)}
 .proj-card:hover{border-color:var(--accent);transform:translateY(-2px)}
 
 /* ========== 상세 기획서 뷰어 (프로젝트 페이지 아래) ========== */
