@@ -394,12 +394,18 @@ iframe.pj-player{pointer-events:none}
 .pj-figure figcaption{width:100%;padding:14px 18px;border-top:1px solid var(--line);
   color:var(--dim);font-size:var(--fs-small)}
 
-/* 기획서 슬라이드처럼 — 글 옆에 그림 한 장 */
-.pj-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,42%);
+/* 기획서 슬라이드처럼 — 글 옆에 그림 한 장.
+   글과 그림의 윗줄을 맞추고, 그림은 너무 길어지지 않게 높이를 묶는다 */
+.pj-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,38%);
   gap:clamp(20px,3.5vw,56px);align-items:start}
-.pj-cols.flip{grid-template-columns:minmax(0,42%) minmax(0,1fr)}
+.pj-cols.flip{grid-template-columns:minmax(0,38%) minmax(0,1fr)}
 .pj-cols .md-body{margin:0}
-/* 여러 장은 한 줄로 */
+/* 옆그림은 높이를 한 범위로 묶어 구역마다 들쭉날쭉하지 않게 한다.
+   범위를 벗어나는 그림만 조금 잘린다(위쪽을 남긴다) */
+.pj-cols .pj-figs img{min-height:clamp(220px,26vw,300px);max-height:clamp(320px,40vw,560px);
+  object-fit:cover;object-position:center 30%}
+/* 여러 장은 한 줄로. 비율을 4:3 으로 맞춰 아랫변까지 가지런히 떨어지게 한다
+   (원본 비율이 다르면 조금 잘린다) */
 .pj-figs{display:grid;gap:clamp(10px,1.4vw,18px);margin:clamp(16px,2.4vw,30px) 0 0}
 .pj-cols .pj-figs{margin:0}
 /* 구역의 첫 요소면 위 margin 을 뺀다.
@@ -408,6 +414,7 @@ iframe.pj-player{pointer-events:none}
 .pj-figs.n2{grid-template-columns:1fr 1fr}
 .pj-figs.n3{grid-template-columns:1fr 1fr 1fr}
 .pj-figs.n4{grid-template-columns:1fr 1fr 1fr 1fr}
+.pj-figs.n2 img,.pj-figs.n3 img,.pj-figs.n4 img{aspect-ratio:4/3;object-fit:cover}
 .pj-figs img{display:block;width:100%;height:auto;border:1px solid var(--line-2);
   border-radius:var(--radius);background:var(--screen)}
 .pj-figs figcaption{grid-column:1/-1;margin-top:2px;color:var(--dim);font-size:var(--fs-small)}
@@ -524,7 +531,9 @@ iframe.pj-player{pointer-events:none}
   color:var(--text)}
 .cover-body blockquote p:last-child,.md-body blockquote p:last-child{margin-bottom:0}
 .cover-body hr,.md-body hr{height:0;margin:28px 0;border:0;border-top:1px solid var(--line)}
-.cover-body ul,.cover-body ol,.md-body ul,.md-body ol{margin:0 0 14px;padding-left:20px}
+.cover-body ul,.cover-body ol{margin:0 0 14px;padding-left:20px}
+/* 프로젝트 본문은 글머리 기호 폭만큼만 들여써서 굵은 소제목과 왼쪽 끝을 맞춘다 */
+.md-body ul,.md-body ol{margin:0 0 14px;padding-left:1.15em}
 .cover-body li,.md-body li{margin:4px 0}
 /* 겹친 목록 */
 .cover-body li>ul,.cover-body li>ol,.md-body li>ul,.md-body li>ol{margin:4px 0 0}
