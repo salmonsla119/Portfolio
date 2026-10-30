@@ -119,6 +119,11 @@ body.on-light{background:var(--bg)}
 .stage-fx{position:absolute;left:0;top:0;width:1905px;height:942px;
   transform:scale(var(--k,1));transform-origin:0 0}
 .stage-fx>*{position:absolute;margin:0}
+/* 맨 뒤에 깔리는 손그림 배경 (-1,0) 1908x1074 */
+/* 손그림 배경 — 피그마에서 채우기 투명도 43%, 1908x1074 꽉 채움(FILL).
+   img{max-width:100%} 때문에 캔버스보다 넓은 그림이 잘리므로 풀어 준다 */
+.fx-bg{left:-1px;top:0;width:1908px;max-width:none;height:1074px;object-fit:cover;
+  opacity:.43;pointer-events:none;user-select:none}
 
 /* 제목 줄 — 아이콘(66,25) + 글자 3개 */
 .fx-head{left:66px;top:25px;display:flex;align-items:center;gap:14px}
@@ -190,7 +195,7 @@ body.on-light{background:var(--bg)}
 .fx-mask{left:0;top:862px;width:1905px;height:80px;background:var(--bg)}
 /* 그림 두 장 + 바닥 선 */
 /* 초상화 — 누르면 이력서로 */
-.fx-portrait{left:578px;top:56px;width:780px;display:block;cursor:pointer}
+.fx-portrait{left:561px;top:56px;width:780px;display:block;cursor:pointer}
 .fx-portrait img{display:block;width:100%;height:auto;
   transition:filter .15s ease,transform .15s ease}
 .fx-portrait:hover img{filter:brightness(1.06)}
@@ -246,6 +251,7 @@ body.on-light{background:var(--bg)}
   .fx-panel{width:100%;border-radius:14px}
   .fx-panel:before{left:24px;top:-18px;
     border:9.5px solid transparent;border-bottom:18px solid var(--accent);border-top:0}
+  .fx-bg{display:none}
   .fx-mask{display:none}
   .fx-portrait{width:62%;align-self:center}
   .fx-brush{width:38%;align-self:flex-end}
