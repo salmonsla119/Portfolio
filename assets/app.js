@@ -260,9 +260,10 @@ function sheetTable(key){
 /* 양식 칸으로 인정하는 키. 여기 없는 `낱말:` 줄은 그냥 본문이다.
    칸은 둘로 나뉜다.
    - BLOCK_KEY : 양식 전체를 설정하는 칸. 블록 안 어디에 적어도 되고 본문에서는 빠진다.
-   - FLOW_KEY  : 본문에서 **적은 자리에 그대로 그려지는** 칸(인용 상자, 전·후 이미지). */
+   - FLOW_KEY  : 본문에서 **적은 자리에 그대로 그려지는** 칸(인용 상자, 전·후 이미지,
+                 손그림, 카드). */
 var BLOCK_KEY=/^[ \t]*(그림|사진|제목|아이콘|이름|설명|구역|포지션|역량|작업[ \t]*기간|기간|장르|링크|그림위치|비율|문양)[ \t]*:[ \t]*(.*)$/,
-    FLOW_KEY=/^[ \t]*(전|후|인용)[ \t]*:[ \t]*(.*)$/,
+    FLOW_KEY=/^[ \t]*(전|후|인용|손그림|카드)[ \t]*:[ \t]*(.*)$/,
     RE_CALL=/^[ \t]*@@[ \t]*(.*?)[ \t]*$/,
     RE_RULE=/^[ \t]*-{3,}[ \t]*$/;
 
@@ -329,28 +330,63 @@ function figures(v,caption,ratio){
     +list.map(function(src){return'<img src="'+e(src)+'" alt="" loading="lazy">'}).join('')
     +(caption?'<figcaption>'+mdLine(caption)+'</figcaption>':'')+'</figure>';
 }
-/* 본문 — 마크다운에 더해 `인용:` `전:` `후:` 줄을 적은 자리에 그린다 */
+/* 손그림 — 바탕이 비어 있는 선 그림. 높이를 묶어 두어
+   가로로 긴 그림은 넓게, 정사각에 가까운 그림은 좁게 들어간다 */
+function inkFigs(v){
+  var list=String(v||'').split(',').map(function(t){return t.trim()}).filter(Boolean);
+  if(!list.length)return'';
+  return'<div class="pj-ink n'+Math.min(list.length,4)+'">'
+    +list.map(function(src){
+        return'<img class="ink" src="'+e(src)+'" alt="" loading="lazy">'}).join('')
+    +'</div>';
+}
+/* 카드 — `카드: 그림들` 바로 아래의 목록 항목이 카드 한 장씩이 된다.
+   그림은 적은 차례대로 카드에 들어간다(모자라면 그림 없는 카드) */
+function cardGrid(v,items){
+  if(!items.length)return'';
+  var pics=String(v||'').split(',').map(function(t){return t.trim()}).filter(Boolean);
+  return'<ol class="pj-cards n'+Math.min(items.length,4)+'">'+items.map(function(t,i){
+    return'<li class="pj-card">'
+      +(pics[i]?'<span class="pj-card-ink"><img class="ink" src="'+e(pics[i])
+        +'" alt="" loading="lazy"></span>':'')
+      +'<b class="pj-card-n">'+('0'+(i+1)).slice(-2)+'</b>'
+      +'<p>'+(window.renderItem?window.renderItem(t):e(t))+'</p>'
+    +'</li>'}).join('')+'</ol>';
+}
+/* 본문 — 마크다운에 더해 `인용:` `전:` `후:` `손그림:` `카드:` 줄을 적은 자리에 그린다 */
+var RE_ITEM=/^[ \t]*[-*][ \t]+(.*)$/;
 function bodyHtml(t){
   var lines=String(t==null?'':t).replace(/\r\n?/g,'\n').split('\n'),
-      out='',buf=[],ba=null,i,f;
+      out='',buf=[],ba=null,cd=null,items=[],i,f,m;
   function text(){var v=buf.join('\n');buf=[];if(v.trim())out+=mdHtml(v)}
   function row(){if(ba){out+=baRow(ba[0],ba[1]);ba=null}}
+  /* 카드 줄 아래에 모아 둔 목록 항목을 카드로 내보낸다 */
+  function cards(){if(cd!==null){out+=cardGrid(cd,items);cd=null;items=[]}}
   for(i=0;i<lines.length;i++){
     f=FLOW_KEY.exec(lines[i]);
     if(f){
-      text();
-      if(f[1]==='인용'){row();out+=quoteBox(f[2].trim());continue}
+      text();row();cards();
+      if(f[1]==='인용'){out+=quoteBox(f[2].trim());continue}
+      if(f[1]==='손그림'){out+=inkFigs(f[2].trim());continue}
+      if(f[1]==='카드'){cd=f[2].trim();items=[];continue}
       if(!ba)ba=['',''];
       if(f[1]==='전'){if(ba[0]){row();ba=['','']}ba[0]=f[2].trim()}
       else ba[1]=f[2].trim();
       continue;
+    }
+    /* 카드 줄 바로 아래의 목록은 카드 내용이다. 목록이 끝나면 카드도 끝난다 */
+    if(cd!==null){
+      m=RE_ITEM.exec(lines[i]);
+      if(m){items.push(m[1]);continue}
+      if(lines[i].trim()==='')continue;
+      cards();
     }
     /* 전: 과 후: 사이의 빈 줄은 한 벌로 묶어 준다 */
     if(ba&&lines[i].trim()==='')continue;
     row();
     buf.push(lines[i]);
   }
-  text();row();
+  text();row();cards();
   return out;
 }
 /* 그림 칸: 주소가 있으면 그림, 없으면 안내 자리 */
@@ -518,7 +554,8 @@ function blockSection(b,c,prev,n){
       /* 같은 밝기가 이어지면 위 패딩을 뺀다(구역이 두 번 겹쳐 보이지 않게) */
       tight=prev===tone?' is-tight':'';
   /* 그림이 붙는 양식(이미지·표)과 그림 칸을 쓴 글에는 문양을 깔지 않는다 */
-  var bare=['이미지','표','기획서','인용'].indexOf(key)<0&&!b.fields['그림']&&!b.fields['사진'],
+  var bare=['이미지','표','기획서','인용'].indexOf(key)<0&&!b.fields['그림']&&!b.fields['사진']
+            &&!/^[ \t]*(손그림|카드)[ \t]*:/m.test(b.body||''),
       orn=bare?ornament(b,n||0):'';
   return{tone:tone,html:'<section class="'+spec.cls+(tone==='light'?' on-light':'')+tight+'">'
     +'<div class="wrap'+(orn?' has-orn':'')+'">'+orn+spec.make(c,b)+'</div></section>'};

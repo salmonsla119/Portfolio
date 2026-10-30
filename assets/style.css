@@ -438,6 +438,39 @@ iframe.pj-player{pointer-events:none}
   border-radius:var(--radius);background:var(--screen)}
 .pj-figs figcaption{grid-column:1/-1;margin-top:2px;color:var(--dim);font-size:var(--fs-small)}
 
+/* 손그림 — 바탕이 비어 있는 선 그림. 파일은 밝은 선으로 만들어 두었으므로
+   밝은 구역에서만 색을 뒤집는다(테두리도 바탕도 두지 않는다) */
+.ink{display:block;width:auto;max-width:100%;height:auto}
+/* 본문 그림의 테두리·여백(.md-body img)은 손그림에 두지 않는다 */
+.md-body img.ink,.pj-card img.ink{margin:0;border:0;border-radius:0}
+.on-light .ink{filter:invert(1)}
+/* 높이를 묶어 두면 가로로 긴 그림은 넓게, 정사각에 가까운 그림은 좁게 앉는다 */
+.pj-ink{display:flex;flex-wrap:wrap;align-items:flex-end;
+  gap:clamp(10px,1.4vw,18px);margin:clamp(18px,2.6vw,32px) 0}
+.pj-ink .ink{max-height:clamp(96px,13vw,190px)}
+.md-body>.pj-ink:first-child{margin-top:0}
+
+/* 카드 — `카드:` 줄 아래 목록 항목 하나가 카드 한 장. 그림은 적은 차례대로 들어간다 */
+.pj-cards{display:grid;gap:clamp(12px,1.6vw,22px);margin:clamp(20px,2.8vw,34px) 0;
+  padding:0;list-style:none}
+.md-body>.pj-cards{max-width:none}
+.pj-cards.n2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pj-cards.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pj-cards.n4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pj-card{display:flex;flex-direction:column;gap:10px;
+  padding:clamp(14px,1.7vw,22px);border:1px solid var(--line-2);border-radius:var(--radius)}
+.pj-card-ink{display:block}
+.pj-card-ink .ink{width:100%;aspect-ratio:3/2;object-fit:contain;max-height:none}
+.pj-card-n{color:var(--accent);font-size:var(--fs-label);font-weight:800;letter-spacing:var(--ls)}
+.pj-card p{margin:0;color:var(--read);font-size:var(--fs-body);line-height:1.7}
+@media(max-width:860px){
+  .pj-cards.n3,.pj-cards.n4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  .pj-cards.n2,.pj-cards.n3,.pj-cards.n4{grid-template-columns:1fr}
+  .pj-ink .ink{max-height:clamp(80px,22vw,140px)}
+}
+
 /* 맨 아래 "메인으로" — 마지막 양식의 밝기를 그대로 이어 간다 */
 .pj-foot{background:var(--bg);padding:0 0 clamp(50px,7vh,100px)}
 .pj-foot .back{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:11px 24px;

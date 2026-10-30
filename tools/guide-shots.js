@@ -18,12 +18,18 @@ const CASES=[
  ['text','@@기획 의도\n---\n**몬스터 헌터**의 제작 영상을 보고 시작한 기획입니다.\n\n1. 손맛이 먼저다\n2. 숫자는 손맛을 거드는 역할이다\n'],
  ['image','@@이미지\n그림: '+IMG+'\n설명: 수정한 전투 화면\n'],
  ['sheet','@@표\n제목: 작업 **캘린더**\n이름: work-calendar-2026-08\n'],
+ ['cards','@@문제\n제목: 의견 불일치\n\n손그림: assets/images/project-01-issue-torn.png\n\n'
+        +'원인은 다음과 같습니다.\n\n'
+        +'카드: assets/images/project-01-cause-genre.png, assets/images/project-01-cause-priority.png,'
+        +' assets/images/project-01-cause-authority.png\n'
+        +'- 정해진 장르의 정의에 대한 서로 다른 이해\n- 생각하는 방향성 두개의 우선도 차이\n'
+        +'- 애매모호한 팀장과 부팀장의 권한\n'],
  ['tabs','@@탭 프로젝트\n\n@@글\n제목: 게임 소개\n\n샷건에 주사위를 장전해 쏘는 전투입니다.\n\n'
         +'@@탭 문제 상황\n\n@@문제\n테스터 절반이 첫 전투에서 규칙을 이해하지 못했습니다.\n']
 ];
 /* PDF·문서에 넣었을 때 글씨가 읽히도록 900px 폭으로 찍습니다 */
 /* 그림이 큰 칸만 jpg 로 저장해 파일 크기를 줄입니다 */
-const JPG=['intro','solve','image'];
+const JPG=['intro','solve','image','cards'];
 
 (async()=>{
   const b=await chromium.launch({args:['--no-sandbox']});

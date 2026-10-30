@@ -527,12 +527,17 @@ projects:[
 @@문제
 제목: 의견 불일치
 
+손그림: assets/images/project-01-issue-torn.png
+
 1주차에 게임의 컨셉에 대한 팀장과 팀원 개개인의 의견이 모두 일치하지 않았고 작업이 진전되지 않아 ==기획이 한번 엎어졌었습니다==.
 원인은 다음과 같습니다.
 
+카드: assets/images/project-01-cause-genre.png, assets/images/project-01-cause-priority.png, assets/images/project-01-cause-authority.png
 - 정해진 장르의 정의에 대한 서로 다른 이해
 - 생각하는 방향성 두개의 우선도 차이
 - 애매모호한 팀장과 부팀장의 권한
+
+손그림: assets/images/project-01-team.png
 
 팀원 모두가 게임의 각 다른 파트 출신의 현업자인 팀이었고 때문에 서로 자기의사가 강한 상태였습니다.
 팀장은 탑다운과 즉흥 개발에 익숙했고 게임의 세부 컨셉에 관해서는 당장 정할 필요 없다는 입장이었기에 당장 작업이 필요하다 생각하는 저와는 끊임없이 부딧쳤었습니다.

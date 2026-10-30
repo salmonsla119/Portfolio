@@ -93,4 +93,6 @@ function renderMarkdown(md){
   return html;
 }
 window.renderMarkdown=renderMarkdown;
+/* 목록 항목 한 줄 — 카드처럼 목록 밖에서 같은 규칙을 쓸 때 */
+window.renderItem=itemHtml;
 })();
