@@ -22,7 +22,7 @@ var RE_HEAD=/^(#{1,6})\s+(.*)$/,
     RE_HR=/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/;
 /* 목록 항목이 `낱말: 내용` 꼴이면 앞의 낱말을 라벨로 떼어 강조한다
    (플랫폼: PC / 특징: ... 처럼 쓰는 줄이 많다) */
-var RE_KEY=/^([^\s:][^:]{0,13}):[ \t]+(.+)$/;
+var RE_KEY=/^([^\s:][^:.]{0,29}):[ \t]+(.+)$/;
 function itemHtml(text){
   var m=RE_KEY.exec(text);
   return m?'<b class="k">'+inline(m[1])+':</b> '+inline(m[2]):inline(text);
