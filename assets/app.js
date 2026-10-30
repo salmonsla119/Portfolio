@@ -365,7 +365,8 @@ var BLOCKS={
             :hint('획득 역량 입력'))
         +'</dl>'
         +'<h2>'+mdLine(b.fields['제목']||c.p.summary||'한 줄 설명 입력')+'</h2>'
-        +'<div class="md-body">'+bodyHtml(b.body||c.p.body||'상세 설명 입력')+'</div>'
+        /* 본문이 없으면 칸 자체를 넣지 않는다 */
+        +(function(t){return t?'<div class="md-body">'+bodyHtml(t)+'</div>':''}(b.body||c.p.body))
       +'</div>'
     +'</div>';
   }},
