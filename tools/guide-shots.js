@@ -17,7 +17,9 @@ const CASES=[
  ['docs','@@기획서\n'],
  ['text','@@기획 의도\n---\n**몬스터 헌터**의 제작 영상을 보고 시작한 기획입니다.\n\n1. 손맛이 먼저다\n2. 숫자는 손맛을 거드는 역할이다\n'],
  ['image','@@이미지\n그림: '+IMG+'\n설명: 수정한 전투 화면\n'],
- ['sheet','@@표\n제목: 작업 **캘린더**\n이름: work-calendar-2026-08\n']
+ ['sheet','@@표\n제목: 작업 **캘린더**\n이름: work-calendar-2026-08\n'],
+ ['tabs','@@탭 프로젝트\n\n@@글\n제목: 게임 소개\n\n샷건에 주사위를 장전해 쏘는 전투입니다.\n\n'
+        +'@@탭 문제 상황\n\n@@문제\n테스터 절반이 첫 전투에서 규칙을 이해하지 못했습니다.\n']
 ];
 /* PDF·문서에 넣었을 때 글씨가 읽히도록 900px 폭으로 찍습니다 */
 /* 그림이 큰 칸만 jpg 로 저장해 파일 크기를 줄입니다 */
@@ -34,11 +36,18 @@ const JPG=['intro','solve','image'];
         body:(await res.text())+'\nwindow.PORTFOLIO_DATA.projects[0].md='+JSON.stringify(md)+';\n'});
     });
     await pg.goto('http://localhost:8765/project.html?id=project-01',{waitUntil:'load'});
-    /* 맨 위 16:9 화면 다음 칸(= 불러온 양식)만 잘라냅니다 */
-    const box=await pg.evaluate(()=>{
+    /* 맨 위 16:9 화면 다음 칸(= 불러온 양식)만 잘라냅니다.
+       탭 예시만 단추 줄 + 첫 칸의 첫 구역까지 함께 잘라냅니다 */
+    const box=await pg.evaluate(name=>{
+      if(name==='tabs'){
+        const t=document.querySelector('.pj-tabsbar').getBoundingClientRect(),
+              f=document.querySelector('.pj-panel > section').getBoundingClientRect();
+        return{x:0,y:Math.round(t.top+window.scrollY),width:900,
+               height:Math.round(f.bottom-t.top)};
+      }
       const r=document.querySelectorAll('#project > section')[1].getBoundingClientRect();
       return{x:0,y:Math.round(r.top+window.scrollY),width:900,height:Math.round(r.height)};
-    });
+    },name);
     const jpg=JPG.indexOf(name)>=0;
     await pg.screenshot(Object.assign(
       {path:OUT+name+(jpg?'.jpg':'.png'),fullPage:true,clip:box},

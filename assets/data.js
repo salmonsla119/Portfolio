@@ -52,6 +52,12 @@ projects:[
 작업기간: 07/20 ~ 09/03 (34일)
 장르: 주사위, 덱빌딩, 로그라이크, 인크리멘탈
 
+@@탭 프로젝트
+
+@@기획서
+
+@@탭 문제 상황
+
 @@문제
 제목: 의견 불일치
 
@@ -113,8 +119,6 @@ projects:[
 - 팀 내 권한 분할 및 체계 확정
 
 이것으로 일주일 늦어졌던 개발 일정을 효율화시켜 제 시간에 맞출 수 있었습니다.
-
-@@기획서
 `,shortVideos:[{src:"https://www.youtube.com/watch?v=mYlwMKpCUC0&t=1s",title:"High Num 소개 영상"}],images:[],documents:[{title:"2026년 8월 작업 캘린더",src:"assets/documents/work-calendar-2026-08.xlsx",sheet:"work-calendar-2026-08"}]},
   {id:"project-02",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-03",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},

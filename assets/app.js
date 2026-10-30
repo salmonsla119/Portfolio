@@ -434,26 +434,59 @@ var BLOCKS={
 /* md 칸이 비어 있을 때 쓰는 기본 구성 */
 var DEFAULT_MD='@@소개\n@@인용\n@@문제\n@@해결\n@@기획서\n';
 
+/* 양식 하나를 구역으로 그린다. prev 는 바로 앞 구역의 밝기 */
+function blockSection(b,c,prev){
+  var key=BLOCK_ALIAS[String(b.name).replace(/\s+/g,'')];
+  /* 모르는 이름은 글 양식 + 그 이름을 제목으로 */
+  if(!key){key='글';if(!b.fields['제목'])b.fields['제목']=b.name}
+  var spec=BLOCKS[key],
+      set=b.fields['구역'],
+      tone=set?(/어둡|검|dark/i.test(set)?'dark':'light'):spec.tone,
+      /* 같은 밝기가 이어지면 위 패딩을 뺀다(구역이 두 번 겹쳐 보이지 않게) */
+      tight=prev===tone?' is-tight':'';
+  return{tone:tone,html:'<section class="'+spec.cls+(tone==='light'?' on-light':'')+tight+'">'
+    +'<div class="wrap">'+spec.make(c,b)+'</div></section>'};
+}
+/* 맨 아래 "메인으로" — 앞 구역의 밝기를 그대로 이어 간다 */
+function footSection(prev){
+  return'<section class="pj-foot'+(prev==='light'?' on-light':'')+'"><div class="wrap">'
+    +'<a class="back" href="index.html" data-ico="back">메인으로</a></div></section>';
+}
+/* 여러 양식을 이어서 그린다 */
+function blockRun(list,c,prev){
+  var html='',i,r;
+  for(i=0;i<list.length;i++){r=blockSection(list[i],c,prev);html+=r.html;prev=r.tone}
+  return{tone:prev,html:html};
+}
+
 function renderBlocks(md,c){
   var blocks=parseBlocks(md);
   if(!blocks.length)blocks=parseBlocks(DEFAULT_MD);
-  var html='',prev='';
-  for(var i=0;i<blocks.length;i++){
-    var b=blocks[i],key=BLOCK_ALIAS[String(b.name).replace(/\s+/g,'')];
-    /* 모르는 이름은 글 양식 + 그 이름을 제목으로 */
-    if(!key){key='글';if(!b.fields['제목'])b.fields['제목']=b.name}
-    var spec=BLOCKS[key],
-        set=b.fields['구역'],
-        tone=set?(/어둡|검|dark/i.test(set)?'dark':'light'):spec.tone,
-        /* 같은 밝기가 이어지면 위 패딩을 뺀다(구역이 두 번 겹쳐 보이지 않게) */
-        tight=prev===tone?' is-tight':'';
-    html+='<section class="'+spec.cls+(tone==='light'?' on-light':'')+tight+'">'
-      +'<div class="wrap">'+spec.make(c,b)+'</div></section>';
-    prev=tone;
+  /* `@@탭 이름` 을 만나면 그 뒤의 양식들은 그 탭에 들어간다.
+     탭이 하나도 없으면 예전처럼 쭉 이어서 그린다. */
+  var head=[],tabs=[],i,m;
+  for(i=0;i<blocks.length;i++){
+    m=/^탭[ \t]*(.*)$/.exec(blocks[i].name);
+    if(m){tabs.push({title:m[1].trim()||('탭 '+(tabs.length+1)),blocks:[]});continue}
+    (tabs.length?tabs[tabs.length-1].blocks:head).push(blocks[i]);
   }
-  /* 맨 아래 "메인으로" — 마지막 구역의 밝기를 그대로 이어 간다 */
-  return html+'<section class="pj-foot'+(prev==='light'?' on-light':'')+'"><div class="wrap">'
-    +'<a class="back" href="index.html" data-ico="back">메인으로</a></div></section>';
+  var top=blockRun(head,c,'');
+  if(!tabs.length)return top.html+footSection(top.tone);
+
+  /* 탭 단추 줄 — 위 구역과 같은 밝기면 붙여 둔다 */
+  var html=top.html
+    +'<section class="pj-tabsbar on-light'+(top.tone==='light'?' is-tight':'')+'"><div class="wrap">'
+    +'<div class="pj-tabs" role="tablist">'+tabs.map(function(t,n){
+        return'<button type="button" class="pj-tab'+(n?'':' on')+'" data-tab="'+n+'"'
+          +' role="tab" aria-selected="'+(n?'false':'true')+'">'+e(t.title)+'</button>'
+      }).join('')+'</div></div></section>';
+  /* 칸마다 따로 쌓는다. 한 번에 하나만 보이므로 밝기도 칸마다 새로 센다 */
+  for(i=0;i<tabs.length;i++){
+    var run=blockRun(tabs[i].blocks,c,'light');
+    html+='<div class="pj-panel" data-panel="'+i+'"'+(i?' hidden':'')+'>'
+      +run.html+footSection(run.tone)+'</div>';
+  }
+  return html;
 }
 
 /* ================= 프로젝트 상세 =================
@@ -523,6 +556,24 @@ function renderBlocks(md,c){
       +renderBlocks(p.md,{p:p,slides:slides,docs:docs});
 
     paintIcons(root);
+
+    /* 소개 아래 탭 — 누르면 그 칸만 보인다 */
+    var tabBtns=root.querySelectorAll('.pj-tab');
+    for(var tb=0;tb<tabBtns.length;tb++){
+      tabBtns[tb].addEventListener('click',function(ev){
+        var n=ev.currentTarget.getAttribute('data-tab'),
+            btns=root.querySelectorAll('.pj-tab'),
+            panels=root.querySelectorAll('.pj-panel'),x;
+        for(x=0;x<btns.length;x++){
+          var on=btns[x].getAttribute('data-tab')===n;
+          btns[x].classList.toggle('on',on);
+          btns[x].setAttribute('aria-selected',on?'true':'false');
+        }
+        for(x=0;x<panels.length;x++){
+          panels[x].hidden=panels[x].getAttribute('data-panel')!==n;
+        }
+      });
+    }
 
     /* 썸네일 줄을 좌우 화살표로 밀어서 본다 */
     var rail=q('pj-thumbs'),rowArrows=root.querySelectorAll('.pj-thumbs-arrow');
