@@ -19,6 +19,23 @@ var RE_HEAD=/^(#{1,6})\s+(.*)$/,
     RE_UL=/^\s*[-*]\s+/,
     RE_OL=/^\s*\d+[.)]\s+/,
     RE_HR=/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/;
+/* 들여쓴 목록 항목은 바로 앞 항목 안으로 들어간다 */
+function buildList(items,at,depth){
+  var ordered=items[at].ordered,out=[],k=at,sub;
+  while(k<items.length&&items[k].depth>=depth){
+    if(items[k].depth>depth){
+      sub=buildList(items,k,items[k].depth);
+      if(out.length)out[out.length-1]=out[out.length-1].replace(/<\/li>$/,sub.html+'</li>');
+      else out.push('<li>'+sub.html+'</li>');
+      k=sub.next;
+    }else{
+      out.push('<li>'+inline(items[k].text)+'</li>');
+      k++;
+    }
+  }
+  return{html:(ordered?'<ol>':'<ul>')+out.join('')+(ordered?'</ol>':'</ul>'),next:k};
+}
+
 function renderMarkdown(md){
   var lines=String(md||'').replace(/\r\n?/g,'\n').split('\n');
   var html='',i=0,n=lines.length,para=[];
@@ -48,12 +65,15 @@ function renderMarkdown(md){
     }
     if(RE_UL.test(line)||RE_OL.test(line)){
       flushPara();
-      var ordered=RE_OL.test(line),re=ordered?RE_OL:RE_UL,items=[];
-      while(i<n&&re.test(lines[i])){
-        items.push('<li>'+inline(lines[i].replace(re,''))+'</li>');
+      /* 목록은 한 덩어리로 모은 뒤 들여쓰기 깊이대로 겹쳐 쌓는다 */
+      var items=[];
+      while(i<n&&(RE_UL.test(lines[i])||RE_OL.test(lines[i]))){
+        var ord=RE_OL.test(lines[i]),
+            lead=/^[ \t]*/.exec(lines[i])[0].replace(/\t/g,'  ').length;
+        items.push({depth:lead,ordered:ord,text:lines[i].replace(ord?RE_OL:RE_UL,'')});
         i++;
       }
-      html+=ordered?'<ol>'+items.join('')+'</ol>':'<ul>'+items.join('')+'</ul>';
+      html+=buildList(items,0,items[0].depth).html;
       continue;
     }
     if(line.trim()===''){flushPara();i++;continue;}
