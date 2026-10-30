@@ -237,7 +237,7 @@ function sheetTable(key){
    칸은 둘로 나뉜다.
    - BLOCK_KEY : 양식 전체를 설정하는 칸. 블록 안 어디에 적어도 되고 본문에서는 빠진다.
    - FLOW_KEY  : 본문에서 **적은 자리에 그대로 그려지는** 칸(인용 상자, 전·후 이미지). */
-var BLOCK_KEY=/^[ \t]*(그림|사진|제목|아이콘|이름|설명|구역|포지션|역량|작업[ \t]*기간|기간|장르|링크)[ \t]*:[ \t]*(.*)$/,
+var BLOCK_KEY=/^[ \t]*(그림|사진|제목|아이콘|이름|설명|구역|포지션|역량|작업[ \t]*기간|기간|장르|링크|그림위치)[ \t]*:[ \t]*(.*)$/,
     FLOW_KEY=/^[ \t]*(전|후|인용)[ \t]*:[ \t]*(.*)$/,
     RE_CALL=/^[ \t]*@@[ \t]*(.*?)[ \t]*$/,
     RE_RULE=/^[ \t]*-{3,}[ \t]*$/;
@@ -294,6 +294,14 @@ function baRow(before,after){
   if(before||after)return'<div class="pj-ba one">'
     +box(before||after,before?'해결 전':'해결 후')+'</div>';
   return'';
+}
+/* 그림 칸 — 쉼표로 여러 장을 적으면 한 줄에 나란히 건다 */
+function figures(v,caption){
+  var list=String(v||'').split(',').map(function(t){return t.trim()}).filter(Boolean);
+  if(!list.length)return'';
+  return'<figure class="pj-figs n'+Math.min(list.length,4)+'">'
+    +list.map(function(src){return'<img src="'+e(src)+'" alt="" loading="lazy">'}).join('')
+    +(caption?'<figcaption>'+mdLine(caption)+'</figcaption>':'')+'</figure>';
 }
 /* 본문 — 마크다운에 더해 `인용:` `전:` `후:` 줄을 적은 자리에 그린다 */
 function bodyHtml(t){
@@ -420,19 +428,31 @@ var BLOCKS={
       +(b.body?'<div class="md-body">'+bodyHtml(b.body)+'</div>':'');
   }},
 
-  /* 자유 서술 — 제목(없으면 생략) + 마크다운 본문 */
+  /* 자유 서술 — 제목(없으면 생략) + 마크다운 본문.
+     `그림:` 을 한 장 적으면 기획서 슬라이드처럼 글 옆에 붙고,
+     쉼표로 여러 장을 적으면 글 아래에 한 줄로 걸린다. */
   '글':{cls:'pj-free',tone:'light',make:function(c,b){
-    var t=b.fields['제목']||'';
+    var t=b.fields['제목']||'',
+        pics=String(b.fields['그림']||b.fields['사진']||'').split(',')
+               .map(function(x){return x.trim()}).filter(Boolean),
+        side=pics.length===1,
+        flip=/왼|left/i.test(b.fields['그림위치']||''),
+        text='<div class="md-body">'+bodyHtml(b.body)+'</div>',
+        body=side
+          ?'<div class="pj-cols'+(flip?' flip':'')+'">'
+            +(flip?figures(pics[0],b.fields['설명'])+text:text+figures(pics[0],b.fields['설명']))
+           +'</div>'
+          :text+figures(pics.join(','),b.fields['설명']);
     return(t?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'doc')+'">'+mdLine(t)+'</h2>':'')
-      +'<div class="md-body">'+bodyHtml(b.body)+'</div>';
+      +body;
   }},
 
   '이미지':{cls:'pj-free',tone:'light',make:function(c,b){
-    var cap=b.fields['설명']||b.body;
+    var src=b.fields['그림']||b.fields['사진']||'',cap=b.fields['설명']||b.body;
     return(b.fields['제목']?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'image')+'">'
           +mdLine(b.fields['제목'])+'</h2>':'')
-      +'<figure class="pj-figure">'+fill(b.fields['그림']||b.fields['사진'],b.fields['제목'],'이미지 추가 영역')
-      +(cap?'<figcaption class="md-body">'+mdHtml(cap)+'</figcaption>':'')+'</figure>';
+      +(src?figures(src,cap)
+          :'<figure class="pj-figure">'+fill('','','이미지 추가 영역')+'</figure>');
   }},
 
   /* 엑셀 표 — assets/sheets.js 의 이름을 적는다 */

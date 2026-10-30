@@ -56,6 +56,8 @@ projects:[
 @@탭 프로젝트
 
 @@원 페이지 기획서
+그림: assets/images/doc/keyart.jpg
+그림위치: 왼쪽
 
 **운을 장전하고, 적을 쏴 죽여라.**
 
@@ -75,13 +77,12 @@ projects:[
 - 적을 효과적으로 사살하기 위한 아이템 수집
 - 조건을 달성해 업적을 해금하여 새로운 수집품 추가
 
-레퍼런스 게임: 발라트로, 클로버 핏, 벅샷 룰렛
-
 @@이미지
-그림: assets/images/doc/onepage.jpg
-설명: 원 페이지 기획서
+그림: assets/images/doc/ref-2.jpg, assets/images/doc/ref-3.jpg, assets/images/doc/ref-1.jpg
+설명: 레퍼런스 게임 — 발라트로 · 클로버 핏 · 벅샷 룰렛
 
 @@세계관
+그림: assets/images/doc/world.jpg
 구역: 어둡게
 
 **HIGH NUM**
@@ -97,6 +98,8 @@ projects:[
 - 수집품의 형태나 설명 등 간접적인 정보를 통해 유추할 만한 단서가 있다
 
 @@비주얼 컨셉
+그림: assets/images/doc/concept.jpg
+그림위치: 왼쪽
 
 **톤 앤 매너**
 
@@ -123,10 +126,12 @@ projects:[
 - 총에 맞을 시 종이가 뚫린 듯한 이미지로 표현
 
 @@이미지
-그림: assets/images/doc/visual.jpg
-설명: 비주얼 컨셉
+그림: assets/images/doc/mood-1.jpg, assets/images/doc/mood-2.jpg, assets/images/doc/mood-3.jpg
+설명: 무드 레퍼런스 — 밴디의 잉크가게 · 표지판 · 중세 동물 그림
 
 @@플레이어
+그림: assets/images/doc/player.jpg
+그림위치: 왼쪽
 구역: 어둡게
 
 **괴물을 사냥하는 보안관** — 피곤이 짙게 눌러앉은 과묵한 표정과 거칠고 너저분한 모습
@@ -145,11 +150,8 @@ projects:[
 - 탄 장전: 주사위 홀스터에서 원하는 주사위들을 꺼내 장전
 - 게임 일시 정지: 일시 정지 키를 누르면 게임을 정지하고 정지 화면 UI를 호출
 
-@@이미지
-그림: assets/images/doc/player.jpg
-설명: 캐릭터 비주얼 - 플레이어
-
 @@적대 캐릭터
+그림: assets/images/doc/enemy.jpg
 
 **괴물? 광인? 악마?** — 황야를 점령한 정체불명의 존재들. 인간에게 적대적이며, 주인공을 죽이려고 한다
 
@@ -177,8 +179,8 @@ projects:[
 	- 기획 의도: 단발성의 운(요행)만으로는 클리어하기 어려운 난이도를 가지고 있으며, 해당 스테이지에서 플레이어가 구축한 덱의 완성도와 시너지를 종합적으로 시험하기 위한 역할
 
 @@이미지
-그림: assets/images/doc/enemy.jpg
-설명: 캐릭터 비주얼 - 적
+그림: assets/images/doc/enemy-kind.jpg, assets/images/doc/enemy-boss.jpg
+설명: 일반 · 정예 몬스터 / 보스 몬스터
 
 @@컨텐츠 플로우
 구역: 어둡게
@@ -191,7 +193,7 @@ projects:[
 
 @@이미지
 그림: assets/images/doc/flow.jpg
-설명: 컨텐츠 플로우
+설명: 스테이지 플로우 · 전투 플로우
 
 @@전투 메커니즘
 
@@ -242,9 +244,11 @@ projects:[
 
 @@이미지
 그림: assets/images/doc/ui.jpg
-설명: 플레이어 조작 - 전투
+설명: 전투 화면 구성
 
 @@스테이지 구조
+그림: assets/images/doc/map.jpg
+그림위치: 왼쪽
 
 **스테이지**
 
@@ -273,10 +277,11 @@ projects:[
 - 어려움: 이벤트칸을 늘려 무작위성을 늘리며 전투 횟수를 늘려 체력 관리가 가장 어렵도록 설계 (상점 1 / 휴식 1 / 일반 전투 3 / 어려운 전투 1 / 이벤트 3 / 보물 1)
 
 @@이미지
-그림: assets/images/doc/stage.jpg
-설명: 스테이지 구조
+그림: assets/images/doc/stage.jpg, assets/images/doc/stage-move.jpg
+설명: 세 갈래 길의 난이도 설계 · 1인칭 시점의 칸 이동
 
 @@보상 설계 메커니즘
+그림: assets/images/doc/shop-ref.jpg
 구역: 어둡게
 
 **전투 클리어로 획득**
@@ -314,6 +319,7 @@ projects:[
 - 유물은 무작위로 1가지만 판매하며 높은 가격을 가짐
 
 @@수집 해금 시스템
+그림: assets/images/doc/unlock-1.jpg, assets/images/doc/unlock-2.jpg
 
 **게임 종료 시 정산** — 지정된 모든 스테이지를 클리어하거나, 클리어에 실패하여 게임이 종료되었을 때 일괄 정산
 
@@ -334,6 +340,7 @@ projects:[
 - 해당 아이템의 로컬 해금 여부가 true라면 해당 아이템을 아이템 풀 테이블에서 활성화
 
 @@다이스
+그림: assets/images/doc/dice.jpg
 구역: 어둡게
 
 **다이스 정의**
@@ -354,11 +361,8 @@ projects:[
 - 치트 CHT: 특정 눈만 등장하는 주사위 (치트: 1, 치트: 6, 치트: 홀수, 치트: 3이하 등으로 표기)
 - 베팅 BTG: 사용 후 전투가 끝난 뒤 추가 골드 보상 +20
 
-@@이미지
-그림: assets/images/doc/dice.jpg
-설명: 다이스
-
 @@칩
+그림: assets/images/doc/chip.jpg
 
 **확률을 뚫기 위한 보험** — 사용 즉시 효과가 적용되는 1회성 소모재
 
@@ -367,6 +371,7 @@ projects:[
 - 코인(칩) 형태: 앞면에 칩의 효과를 표현하는 그림이 양각된 형태. 마우스를 올리면 상세 효과를 볼 수 있다
 
 @@유물
+그림: assets/images/doc/relic-1.jpg, assets/images/doc/relic-2.jpg, assets/images/doc/relic-3.jpg
 구역: 어둡게
 
 **플레이어를 강화하는 수집품** — 시너지를 성장시키며 전략성을 부여하는 키 아이템. 유물에는 3종류가 있으며, 종류에 따라 다른 형태를 가진다. 소지 제한 없음 — 다양한 아이템을 해금하고 파밍하여 상한 없는 수치 증폭의 짜릿함을 의도
