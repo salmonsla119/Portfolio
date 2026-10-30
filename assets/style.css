@@ -550,7 +550,12 @@ iframe.pj-player{pointer-events:none}
 .cover-body mark,.md-body mark{padding:0 .2em;border-radius:2px;
   background:var(--mark);color:inherit}
 /* 프로젝트 쪽 본문은 줄 간격을 조금 좁게 */
+/* 읽는 줄 너비를 프로젝트 탭의 글 칸(그림 옆 58%)과 같게 묶는다.
+   한 줄이 1180px 를 가로지르면 눈이 되돌아올 자리를 놓친다.
+   인용·그림·전후 칸은 묶지 않는다(구역 전체를 쓰는 것들이다) */
 .md-body{line-height:1.9}
+.md-body>p,.md-body>ul,.md-body>ol,.md-body>h3,.md-body>hr{max-width:46em}
+.pj-cols .md-body>*{max-width:none}
 .md-body>*:first-child{margin-top:0}
 .md-body>*:last-child{margin-bottom:0}
 .md-body h3{display:flex;align-items:center;gap:10px;margin:1.9em 0 .7em;
