@@ -330,21 +330,26 @@ iframe.pj-player{pointer-events:none}
   display:grid;place-items:center}
 .pj-shot img{width:100%;height:100%;object-fit:cover}
 .pj-copy{padding-top:0}
-/* 참여 포지션 + 획득 역량 — 한 줄 설명 위에 가는 선으로 묶어 둔다 */
-.pj-meta{display:grid;gap:10px;margin-bottom:clamp(16px,2.2vw,26px);
-  padding-bottom:clamp(14px,2vw,22px);border-bottom:1px solid var(--line)}
-.pj-position,.pj-gain{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0}
-.pj-position span,.pj-gain span{color:var(--dim);font-size:var(--fs-label);font-weight:600;
-  letter-spacing:var(--ls)}
-.pj-position b{color:var(--accent);font-size:26px;font-weight:800;line-height:1.1}
+/* 작업 기간·장르·참여 포지션·획득 역량 — 한 줄 설명 위에 가는 선으로 묶어 둔다.
+   라벨과 값이 세로로 맞도록 두 칸짜리 표로 짰다 */
+.pj-meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px 16px;align-items:baseline;
+  margin:0 0 clamp(16px,2.2vw,26px);padding-bottom:clamp(14px,2vw,22px);
+  border-bottom:1px solid var(--line)}
+.pj-meta dt{color:var(--dim);font-size:var(--fs-label);font-weight:600;letter-spacing:var(--ls);
+  white-space:nowrap}
+.pj-meta dd{margin:0;color:var(--text);font-size:var(--fs-body);font-weight:700}
+.pj-hint{color:var(--dim);font-size:var(--fs-small);font-weight:400;font-style:normal}
+.pj-position{color:var(--accent);font-size:26px;font-weight:800;line-height:1}
+.pj-gain{display:flex;flex-wrap:wrap;gap:8px}
 .pj-gain em{padding:5px 12px;border:1px solid var(--line-2);border-radius:2px;
   color:var(--text);font-size:var(--fs-small);font-weight:600;font-style:normal;line-height:1.4}
-.pj-gain i{color:var(--dim);font-size:var(--fs-small);font-style:normal}
 .pj-copy h2{font-size:var(--fs-h2);font-weight:800;color:var(--text);word-break:keep-all}
 .pj-copy h2 b{color:var(--accent)}
 .pj-copy .md-body{margin-top:14px}
-/* 인용 — 상자가 아니라 가는 선 사이에 */
+/* 인용 — 상자가 아니라 가는 선 사이에.
+   `인용:` 칸으로 다른 양식 안에 넣으면 .in-block 이 붙어 위 여백만 더해진다 */
 .pj-quote-sec{background:var(--bg);padding:clamp(30px,4.5vw,72px) 0 clamp(40px,5.5vw,88px)}
+.pj-quote.in-block{margin-top:clamp(24px,3.2vw,48px)}
 .pj-quote{display:grid;justify-items:center;gap:14px;width:min(100%,780px);margin:0 auto;
   padding:clamp(22px,3vw,40px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   color:var(--text);font-size:var(--fs-lead);font-weight:400;line-height:1.8;
@@ -357,6 +362,8 @@ iframe.pj-player{pointer-events:none}
 .pj-solve{background:var(--bg);padding:clamp(34px,4.2vw,70px) 0 clamp(24px,3vw,48px)}
 .pj-ba{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr);
   gap:clamp(10px,1.5vw,20px);align-items:center;margin-top:clamp(18px,2.5vw,36px)}
+/* 전·후 중 하나만 넣었을 때 */
+.pj-ba.one{grid-template-columns:minmax(0,1fr)}
 .pj-ba-box{overflow:hidden;aspect-ratio:703/570;border:1px solid var(--line-2);
   border-radius:var(--radius);background:var(--screen);display:grid;place-items:center}
 .pj-ba-box img{width:100%;height:100%;object-fit:cover}
@@ -365,6 +372,8 @@ iframe.pj-player{pointer-events:none}
 .pj-arrow:before{content:"→"}
 .pj-note{margin-top:clamp(18px,2.5vw,36px);padding-top:clamp(16px,2vw,26px);
   border-top:1px solid var(--line)}
+/* 전·후 이미지를 아예 안 넣었으면 그 위 선도 필요 없다 */
+.pj-note.no-line{margin-top:clamp(14px,2vw,24px);padding-top:0;border-top:0}
 
 /* 상세 기획서 */
 .pj-extra{display:block;background:var(--bg);padding:clamp(40px,5vw,84px) 0 0}
@@ -387,6 +396,7 @@ iframe.pj-player{pointer-events:none}
 
 @media(max-width:760px){
   .pj-row{grid-template-columns:1fr}
+  .pj-ba.one{grid-template-columns:1fr}
   .pj-ba{grid-template-columns:1fr;gap:10px}
   .pj-arrow:before{content:"↓"}
   .pj-thumbs-wrap{max-width:46%}

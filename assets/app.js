@@ -234,7 +234,7 @@ function sheetTable(key){
    양식을 새로 만들려면 BLOCKS 에 한 줄 더하면 된다. */
 
 /* 양식 칸으로 인정하는 키. 여기 없는 `낱말:` 줄은 그냥 본문이다. */
-var FIELD_KEY=/^[ \t]*(그림|사진|전|후|제목|아이콘|이름|설명|구역|포지션|역량)[ \t]*:[ \t]*(.*)$/,
+var FIELD_KEY=/^[ \t]*(그림|사진|전|후|제목|아이콘|이름|설명|구역|포지션|역량|기간|장르|인용)[ \t]*:[ \t]*(.*)$/,
     RE_CALL=/^[ \t]*@@[ \t]*(.*?)[ \t]*$/,
     RE_RULE=/^[ \t]*-{3,}[ \t]*$/;
 
@@ -268,6 +268,11 @@ function mdHtml(t){
 function mdLine(t){
   return e(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
 }
+/* 인용 상자 — 어느 양식에서든 `인용:` 한 줄을 적으면 그 양식 끝에 붙는다 */
+function quoteBox(t){
+  return t?'<blockquote class="pj-quote in-block">'+icon('quote')
+    +'<span>'+mdLine(t)+'</span></blockquote>':'';
+}
 /* 그림 칸: 주소가 있으면 그림, 없으면 안내 자리 */
 function fill(src,alt,empty){
   return src?'<img src="'+e(src)+'" alt="'+e(alt||'')+'" loading="lazy">'
@@ -290,19 +295,27 @@ var BLOCK_ALIAS={
 var BLOCKS={
   /* 소개 — 대표 이미지 + (참여 포지션·획득 역량) + 한 줄 설명 + 본문 */
   '소개':{cls:'pj-band',tone:'light',make:function(c,b){
-    var gains=String(b.fields['역량']||c.p.gains||'').split(/[,·]/)
-                .map(function(t){return t.trim()}).filter(Boolean);
+    /* 쉼표·가운뎃점으로 나눠 적는 칸(장르·역량) */
+    function many(v){return String(v||'').split(/[,·]/)
+      .map(function(t){return t.trim()}).filter(Boolean)}
+    var gains=many(b.fields['역량']||c.p.gains),
+        genre=many(b.fields['장르']||c.p.genre),
+        /* 한 줄: 값이 없으면 흐린 안내 글자만 둔다 */
+        row=function(label,html){return'<dt>'+label+'</dt><dd>'+html+'</dd>'},
+        hint=function(t){return'<i class="pj-hint">'+e(t)+'</i>'};
     return'<div class="pj-row">'
       +'<figure class="pj-shot">'
         +fill(b.fields['그림']||c.p.image||(c.slides[0]||{}).src,c.p.title,'대표 이미지 추가 영역')+'</figure>'
       +'<div class="pj-copy">'
-        +'<div class="pj-meta">'
-          +'<p class="pj-position"><span>참여 포지션</span><b>'
-            +e(b.fields['포지션']||c.p.position||'00')+'</b></p>'
-          +'<p class="pj-gain"><span>획득 역량</span>'
-            +(gains.length?gains.map(function(t){return'<em>'+e(t)+'</em>'}).join('')
-                          :'<i>획득 역량 입력</i>')+'</p>'
-        +'</div>'
+        +'<dl class="pj-meta">'
+          +row('작업 기간',e(b.fields['기간']||c.p.period||'')||hint('작업 기간 입력'))
+          +row('장르',genre.length?genre.join(' · '):hint('장르 입력'))
+          +row('참여 포지션','<b class="pj-position">'
+            +e(b.fields['포지션']||c.p.position||'00')+'</b>')
+          +row('획득 역량',gains.length
+            ?'<span class="pj-gain">'+gains.map(function(t){return'<em>'+e(t)+'</em>'}).join('')+'</span>'
+            :hint('획득 역량 입력'))
+        +'</dl>'
         +'<h2>'+mdLine(b.fields['제목']||c.p.summary||'한 줄 설명 입력')+'</h2>'
         +'<div class="md-body">'+mdHtml(b.body||c.p.body||'상세 설명 입력')+'</div>'
       +'</div>'
@@ -321,15 +334,23 @@ var BLOCKS={
   }},
 
   '해결':{cls:'pj-solve',tone:'dark',make:function(c,b){
-    var s=c.p.solution||{};
+    var s=c.p.solution||{},
+        before=b.fields['전']||s.before,
+        after=b.fields['후']||s.after,
+        box=function(src,alt){return'<div class="pj-ba-box">'
+          +'<img src="'+e(src)+'" alt="'+e(alt)+'" loading="lazy"></div>'},
+        ba='';
+    /* 전·후 둘 다 있으면 화살표를 사이에, 하나만 있으면 그 한 칸만,
+       둘 다 없으면 이미지 칸 자체를 넣지 않는다 */
+    if(before&&after)ba='<div class="pj-ba">'+box(before,'해결 전')
+      +'<span class="pj-arrow" aria-hidden="true"></span>'+box(after,'해결 후')+'</div>';
+    else if(before||after)ba='<div class="pj-ba one">'
+      +box(before||after,before?'해결 전':'해결 후')+'</div>';
     return'<h2 class="pj-solve-title" data-ico="'+e(b.fields['아이콘']||'swap')+'">'
         +mdLine(b.fields['제목']||'**해결** 과정')+'</h2>'
-      +'<div class="pj-ba">'
-        +'<div class="pj-ba-box">'+fill(b.fields['전']||s.before,'해결 전','전 이미지 추가 영역')+'</div>'
-        +'<span class="pj-arrow" aria-hidden="true"></span>'
-        +'<div class="pj-ba-box">'+fill(b.fields['후']||s.after,'해결 후','후 이미지 추가 영역')+'</div>'
-      +'</div>'
-      +'<div class="md-body pj-note">'+mdHtml(b.body||s.note||'해결 과정 설명 입력')+'</div>';
+      +ba
+      +'<div class="md-body pj-note'+(ba?'':' no-line')+'">'
+        +mdHtml(b.body||s.note||'해결 과정 설명 입력')+'</div>';
   }},
 
   '기획서':{cls:'pj-extra',tone:'light',make:function(c,b){
@@ -386,7 +407,7 @@ function renderBlocks(md,c){
         /* 같은 밝기가 이어지면 위 패딩을 뺀다(구역이 두 번 겹쳐 보이지 않게) */
         tight=prev===tone?' is-tight':'';
     html+='<section class="'+spec.cls+(tone==='light'?' on-light':'')+tight+'">'
-      +'<div class="wrap">'+spec.make(c,b)+'</div></section>';
+      +'<div class="wrap">'+spec.make(c,b)+quoteBox(b.fields['인용'])+'</div></section>';
     prev=tone;
   }
   /* 맨 아래 "메인으로" — 마지막 구역의 밝기를 그대로 이어 간다 */
