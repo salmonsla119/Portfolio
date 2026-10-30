@@ -656,7 +656,9 @@ function renderBlocks(md,c){
       /* 1) 16:9 화면 — 영상 재생. 여기는 늘 맨 위에 고정이다 */
       '<section class="pj-hero">'
         +'<div class="pj-slide">'+stageMedia+'</div>'
-        +'<div class="pj-head"><h1>'+e(p.title)+'</h1>'
+        +'<div class="pj-head">'
+          +'<a class="pj-back" href="index.html" data-ico="back">메인으로</a>'
+          +'<h1>'+e(p.title)+'</h1>'
           +'<p class="pj-tags">'+(tags.length?tags.map(function(t){return'#'+e(t)}).join('  '):'#장르 입력')+'</p></div>'
         +'<div class="pj-thumbs-wrap">'
           +'<button type="button" class="pj-thumbs-arrow" data-scroll="-1" aria-label="이전 프로젝트들">‹</button>'
