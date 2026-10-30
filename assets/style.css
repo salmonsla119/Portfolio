@@ -393,6 +393,16 @@ iframe.pj-player{pointer-events:none}
 /* 상세 기획서 */
 .pj-extra{display:block;background:var(--bg);padding:clamp(40px,5vw,84px) 0 0}
 
+/* 문양 — 사진이 없는 칸의 빈 오른쪽에 옅게 깔리는 선 그림.
+   글 뒤로 깔리므로 안쪽 요소는 위로 올린다 */
+.wrap.has-orn{position:relative}
+.wrap.has-orn>*:not(.pj-orn){position:relative;z-index:1}
+.pj-orn{position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:0;
+  width:clamp(130px,15vw,200px);color:var(--line-2);opacity:.45;pointer-events:none;
+  -webkit-user-select:none;user-select:none}
+.pj-orn .ico{width:100%;height:auto}
+@media(max-width:1023px){.pj-orn{display:none}}
+
 /* 자유 양식(글·이미지·표) */
 .pj-free{background:var(--bg);padding:clamp(40px,5vw,84px) 0 clamp(24px,3vw,48px)}
 .pj-figure{margin:clamp(16px,2.4vw,30px) 0 0;overflow:hidden;border:1px solid var(--line-2);

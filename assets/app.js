@@ -32,6 +32,30 @@ var ICONS={
   layers:'<path d="M12 3l9 4.8-9 4.8-9-4.8z"/><path d="M3 12.5l9 4.8 9-4.8"/>',
   tool:'<path d="M3 7.5h9M17 7.5h4M3 16.5h4M12 16.5h9"/><circle cx="14.5" cy="7.5" r="2.4"/><circle cx="8.5" cy="16.5" r="2.4"/>',
   alert:'<path d="M12 3.2L1.9 20.8h20.2z"/><path d="M12 9.5v4.8M12 17.6h.01"/>',
+  /* ===== 문양 =====
+     사진이 없는 칸의 빈 오른쪽에 옅게 까는 장식. 48 격자, 선만. */
+  'orn-dice':{vb:'0 0 48 48',sw:1.6,p:
+     '<rect x="7" y="7" width="34" height="34" rx="7"/>'
+    +'<g class="fill-a no-line"><circle cx="16" cy="16" r="2.6"/><circle cx="32" cy="16" r="2.6"/>'
+    +'<circle cx="24" cy="24" r="2.6"/><circle cx="16" cy="32" r="2.6"/><circle cx="32" cy="32" r="2.6"/></g>'},
+  'orn-card':{vb:'0 0 48 48',sw:1.6,p:
+     '<rect x="5" y="13" width="21" height="29" rx="3"/>'
+    +'<rect x="21" y="6" width="22" height="30" rx="3"/>'
+    +'<path class="a" d="M32 14.5l5.5 6.5-5.5 6.5-5.5-6.5z"/>'},
+  'orn-chip':{vb:'0 0 48 48',sw:1.6,p:
+     '<circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="9.5"/>'
+    +'<path d="M24 7v6M24 35v6M7 24h6M35 24h6"/>'
+    +'<path class="a" d="M12.6 12.6l4.2 4.2M31.2 31.2l4.2 4.2M35.4 12.6l-4.2 4.2M16.8 31.2l-4.2 4.2"/>'},
+  'orn-star':{vb:'0 0 48 48',sw:1.6,p:
+     '<path d="M24 6.5l5.4 11.1 12.2 1.7-8.8 8.6 2.1 12.1L24 34.3 12.1 40l2.1-12.1-8.8-8.6 12.2-1.7z"/>'
+    +'<circle class="a" cx="24" cy="24" r="4.4"/>'},
+  'orn-target':{vb:'0 0 48 48',sw:1.6,p:
+     '<circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="10"/>'
+    +'<circle class="fill-a no-line" cx="24" cy="24" r="3"/>'
+    +'<path d="M24 1.5v7M24 39.5v7M1.5 24h7M39.5 24h7"/>'},
+  'orn-shell':{vb:'0 0 48 48',sw:1.6,p:
+     '<path d="M16 15a8 8 0 0 1 16 0v26H16z"/><path d="M16 26h16"/>'
+    +'<path class="a" d="M19 41v3.5h10V41"/>'},
   /* 기획(연필) × 아트(붓)을 엇갈려 놓은 하이브리드 아이콘. 붓 쪽만 하늘색. */
   /* 문서에 붓칠 — 사용자가 그린 아이콘. 자체 viewBox(512)와 선 굵기를 쓴다.
      색은 우리 변수로: 흰회색 = currentColor, 하늘색 = .a / .fill-a */
@@ -470,7 +494,17 @@ var BLOCKS={
 var DEFAULT_MD='@@소개\n@@인용\n@@문제\n@@해결\n@@기획서\n';
 
 /* 양식 하나를 구역으로 그린다. prev 는 바로 앞 구역의 밝기 */
-function blockSection(b,c,prev){
+/* 문양 차례 — 칸마다 돌아가며 다른 그림이 깔리게 */
+var ORNAMENTS=['orn-dice','orn-card','orn-target','orn-chip','orn-star','orn-shell'];
+function ornament(b,n){
+  var pick=b.fields['문양']||'';
+  if(/없|끄|no|none/i.test(pick))return'';
+  var name=pick?(ORNAMENTS.indexOf('orn-'+pick)>=0?'orn-'+pick:(ICONS[pick]?pick:''))
+               :ORNAMENTS[n%ORNAMENTS.length];
+  return name?'<span class="pj-orn" aria-hidden="true">'+icon(name)+'</span>':'';
+}
+
+function blockSection(b,c,prev,n){
   var key=BLOCK_ALIAS[String(b.name).replace(/\s+/g,'')];
   /* 모르는 이름은 글 양식 + 그 이름을 제목으로 */
   if(!key){key='글';if(!b.fields['제목'])b.fields['제목']=b.name}
@@ -480,8 +514,11 @@ function blockSection(b,c,prev){
              :(spec.tone==='이어받기'?(prev||'light'):spec.tone),
       /* 같은 밝기가 이어지면 위 패딩을 뺀다(구역이 두 번 겹쳐 보이지 않게) */
       tight=prev===tone?' is-tight':'';
+  /* 그림이 붙는 양식(이미지·표)과 그림 칸을 쓴 글에는 문양을 깔지 않는다 */
+  var bare=['이미지','표','기획서','인용'].indexOf(key)<0&&!b.fields['그림']&&!b.fields['사진'],
+      orn=bare?ornament(b,n||0):'';
   return{tone:tone,html:'<section class="'+spec.cls+(tone==='light'?' on-light':'')+tight+'">'
-    +'<div class="wrap">'+spec.make(c,b)+'</div></section>'};
+    +'<div class="wrap'+(orn?' has-orn':'')+'">'+orn+spec.make(c,b)+'</div></section>'};
 }
 /* 맨 아래 "메인으로" — 앞 구역의 밝기를 그대로 이어 간다 */
 function footSection(prev){
@@ -489,9 +526,9 @@ function footSection(prev){
     +'<a class="back" href="index.html" data-ico="back">메인으로</a></div></section>';
 }
 /* 여러 양식을 이어서 그린다 */
-function blockRun(list,c,prev){
-  var html='',i,r;
-  for(i=0;i<list.length;i++){r=blockSection(list[i],c,prev);html+=r.html;prev=r.tone}
+function blockRun(list,c,prev,from){
+  var html='',i,r,n=from||0;
+  for(i=0;i<list.length;i++){r=blockSection(list[i],c,prev,n++);html+=r.html;prev=r.tone}
   return{tone:prev,html:html};
 }
 

@@ -84,6 +84,8 @@
 - **내용을 비우면 `data.js`의 원래 항목(`summary`·`body`·`problem`·`solution`…)을 그대로 쓴다.** 그래서 `md`가 비어 있어도 예전과 똑같이 나온다(`DEFAULT_MD`).
 - **목록에 없는 이름은 `글` 양식으로 그리고 그 이름을 제목으로 쓴다.** 새 이름을 부르는 것만으로 제목 있는 글 칸이 생기므로, 양식을 더하기 전에 이걸로 충분한지 먼저 본다.
 - 본문은 `bodyHtml()`(→ `renderMarkdown()`)을 거쳐 `.md-body` 안에 들어간다.
+- **사진 없는 칸에는 문양을 깐다** — `ornament()`가 `ORNAMENTS` 목록(`orn-dice card target chip star shell`, 48 격자 선 그림)을 칸 차례대로 돌려 `.pj-orn`으로 넣는다. `.wrap`의 오른쪽 빈 자리에 `--line-2` 색 45% 불투명도로 깔리고 글 뒤(`z-index:0`)에 있다. `문양: 이름` / `문양: 없음`으로 고르거나 끈다. 그림을 넣은 칸과 이미지·표·기획서·인용 양식은 제외. 1024px 미만에서는 숨긴다.
+  - **`.wrap.has-orn > *`에 `position:relative`를 주면 문양까지 흐름에 끼어들어 구역이 터진다.** `:not(.pj-orn)`으로 빼 둘 것.
 - **읽는 줄 너비는 46em(약 690px)으로 묶는다** — 프로젝트 탭의 글 칸(그림 옆)과 같은 너비라 탭마다 배치감이 어긋나지 않는다. 묶는 대상은 `.md-body > p/ul/ol/h3/hr`뿐이고 인용·그림·전후 칸은 구역 전체를 쓴다.
 - **본문 위계는 세 단계로 고정한다** — 양식 제목(`@@이름` → `.sec-title`) > 묶음 머리말(`### 이름` → `.md-body h3`, 하늘색 막대 + 가는 선) > 항목(`- 낱말: 내용`). 묶음 머리말을 `**굵게**` 문단으로 쓰지 말 것. 항목 안에서 한 번 더 묶을 때만 `- **이름**` + 들여쓴 항목을 쓴다.
 - **강조 수단은 셋이다.** `**굵게**`(흰 글씨), `==형광펜==`(`<mark>`, `--mark` 색), 그리고 목록 항목이 `낱말: 내용` 꼴이면 `markdown.js`의 `itemHtml()`이 앞 낱말을 `<b class="k">` 하늘색 라벨로 떼어 낸다(`RE_KEY`, 30자까지). 인용(`.pj-quote span`)에도 형광펜을 한 줄 깐다. `.md-body`는 자기소개서(`.cover-body`)와 같은 규칙을 공유한다.
@@ -153,7 +155,7 @@
 
 **아이콘은 전부 선(벡터) 아이콘이다.** `assets/app.js` 위쪽 `ICONS`에 24x24 path 만 모여 있고, 쓰는 쪽은 **`data-ico="이름"` 한 줄이면 된다**(`paintIcons()`가 채운다). JS로 그리는 곳에서는 `icon('이름')`을 쓴다. 색은 `currentColor`, 굵기는 `.ico`가 정하므로 아이콘마다 색·크기를 따로 지정하지 않는다. 다시 그려지는 화면(프로젝트 상세, 기획서 뷰어)에서는 그린 뒤 `paintIcons(root)`를 호출해야 한다.
 
-현재 있는 이름: `doc pen grid film sound mute quote swap clip down back image user badge award case layers tool alert hybrid`
+현재 있는 이름: `doc pen grid film sound mute quote swap clip down back image user badge award case layers tool alert hybrid` + 문양 `orn-dice orn-card orn-chip orn-star orn-target orn-shell`(48 격자)
 
 아이콘 안에서 일부만 포인트 색을 쓰려면 그 `path`(또는 `g`)에 클래스를 준다 — `a`(선을 하늘색), `fill-a`(면을 하늘색), `no-line`(선 없이 면만).
 
