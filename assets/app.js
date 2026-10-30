@@ -261,7 +261,7 @@ function sheetTable(key){
    칸은 둘로 나뉜다.
    - BLOCK_KEY : 양식 전체를 설정하는 칸. 블록 안 어디에 적어도 되고 본문에서는 빠진다.
    - FLOW_KEY  : 본문에서 **적은 자리에 그대로 그려지는** 칸(인용 상자, 전·후 이미지). */
-var BLOCK_KEY=/^[ \t]*(그림|사진|제목|아이콘|이름|설명|구역|포지션|역량|작업[ \t]*기간|기간|장르|링크|그림위치)[ \t]*:[ \t]*(.*)$/,
+var BLOCK_KEY=/^[ \t]*(그림|사진|제목|아이콘|이름|설명|구역|포지션|역량|작업[ \t]*기간|기간|장르|링크|그림위치|비율|문양)[ \t]*:[ \t]*(.*)$/,
     FLOW_KEY=/^[ \t]*(전|후|인용)[ \t]*:[ \t]*(.*)$/,
     RE_CALL=/^[ \t]*@@[ \t]*(.*?)[ \t]*$/,
     RE_RULE=/^[ \t]*-{3,}[ \t]*$/;
@@ -320,10 +320,12 @@ function baRow(before,after){
   return'';
 }
 /* 그림 칸 — 쉼표로 여러 장을 적으면 한 줄에 나란히 건다 */
-function figures(v,caption){
+function figures(v,caption,ratio){
   var list=String(v||'').split(',').map(function(t){return t.trim()}).filter(Boolean);
   if(!list.length)return'';
-  return'<figure class="pj-figs n'+Math.min(list.length,4)+'">'
+  /* `비율: 원본` 이면 4:3 으로 맞추지 않고 원본 비율 그대로 건다 */
+  var asIs=/원본|그대로|auto/i.test(ratio||'')?' as-is':'';
+  return'<figure class="pj-figs n'+Math.min(list.length,4)+asIs+'">'
     +list.map(function(src){return'<img src="'+e(src)+'" alt="" loading="lazy">'}).join('')
     +(caption?'<figcaption>'+mdLine(caption)+'</figcaption>':'')+'</figure>';
 }
@@ -464,9 +466,10 @@ var BLOCKS={
         text='<div class="md-body">'+bodyHtml(b.body)+'</div>',
         body=side
           ?'<div class="pj-cols'+(flip?' flip':'')+'">'
-            +(flip?figures(pics[0],b.fields['설명'])+text:text+figures(pics[0],b.fields['설명']))
+            +(flip?figures(pics[0],b.fields['설명'],b.fields['비율'])+text
+                  :text+figures(pics[0],b.fields['설명'],b.fields['비율']))
            +'</div>'
-          :text+figures(pics.join(','),b.fields['설명']);
+          :text+figures(pics.join(','),b.fields['설명'],b.fields['비율']);
     return(t?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'doc')+'">'+mdLine(t)+'</h2>':'')
       +body;
   }},
@@ -476,7 +479,7 @@ var BLOCKS={
     var src=b.fields['그림']||b.fields['사진']||'',cap=b.fields['설명']||b.body;
     return(b.fields['제목']?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'image')+'">'
           +mdLine(b.fields['제목'])+'</h2>':'')
-      +(src?figures(src,cap)
+      +(src?figures(src,cap,b.fields['비율'])
           :'<figure class="pj-figure">'+fill('','','이미지 추가 영역')+'</figure>');
   }},
 

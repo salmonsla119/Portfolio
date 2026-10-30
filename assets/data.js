@@ -190,6 +190,7 @@ projects:[
 
 @@이미지
 그림: assets/images/doc/enemy-kind.jpg, assets/images/doc/enemy-boss.jpg
+비율: 원본
 설명: 일반 · 정예 몬스터 / 보스 몬스터
 
 @@컨텐츠 플로우

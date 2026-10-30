@@ -432,6 +432,8 @@ iframe.pj-player{pointer-events:none}
 .pj-figs.n3{grid-template-columns:1fr 1fr 1fr}
 .pj-figs.n4{grid-template-columns:1fr 1fr 1fr 1fr}
 .pj-figs.n2 img,.pj-figs.n3 img,.pj-figs.n4 img{aspect-ratio:4/3;object-fit:cover}
+/* `비율: 원본` — 자르지 않고 원본 비율 그대로 */
+.pj-figs.as-is img{aspect-ratio:auto;object-fit:contain;min-height:0;max-height:none}
 .pj-figs img{display:block;width:100%;height:auto;border:1px solid var(--line-2);
   border-radius:var(--radius);background:var(--screen)}
 .pj-figs figcaption{grid-column:1/-1;margin-top:2px;color:var(--dim);font-size:var(--fs-small)}
