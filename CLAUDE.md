@@ -34,7 +34,7 @@
 | `docs/blocks/` | 위 스크립트가 만든 양식 예시 그림. **양식의 생김새를 바꿨으면 다시 돌릴 것** |
 | `assets/images/doc/` | High Num 컨셉 기획서 PDF에서 뽑은 그림(`pdfimages`로 추출한 원본 아트 + 도식 쪽은 `pdftoppm` 캡처) |
 | `assets/images/project-01-cause-*.png` 등 | 손그림(바탕이 빈 선 그림). 사용자가 준 원본은 **검은 선 + 투명 바탕**이라 `convert 원본 -channel RGB -negate +channel -trim +repage -resize 폭x` 로 선만 밝게 뒤집어 넣었다 |
-| `편집방법.md` | 사용자용 한국어 편집 안내 (구조를 바꾸면 여기도 갱신하고, **`node tools/guide-shots.js && node tools/guide-pdf.js`로 그림과 PDF를 다시 만들 것**) |
+| `편집방법.md` | 사용자용 한국어 편집 안내. **사용자가 따로 말하기 전까지는 건드리지 않는다**(2026-10 사용자 요청). 갱신하라고 하면 그때 고치고 **`node tools/guide-shots.js && node tools/guide-pdf.js`로 그림과 PDF를 다시 만든다** |
 
 프로젝트 항목에는 `problem`(발생한 문제)과 `solution`(해결 과정)이 따로 있다.
 
@@ -212,4 +212,4 @@ python -m http.server 8000
 
 - 사용자는 한국어로 소통한다. 문서(`편집방법.md`, `README.md`)도 한국어로 유지한다.
 - 콘텐츠를 임의로 바꾸지 않는다. 사용자가 직접 쓴 문구다. 빈 칸은 빈 칸으로 두고 틀만 만든다.
-- 구조를 바꿨으면 `편집방법.md`의 안내도 같이 갱신한다.
+- **`편집방법.md`·`편집방법.pdf`·`docs/blocks/`는 사용자가 갱신하라고 할 때만 손댄다.** 구조를 바꿔도 먼저 알아서 고치지 않는다.
