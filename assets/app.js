@@ -233,8 +233,12 @@ function sheetTable(key){
 
    양식을 새로 만들려면 BLOCKS 에 한 줄 더하면 된다. */
 
-/* 양식 칸으로 인정하는 키. 여기 없는 `낱말:` 줄은 그냥 본문이다. */
-var FIELD_KEY=/^[ \t]*(그림|사진|전|후|제목|아이콘|이름|설명|구역|포지션|역량|기간|장르|인용)[ \t]*:[ \t]*(.*)$/,
+/* 양식 칸으로 인정하는 키. 여기 없는 `낱말:` 줄은 그냥 본문이다.
+   칸은 둘로 나뉜다.
+   - BLOCK_KEY : 양식 전체를 설정하는 칸. 블록 안 어디에 적어도 되고 본문에서는 빠진다.
+   - FLOW_KEY  : 본문에서 **적은 자리에 그대로 그려지는** 칸(인용 상자, 전·후 이미지). */
+var BLOCK_KEY=/^[ \t]*(그림|사진|제목|아이콘|이름|설명|구역|포지션|역량|작업[ \t]*기간|기간|장르)[ \t]*:[ \t]*(.*)$/,
+    FLOW_KEY=/^[ \t]*(전|후|인용)[ \t]*:[ \t]*(.*)$/,
     RE_CALL=/^[ \t]*@@[ \t]*(.*?)[ \t]*$/,
     RE_RULE=/^[ \t]*-{3,}[ \t]*$/;
 
@@ -242,18 +246,24 @@ function parseBlocks(md){
   var lines=String(md||'').replace(/\r\n?/g,'\n').split('\n'),out=[],cur=null,i;
   for(i=0;i<lines.length;i++){
     var call=RE_CALL.exec(lines[i]);
-    if(call){out.push(cur={name:call[1],fields:{},lines:[]});continue}
+    /* `@@` 만 있는 줄은 "여기서 끝" 표시로 보고 넘긴다 */
+    if(call){
+      if(call[1]==='')cur=null;
+      else out.push(cur={name:call[1],fields:{},lines:[]});
+      continue;
+    }
     if(cur)cur.lines.push(lines[i]);
   }
   for(i=0;i<out.length;i++){
-    var b=out[i],ls=b.lines,k=0,f;
+    var b=out[i],ls=b.lines,rest=[],k=0,f;
+    /* 이름 아래 빈 줄과 --- 구분선은 넘긴다 */
     while(k<ls.length&&(ls[k].trim()===''||RE_RULE.test(ls[k])))k++;
     for(;k<ls.length;k++){
-      f=FIELD_KEY.exec(ls[k]);
-      if(!f)break;
-      b.fields[f[1]]=f[2].trim();
+      f=BLOCK_KEY.exec(ls[k]);
+      if(f)b.fields[f[1].replace(/[ \t]+/g,'')]=f[2].trim();
+      else rest.push(ls[k]);
     }
-    b.body=ls.slice(k).join('\n').replace(/^\n+|\n+$/g,'');
+    b.body=rest.join('\n').replace(/^\n+|\n+$/g,'');
   }
   return out;
 }
@@ -268,10 +278,46 @@ function mdHtml(t){
 function mdLine(t){
   return e(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
 }
-/* 인용 상자 — 어느 양식에서든 `인용:` 한 줄을 적으면 그 양식 끝에 붙는다 */
+/* 인용 상자 — 어느 양식에서든 `인용:` 한 줄을 적으면 그 자리에 들어간다 */
 function quoteBox(t){
   return t?'<blockquote class="pj-quote in-block">'+icon('quote')
     +'<span>'+mdLine(t)+'</span></blockquote>':'';
+}
+/* 전 → 후 이미지 칸. 둘 다 없으면 아무것도 넣지 않고,
+   하나만 있으면 그 한 칸만 넓게 넣는다 */
+function baRow(before,after){
+  function box(src,alt){
+    return'<div class="pj-ba-box"><img src="'+e(src)+'" alt="'+e(alt)+'" loading="lazy"></div>';
+  }
+  if(before&&after)return'<div class="pj-ba">'+box(before,'해결 전')
+    +'<span class="pj-arrow" aria-hidden="true"></span>'+box(after,'해결 후')+'</div>';
+  if(before||after)return'<div class="pj-ba one">'
+    +box(before||after,before?'해결 전':'해결 후')+'</div>';
+  return'';
+}
+/* 본문 — 마크다운에 더해 `인용:` `전:` `후:` 줄을 적은 자리에 그린다 */
+function bodyHtml(t){
+  var lines=String(t==null?'':t).replace(/\r\n?/g,'\n').split('\n'),
+      out='',buf=[],ba=null,i,f;
+  function text(){var v=buf.join('\n');buf=[];if(v.trim())out+=mdHtml(v)}
+  function row(){if(ba){out+=baRow(ba[0],ba[1]);ba=null}}
+  for(i=0;i<lines.length;i++){
+    f=FLOW_KEY.exec(lines[i]);
+    if(f){
+      text();
+      if(f[1]==='인용'){row();out+=quoteBox(f[2].trim());continue}
+      if(!ba)ba=['',''];
+      if(f[1]==='전'){if(ba[0]){row();ba=['','']}ba[0]=f[2].trim()}
+      else ba[1]=f[2].trim();
+      continue;
+    }
+    /* 전: 과 후: 사이의 빈 줄은 한 벌로 묶어 준다 */
+    if(ba&&lines[i].trim()==='')continue;
+    row();
+    buf.push(lines[i]);
+  }
+  text();row();
+  return out;
 }
 /* 그림 칸: 주소가 있으면 그림, 없으면 안내 자리 */
 function fill(src,alt,empty){
@@ -308,16 +354,18 @@ var BLOCKS={
         +fill(b.fields['그림']||c.p.image||(c.slides[0]||{}).src,c.p.title,'대표 이미지 추가 영역')+'</figure>'
       +'<div class="pj-copy">'
         +'<dl class="pj-meta">'
-          +row('작업 기간',e(b.fields['기간']||c.p.period||'')||hint('작업 기간 입력'))
+          +row('작업 기간',e(b.fields['작업기간']||b.fields['기간']||c.p.period||'')
+                           ||hint('작업 기간 입력'))
           +row('장르',genre.length?genre.join(' · '):hint('장르 입력'))
-          +row('참여 포지션','<b class="pj-position">'
-            +e(b.fields['포지션']||c.p.position||'00')+'</b>')
+          +(function(v){ /* 숫자면 큰 글씨, "부팀장, PM" 같은 글자면 보통 크기 */
+              return row('참여 포지션','<b class="pj-position'+(/^\d+$/.test(v)?' num':'')+'">'
+                +e(v)+'</b>')}(b.fields['포지션']||c.p.position||'00'))
           +row('획득 역량',gains.length
             ?'<span class="pj-gain">'+gains.map(function(t){return'<em>'+e(t)+'</em>'}).join('')+'</span>'
             :hint('획득 역량 입력'))
         +'</dl>'
         +'<h2>'+mdLine(b.fields['제목']||c.p.summary||'한 줄 설명 입력')+'</h2>'
-        +'<div class="md-body">'+mdHtml(b.body||c.p.body||'상세 설명 입력')+'</div>'
+        +'<div class="md-body">'+bodyHtml(b.body||c.p.body||'상세 설명 입력')+'</div>'
       +'</div>'
     +'</div>';
   }},
@@ -330,27 +378,19 @@ var BLOCKS={
   '문제':{cls:'pj-problem',tone:'dark',make:function(c,b){
     return'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'alert')+'">'
         +mdLine(b.fields['제목']||'**발생한** 문제')+'</h2>'
-      +'<div class="md-body pj-issue">'+mdHtml(b.body||c.p.problem||'발생한 문제 입력')+'</div>';
+      +'<div class="md-body pj-issue">'+bodyHtml(b.body||c.p.problem||'발생한 문제 입력')+'</div>';
   }},
 
   '해결':{cls:'pj-solve',tone:'dark',make:function(c,b){
     var s=c.p.solution||{},
-        before=b.fields['전']||s.before,
-        after=b.fields['후']||s.after,
-        box=function(src,alt){return'<div class="pj-ba-box">'
-          +'<img src="'+e(src)+'" alt="'+e(alt)+'" loading="lazy"></div>'},
-        ba='';
-    /* 전·후 둘 다 있으면 화살표를 사이에, 하나만 있으면 그 한 칸만,
-       둘 다 없으면 이미지 칸 자체를 넣지 않는다 */
-    if(before&&after)ba='<div class="pj-ba">'+box(before,'해결 전')
-      +'<span class="pj-arrow" aria-hidden="true"></span>'+box(after,'해결 후')+'</div>';
-    else if(before||after)ba='<div class="pj-ba one">'
-      +box(before||after,before?'해결 전':'해결 후')+'</div>';
+        body=b.body||s.note||'해결 과정 설명 입력',
+        /* 본문에 전·후를 적었으면 그 자리에 그리고, 안 적었을 때만
+           data.js 의 solution 값을 맨 위에 넣는다 */
+        ba=/^[ \t]*(전|후)[ \t]*:/m.test(body)?'':baRow(s.before,s.after);
     return'<h2 class="pj-solve-title" data-ico="'+e(b.fields['아이콘']||'swap')+'">'
         +mdLine(b.fields['제목']||'**해결** 과정')+'</h2>'
       +ba
-      +'<div class="md-body pj-note'+(ba?'':' no-line')+'">'
-        +mdHtml(b.body||s.note||'해결 과정 설명 입력')+'</div>';
+      +'<div class="md-body pj-note'+(ba?'':' no-line')+'">'+bodyHtml(body)+'</div>';
   }},
 
   '기획서':{cls:'pj-extra',tone:'light',make:function(c,b){
@@ -362,14 +402,14 @@ var BLOCKS={
               +e(x.title||('기획서 '+(i+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
         :'<div class="media-empty">'+icon('clip')+'상세 기획서 추가 영역</div>')
       +'</div>'
-      +(b.body?'<div class="md-body">'+mdHtml(b.body)+'</div>':'');
+      +(b.body?'<div class="md-body">'+bodyHtml(b.body)+'</div>':'');
   }},
 
   /* 자유 서술 — 제목(없으면 생략) + 마크다운 본문 */
   '글':{cls:'pj-free',tone:'light',make:function(c,b){
     var t=b.fields['제목']||'';
     return(t?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'doc')+'">'+mdLine(t)+'</h2>':'')
-      +'<div class="md-body">'+mdHtml(b.body)+'</div>';
+      +'<div class="md-body">'+bodyHtml(b.body)+'</div>';
   }},
 
   '이미지':{cls:'pj-free',tone:'light',make:function(c,b){
@@ -407,7 +447,7 @@ function renderBlocks(md,c){
         /* 같은 밝기가 이어지면 위 패딩을 뺀다(구역이 두 번 겹쳐 보이지 않게) */
         tight=prev===tone?' is-tight':'';
     html+='<section class="'+spec.cls+(tone==='light'?' on-light':'')+tight+'">'
-      +'<div class="wrap">'+spec.make(c,b)+quoteBox(b.fields['인용'])+'</div></section>';
+      +'<div class="wrap">'+spec.make(c,b)+'</div></section>';
     prev=tone;
   }
   /* 맨 아래 "메인으로" — 마지막 구역의 밝기를 그대로 이어 간다 */

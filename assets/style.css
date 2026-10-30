@@ -339,7 +339,9 @@ iframe.pj-player{pointer-events:none}
   white-space:nowrap}
 .pj-meta dd{margin:0;color:var(--text);font-size:var(--fs-body);font-weight:700}
 .pj-hint{color:var(--dim);font-size:var(--fs-small);font-weight:400;font-style:normal}
-.pj-position{color:var(--accent);font-size:26px;font-weight:800;line-height:1}
+/* 참여 포지션 — 숫자 한두 자리면 크게, "부팀장, PM" 같은 글자면 본문 크기로 */
+.pj-position{color:var(--accent);font-weight:800}
+.pj-position.num{font-size:26px;line-height:1}
 .pj-gain{display:flex;flex-wrap:wrap;gap:8px}
 .pj-gain em{padding:5px 12px;border:1px solid var(--line-2);border-radius:2px;
   color:var(--text);font-size:var(--fs-small);font-weight:600;font-style:normal;line-height:1.4}
@@ -349,7 +351,9 @@ iframe.pj-player{pointer-events:none}
 /* 인용 — 상자가 아니라 가는 선 사이에.
    `인용:` 칸으로 다른 양식 안에 넣으면 .in-block 이 붙어 위 여백만 더해진다 */
 .pj-quote-sec{background:var(--bg);padding:clamp(30px,4.5vw,72px) 0 clamp(40px,5.5vw,88px)}
-.pj-quote.in-block{margin-top:clamp(24px,3.2vw,48px)}
+.pj-quote.in-block{margin:clamp(24px,3.2vw,48px) auto}
+/* 본문 안에 들어간 인용 상자는 .md-body 의 인용(왼쪽 선) 규칙을 쓰지 않는다 */
+.md-body .pj-quote{padding:clamp(22px,3vw,40px) 0;border-left:0}
 .pj-quote{display:grid;justify-items:center;gap:14px;width:min(100%,780px);margin:0 auto;
   padding:clamp(22px,3vw,40px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   color:var(--text);font-size:var(--fs-lead);font-weight:400;line-height:1.8;

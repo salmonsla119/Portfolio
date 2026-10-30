@@ -40,7 +40,82 @@ resumeProjects:[{year:"",title:"",role:"",detail:""},{year:"",title:"",role:"",d
    비워 두면 기본 구성(포지션 → 소개 → 인용 → 문제 → 해결 → 기획서)으로 나옵니다.
    양식을 부르는 방법은 편집방법.md 의 "프로젝트 상세 — 양식 부르기"를 보세요. */
 projects:[
-  {id:"project-01",featured:true,year:"2026",title:"High Num",genre:"주사위, 롤플레잉, 전략",role:"부팀장, PM",summary:"샷건에 주사위를 장전해 쏘아라! 수치 상승의 쾌감이 느껴지는 주사위 도박 전투",body:"프로젝트 상세 설명 입력",image:"assets/images/project-01-main.png",team:[{part:"기획",count:5},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"일정 관리, 갈등 조율",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[{src:"https://www.youtube.com/watch?v=mYlwMKpCUC0&t=1s",title:"High Num 소개 영상"}],images:[],documents:[{title:"2026년 8월 작업 캘린더",src:"assets/documents/work-calendar-2026-08.xlsx",sheet:"work-calendar-2026-08"}]},
+  {id:"project-01",featured:true,year:"2026",title:"High Num",genre:"주사위, 롤플레잉, 전략",role:"부팀장, PM",summary:"샷건에 주사위를 장전해 쏘아라! 수치 상승의 쾌감이 느껴지는 주사위 도박 전투",body:"프로젝트 상세 설명 입력",image:"assets/images/project-01-main.png",team:[{part:"기획",count:5},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"일정 관리, 갈등 조율",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`
+@@인용
+그래서 저희 게임 무슨 게임이에요?
+
+@@소개
+제목: 샷건에 주사위를 장전해 쏘아라! 수치 상승의 쾌감이 느껴지는 주사위 도박 전투
+포지션: 부팀장, PM
+역량: 일정 관리, 갈등 조율
+그림: assets/images/project-01-main.png
+작업기간: 07/20 ~ 09/03 (34일)
+장르: 주사위, 덱빌딩, 로그라이크, 인크리멘탈
+
+@@문제
+제목: 의견 불일치
+
+1주차에 게임의 컨셉에 대한 팀장과 팀원 개개인의 의견이 모두 일치하지 않았고 작업이 진전되지 않아 기획이 한번 엎어졌었습니다.
+원인은 다음과 같습니다.
+
+- 정해진 장르의 정의에 대한 서로 다른 이해
+- 생각하는 방향성 두개의 우선도 차이
+- 애매모호한 팀장과 부팀장의 권한
+
+팀원 모두가 게임의 각 다른 파트 출신의 현업자인 팀이었고 때문에 서로 자기의사가 강한 상태였습니다.
+팀장은 탑다운과 즉흥 개발에 익숙했고 게임의 세부 컨셉에 관해서는 당장 정할 필요 없다는 입장이었기에 당장 작업이 필요하다 생각하는 저와는 끊임없이 부딧쳤었습니다.
+부팀장인 저는 팀장을 설득하는데 성공하거나 팀원들을 통제할 정도로 요령있거나 강경하지 못했습니다.
+
+@@해결
+제목: **1차** 해결 시도
+
+인용: 이제부터 저희는 무조건 팀장님 말을 따를거에요. 동의 하나요?
+
+다양한 조언을 받은 끝에 저는 저희 팀에서는 모든 팀원들의 의견을 들어주는 것은 불가능하다는 결론을 내렸습니다.
+또한 팀원들과의 면담을 통해 팀원들은 방향이 정해지고 있지 않은 상황에 불만을 가지고 있다는 것 또한 알 수 있었습니다.
+
+그리하여 1차적으로 팀장과의 면담을 진행했습니다. 정해진 것은 다음과 같습니다.
+
+- 팀장은 결정과 검수의 역할만 하고 앞으로 결정해야 하는 사항은 부팀장이 정한다.
+- 팀장의 결정은 절대적이며 팀원들은 의견 제시 시간에만 문서로 정리하여 의견을 낼 수 있다.
+
+이후 팀원들에게 결정사항을 전달했고 팀원들은 모두 수긍했습니다.
+
+@@문제
+제목: PM이 해야하는 것
+
+이후로는 조금 삐걱거려도 작업은 진척 되었습니다.
+그러나 전 일정이 자꾸 지켜지지 않고 작업이 누락되고 있다고 느꼈습니다.
+
+인용: 대체 뭐라는거에요?
+
+그러던 중 팀원 하나가 저에게 일정표에 대해 건의했습니다.
+그때 저는 엑셀을 사용한 WBS 형식의 일정표를 사용하고 있었고 그것이 팀원들에게는 불편하고 작업 단위의 일정 배치가 맞지 않았던 것입니다.
+
+@@해결
+제목: 작업이 안정되기 까지
+
+저는 직후 팀원들에게 자신이 생각하는 자신의 남은 일들을 써달라 요청하였습니다.
+그 결과 그 목록 중 반은 서로 중복되거나 부풀려 있었고 때문에 팀원들은 업무 과중을 느끼고 있었습니다.
+
+전: 
+후: 
+
+이후 저는 trello를 사용해 일단위로 세부 작업 일정을 관리하여 매일 공지하기 시작했습니다.
+작업이 바뀔 시의 승인, 보고가 즉각적으로 일어나기 시작했고 그때부터는 제가 일정을 효율화하는 것이 가능해졌습니다.
+
+@@해결
+제목: 프로젝트를 통해 얻은 것
+
+이 프로젝트를 통해 저는 다음과 같은 역량을 얻을 수 있었습니다.
+
+- 일정 관리 툴을 사용한 세부 작업 파악 및 분배
+- 팀 내 권한 분할 및 체계 확정
+
+이것으로 일주일 늦어졌던 개발 일정을 효율화시켜 제 시간에 맞출 수 있었습니다.
+
+@@기획서
+`,shortVideos:[{src:"https://www.youtube.com/watch?v=mYlwMKpCUC0&t=1s",title:"High Num 소개 영상"}],images:[],documents:[{title:"2026년 8월 작업 캘린더",src:"assets/documents/work-calendar-2026-08.xlsx",sheet:"work-calendar-2026-08"}]},
   {id:"project-02",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-03",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-04",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
