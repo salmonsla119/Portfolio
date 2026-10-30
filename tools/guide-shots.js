@@ -19,13 +19,14 @@ const CASES=[
  ['image','@@이미지\n그림: '+IMG+'\n설명: 수정한 전투 화면\n'],
  ['sheet','@@표\n제목: 작업 **캘린더**\n이름: work-calendar-2026-08\n']
 ];
+/* PDF·문서에 넣었을 때 글씨가 읽히도록 900px 폭으로 찍습니다 */
 /* 그림이 큰 칸만 jpg 로 저장해 파일 크기를 줄입니다 */
 const JPG=['intro','solve','image'];
 
 (async()=>{
   const b=await chromium.launch({args:['--no-sandbox']});
   for(const [name,md] of CASES){
-    const pg=await b.newPage({viewport:{width:1280,height:900},deviceScaleFactor:0.7});
+    const pg=await b.newPage({viewport:{width:900,height:900},deviceScaleFactor:1.5});
     /* data.js 를 가로채 그 프로젝트의 md 칸만 예시 내용으로 바꿔 끼웁니다 */
     await pg.route('**/assets/data.js',async r=>{
       const res=await r.fetch();
@@ -36,7 +37,7 @@ const JPG=['intro','solve','image'];
     /* 맨 위 16:9 화면 다음 칸(= 불러온 양식)만 잘라냅니다 */
     const box=await pg.evaluate(()=>{
       const r=document.querySelectorAll('#project > section')[1].getBoundingClientRect();
-      return{x:0,y:Math.round(r.top+window.scrollY),width:1280,height:Math.round(r.height)};
+      return{x:0,y:Math.round(r.top+window.scrollY),width:900,height:Math.round(r.height)};
     });
     const jpg=JPG.indexOf(name)>=0;
     await pg.screenshot(Object.assign(
