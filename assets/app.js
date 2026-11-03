@@ -148,6 +148,11 @@ function sheetTable(key){
     panel.innerHTML='<p class="spec-eyebrow">'+e(x.eyebrow||'')+'</p>'
       +'<h3>'+e(x.title||'제목 입력')+'</h3>'
       +'<p class="spec-detail">'+e(x.detail||'설명 입력')+'</p>';
+    /* 꼬리가 고른 항목의 한가운데를 가리키도록 설명판을 올린다.
+       꼬리는 패널 위에서 24px, 높이 19px 이므로 중심이 33.5px 다 */
+    var spec=panel.parentNode.querySelector('.fx-spec'),li=btns[n].parentNode;
+    if(spec)panel.style.setProperty('--py',
+      (spec.offsetTop+li.offsetTop+btns[n].offsetHeight/2-33.5)+'px');
     panel.hidden=false;
     for(var i=0;i<btns.length;i++){
       btns[i].classList.toggle('on',i===n);
@@ -625,7 +630,7 @@ function renderBlocks(md,c){
         tags=String(p.genre||'').split(/[,·]/).map(function(t){return t.trim()}).filter(Boolean),
         docs=(p.documents||[]).filter(function(x){return x&&x.src}),
         hero=coverOf(p),
-        others=list.filter(function(x){return x.id!==p.id});
+        others=list;   /* 지금 보고 있는 것도 자리를 지킨다(.on 으로 표시) */
 
     /* 맨 위 16:9 칸: 영상이 있으면 영상을 틀고, 없으면 대표 이미지.
        유튜브 UI(제목·로고·추천 영상·컨트롤)는 전부 끄고 화면만 남긴다.
@@ -666,7 +671,9 @@ function renderBlocks(md,c){
           +'<button type="button" class="pj-thumbs-arrow" data-scroll="-1" aria-label="이전 프로젝트들">‹</button>'
           +'<div class="pj-thumbs" id="pj-thumbs">'+others.map(function(x){
               var c=coverOf(x);
-              return'<button type="button" class="pj-thumb" data-go="'+e(x.id)+'" title="'+e(x.title)+'">'
+              var now=x.id===p.id;
+              return'<button type="button" class="pj-thumb'+(now?' on':'')+'" data-go="'+e(x.id)
+                +'" title="'+e(x.title)+'"'+(now?' aria-current="true"':'')+'>'
                 +(c?'<img src="'+e(c)+'" alt="'+e(x.title)+'" loading="lazy">'
                    :'<span class="pj-thumb-empty">'+e(x.title)+'</span>')+'</button>'}).join('')
           +'</div>'
@@ -714,7 +721,7 @@ function renderBlocks(md,c){
       thumbs[i].addEventListener('click',function(ev){
         var id=ev.currentTarget.getAttribute('data-go'),
             next=list.find(function(x){return x.id===id});
-        if(!next)return;
+        if(!next||ev.currentTarget.classList.contains('on'))return;
         if(history.replaceState)history.replaceState(null,'','project.html?id='+encodeURIComponent(id));
         render(next);
         window.scrollTo({top:0,behavior:'smooth'});

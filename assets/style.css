@@ -154,10 +154,12 @@ body.on-light{background:var(--bg)}
 .spec-item:hover,.spec-item.on{color:var(--accent)}
 .spec-item:hover .spec-name,.spec-item.on .spec-name{border-bottom-color:var(--accent)}
 
-/* 설명판 (383,143) + 왼쪽 꼬리 (355,157) */
-.fx-panel{left:383px;top:143px;width:315px;padding:22px;border-radius:22px;
+/* 설명판 (383, 세로는 고른 특기 항목에 맞춰 --py 로 움직인다) + 왼쪽 꼬리.
+   꼬리 top 은 모서리 반지름(22)보다 아래여야 패널 본체에 붙는다.
+   위에 두면 둥근 모서리 옆에 떠서 떨어져 보인다 */
+.fx-panel{left:383px;top:var(--py,139px);width:315px;padding:22px;border-radius:22px;
   background:var(--accent);color:var(--accent-ink)}
-.fx-panel:before{content:"";position:absolute;left:-28px;top:14px;
+.fx-panel:before{content:"";position:absolute;left:-27px;top:24px;
   width:0;height:0;border:9.5px solid transparent;border-right:28px solid var(--accent);border-left:0}
 .fx-panel .spec-eyebrow{color:rgba(26,30,34,.6);font-size:11px;font-weight:700;letter-spacing:.14em}
 .fx-panel h3{margin:8px 0;font-size:16px;font-weight:800;line-height:19px}
@@ -240,6 +242,7 @@ body.on-light{background:var(--bg)}
   /* 안쪽에 절대 위치 자식이 있는 칸은 기준점을 유지해야 한다
      (풀어 두면 .screen-go 가 화면 전체를 덮어 버린다) */
   .fx-screen,.fx-panel{position:relative}
+  .fx-panel{top:auto}
   .fx-head{flex-wrap:wrap;gap:8px 12px}
   .fx-head .ico{width:42px;height:42px}
   .fx-head p{font-size:24px}
@@ -322,6 +325,8 @@ iframe.pj-player{pointer-events:none}
   border:1px solid var(--line-2);border-radius:3px;background:var(--screen);cursor:pointer;
   line-height:0;transition:border-color .15s ease}
 .pj-thumb:hover{border-color:var(--accent)}
+/* 지금 보고 있는 프로젝트 — 자리는 그대로 지키고 테두리로만 표시한다(누를 수 없다) */
+.pj-thumb.on{border-color:var(--accent);border-width:2px;cursor:default}
 .pj-thumb img{width:100%;height:100%;object-fit:cover}
 .pj-thumb-empty{display:grid;place-items:center;width:100%;height:100%;padding:8%;
   color:var(--dim);font-size:9px;line-height:1.25;text-align:center;word-break:keep-all}
