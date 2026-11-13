@@ -483,6 +483,42 @@ iframe.pj-player{pointer-events:none}
 .pj-ink .ink{max-height:clamp(96px,13vw,190px)}
 .md-body>.pj-ink:first-child{margin-top:0}
 
+/* 제안 목록 — 한 줄이 제안서 하나. 글이 달린 줄만 누를 수 있다 */
+.pp-lead{margin:0 0 clamp(14px,1.8vw,22px);color:var(--read);font-size:var(--fs-body)}
+.pp-list{display:grid;gap:8px;margin:0;padding:0;list-style:none;max-width:none}
+.pp-item{display:flex;align-items:center;gap:12px;width:100%;
+  padding:13px 16px;border:1px solid var(--line);border-radius:var(--radius);
+  background:transparent;color:var(--read);font-size:var(--fs-body);text-align:left}
+.pp-item .pp-name{flex:1 1 auto;min-width:0}
+.pp-item .ico{flex:0 0 auto;width:15px;height:15px;color:var(--accent)}
+/* 상태 칩 */
+.pp-state{flex:0 0 auto;padding:4px 10px;border:1px solid var(--line-2);border-radius:2px;
+  font-size:var(--fs-label);font-weight:700;letter-spacing:var(--ls);color:var(--dim)}
+.pp-item.st-ok .pp-state{border-color:var(--accent);color:var(--accent)}
+.pp-item.st-no{color:var(--dim)}
+.pp-item.st-no .pp-state{opacity:.7}
+/* 글이 달린 줄 */
+button.pp-item{cursor:pointer;transition:border-color .15s ease,color .15s ease}
+button.pp-item:hover{border-color:var(--accent);color:var(--text)}
+
+/* 제안서 창 */
+body.pp-open{overflow:hidden}
+.pp-modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;
+  padding:clamp(16px,4vw,48px);background:rgba(12,14,17,.72);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.pp-modal[hidden]{display:none}
+.pp-sheet{position:relative;width:min(760px,100%);max-height:84vh;overflow:auto;
+  padding:clamp(24px,3.4vw,42px);border:1px solid var(--line-2);border-radius:var(--radius-lg);
+  background:var(--box)}
+.pp-close{position:absolute;right:14px;top:12px;width:34px;height:34px;padding:0;
+  border:1px solid var(--line);border-radius:2px;background:transparent;
+  color:var(--sub);font-size:19px;line-height:1;cursor:pointer}
+.pp-close:hover{border-color:var(--accent);color:var(--accent)}
+.pp-title{margin:0 44px .9em 0;color:var(--text);font-size:var(--fs-h2);font-weight:800;
+  letter-spacing:-.02em}
+.pp-body{color:var(--read)}
+.pp-body>*{max-width:none}
+
 /* 흐름 도식 — `흐름: A > B > C`. 기획서 플로우차트를 선 상자로 그린다 */
 .pj-flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 9px;
   margin:clamp(16px,2vw,26px) 0}

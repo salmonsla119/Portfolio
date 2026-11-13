@@ -7,7 +7,21 @@ var d=window.PORTFOLIO_DATA||{};
 function e(v){return String(v==null?'':v).replace(/[&<>'"]/g,function(c){
   return{'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]})}
 function q(id){return document.getElementById(id)}
-function projects(){return d.projects||[]}
+/* 프로젝트는 작업 기간이 늦게 끝난 것부터 보여 준다.
+   기간을 안 적은 것은 data.js 에 쓴 차례대로 뒤에 붙는다 */
+function periodKey(p){
+  var m=String(p.period||'').match(/\d{4}[.\-\/]\d{1,2}[.\-\/]\d{1,2}/g);
+  if(!m)return'';
+  var t=m[m.length-1].split(/[.\-\/]/);
+  return t[0]+('0'+t[1]).slice(-2)+('0'+t[2]).slice(-2);
+}
+function projects(){
+  return (d.projects||[]).map(function(p,i){return{p:p,i:i,k:periodKey(p)}})
+    .sort(function(a,b){
+      if(a.k&&b.k)return a.k<b.k?1:(a.k>b.k?-1:a.i-b.i);
+      if(a.k)return-1; if(b.k)return 1; return a.i-b.i;
+    }).map(function(x){return x.p});
+}
 
 /* ===== 벡터 아이콘 =====
    24x24 선 아이콘. 색은 currentColor, 굵기는 CSS(.ico)에서 정한다.
@@ -427,7 +441,8 @@ var BLOCK_ALIAS={
   '기획서':'기획서','상세기획서':'기획서','문서':'기획서',
   '글':'글','본문':'글',
   '이미지':'이미지','그림':'이미지','사진':'이미지',
-  '표':'표','엑셀':'표'
+  '표':'표','엑셀':'표',
+  '제안':'제안','제안목록':'제안'
 };
 
 /* cls = 구역 클래스, tone = 기본 밝기(light/dark), make = 안쪽 내용 */
@@ -542,6 +557,30 @@ var BLOCKS={
           :'<figure class="pj-figure">'+fill('','','이미지 추가 영역')+'</figure>');
   }},
 
+  /* 제안 목록 — `이름 | 상태 | 글키` 한 줄이 제안서 하나.
+     글키가 data.js 의 proposals 에 있으면 눌러서 창으로 띄운다 */
+  '제안':{cls:'pj-free',tone:'light',make:function(c,b){
+    var docs=c.p.proposals||{},
+        rows=String(b.body||'').split('\n').map(function(t){
+          return t.replace(/^[ \t]*[-*][ \t]+/,'').trim()}).filter(Boolean);
+    return(b.fields['제목']?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'doc')+'">'
+          +mdLine(b.fields['제목'])+'</h2>':'')
+      +(b.fields['설명']?'<p class="pp-lead">'+mdLine(b.fields['설명'])+'</p>':'')
+      +'<ul class="pp-list">'+rows.map(function(t){
+          var part=t.split('|').map(function(x){return x.trim()}),
+              name=part[0],state=part[1]||'',key=part[2]||'',
+              has=key&&docs[key],
+              cls='pp-item'+(state?' st-'+({'채택':'ok','기각':'no','논의':'talk'}[state]||'talk'):'');
+          return'<li>'+(has
+            ?'<button type="button" class="'+cls+' has-doc" data-pp="'+e(key)+'">'
+            :'<span class="'+cls+'">')
+            +'<span class="pp-name">'+mdLine(name)+'</span>'
+            +(state?'<span class="pp-state">'+e(state)+'</span>':'')
+            +(has?icon('down'):'')
+            +(has?'</button>':'</span>')+'</li>'}).join('')
+      +'</ul>';
+  }},
+
   /* 엑셀 표 — assets/sheets.js 의 이름을 적는다 */
   '표':{cls:'pj-free',tone:'이어받기',make:function(c,b){
     var t=sheetTable(b.fields['이름']||String(b.body||'').trim());
@@ -551,6 +590,37 @@ var BLOCKS={
         +'표를 찾을 수 없습니다 — assets/sheets.js 의 이름을 확인해 주세요</div>');
   }}
 };
+
+/* 제안서 창 — 누른 제안서의 글을 덮개 창으로 띄운다.
+   돌아갈 자리를 잃지 않게 바탕 스크롤을 잠그고, Esc 와 바깥 누르기로 닫는다 */
+function showProposal(key,md,title){
+  var box=document.getElementById('pp-modal');
+  if(!box){
+    box=document.createElement('div');
+    box.id='pp-modal';box.className='pp-modal';box.hidden=true;
+    box.innerHTML='<div class="pp-sheet" role="dialog" aria-modal="true" aria-label="제안서">'
+      +'<button type="button" class="pp-close" aria-label="닫기">\u00d7</button>'
+      +'<h3 class="pp-title"></h3><div class="md-body pp-body"></div></div>';
+    document.body.appendChild(box);
+    box.addEventListener('click',function(ev){
+      if(ev.target===box||ev.target.classList.contains('pp-close'))hideProposal();
+    });
+    document.addEventListener('keydown',function(ev){
+      if(ev.key==='Escape')hideProposal();
+    });
+  }
+  box.querySelector('.pp-title').textContent=title||'';
+  box.querySelector('.pp-body').innerHTML=bodyHtml(md||'');
+  box.hidden=false;
+  document.body.classList.add('pp-open');
+  paintIcons(box);
+  box.querySelector('.pp-close').focus();
+}
+function hideProposal(){
+  var box=document.getElementById('pp-modal');
+  if(box)box.hidden=true;
+  document.body.classList.remove('pp-open');
+}
 
 /* md 칸이 비어 있을 때 쓰는 기본 구성 */
 var DEFAULT_MD='@@소개\n@@인용\n@@문제\n@@해결\n@@기획서\n';
@@ -726,6 +796,16 @@ function renderBlocks(md,c){
         var dir=parseInt(ev.currentTarget.getAttribute('data-scroll'),10)||1,
             one=rail.querySelector('.pj-thumb');
         rail.scrollBy({left:dir*((one?one.offsetWidth:120)+16)*2,behavior:'smooth'});
+      });
+    }
+
+    /* 제안서 누르면 창으로 띄운다 */
+    var pps=root.querySelectorAll('.pp-item.has-doc');
+    for(var pi=0;pi<pps.length;pi++){
+      pps[pi].addEventListener('click',function(ev){
+        var key=ev.currentTarget.getAttribute('data-pp');
+        showProposal(key,(p.proposals||{})[key],
+          ev.currentTarget.querySelector('.pp-name').textContent);
       });
     }
 

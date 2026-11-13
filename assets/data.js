@@ -40,17 +40,16 @@ resumeProjects:[{year:"",title:"",role:"",detail:""},{year:"",title:"",role:"",d
    비워 두면 기본 구성(포지션 → 소개 → 인용 → 문제 → 해결 → 기획서)으로 나옵니다.
    양식을 부르는 방법은 편집방법.md 의 "프로젝트 상세 — 양식 부르기"를 보세요. */
 projects:[
-  {id:"project-01",featured:true,year:"2026",title:"High Num",genre:"주사위, 롤플레잉, 전략",ornament:true,role:"부팀장, PM",summary:"샷건에 주사위를 장전해 쏘아라! 수치 상승의 쾌감이 느껴지는 주사위 도박 전투",body:"",image:"assets/images/project-01-main.png",team:[{part:"기획",count:5},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"일정 관리, 갈등 조율",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`
+  {id:"project-01",featured:true,year:"2026",title:"High Num",genre:"주사위, 롤플레잉, 전략",ornament:true,role:"부팀장, PM",summary:"샷건에 주사위를 장전해 쏘아라! 수치 상승의 쾌감이 느껴지는 주사위 도박 전투",body:"",image:"assets/images/project-01-main.png",team:[{part:"기획",count:5},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2026.07.20 ~ 2026.09.03 (34일)",position:"",gains:"일정 관리, 갈등 조율",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`
 @@인용
 그래서 저희 게임 무슨 게임이에요?
 
 @@소개
 제목: 샷건에 주사위를 장전해 쏘아라! 수치 상승의 쾌감이 느껴지는 주사위 도박 전투
-포지션: 부팀장, PM
+포지션: 부팀장, PM, 기획, 비주얼 가이드
 역량: 일정 관리, 갈등 조율
 링크: itch.io 에서 플레이 | https://panasaga.itch.io/highnum
 그림: assets/images/project-01-main.png
-작업기간: 07/20 ~ 09/03 (34일)
 장르: 주사위, 덱빌딩, 로그라이크, 인크리멘탈
 
 @@탭 프로젝트
@@ -592,7 +591,7 @@ projects:[
 
 이것으로 일주일 늦어졌던 개발 일정을 효율화시켜 ==제 시간에 맞출 수 있었습니다==.
 `,shortVideos:[{src:"https://www.youtube.com/watch?v=mYlwMKpCUC0&t=1s",title:"High Num 소개 영상"}],images:[],documents:[{title:"2026년 8월 작업 캘린더",src:"assets/documents/work-calendar-2026-08.xlsx",sheet:"work-calendar-2026-08"},{title:"컨셉 기획서 Ver 1.1.2",src:"assets/documents/highnum-concept-ver1.1.2.pdf"}]},
-  {id:"project-02",year:"연도 입력",title:"타일 시공 마스터",genre:"캐주얼 클리커",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"assets/images/project-02-logo.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+  {id:"project-02",year:"2026",title:"타일 시공 마스터",genre:"캐주얼 클리커",role:"내 역할 입력",summary:"낡은 타일을 부수고, 새로 칠하고, 완성하자!",body:"프로젝트 상세 설명 입력",image:"assets/images/project-02-logo.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2026.06.30 ~ 2026.08.03",position:"비주얼 가이드, 리소스 작업",gains:"리소스 관리, UI 작업 파이프라인",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
 @@탭 프로젝트
 
@@ -745,7 +744,7 @@ projects:[
 
 @@기획서
 `,shortVideos:[{src:"assets/videos/project-02-hero.mp4",title:"타일 시공 마스터 소개 영상"}],images:[],documents:[{title:"타일 시공 마스터 컨셉 기획서",src:"assets/documents/tile-master-concept.pdf"}]},
-  {id:"project-03",year:"2026",title:"다녀가용",genre:"인크리멘탈, 로그라이크",role:"내 역할 입력",summary:"간단 설명 입력",body:"",image:"assets/images/project-03-key.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+  {id:"project-03",year:"2026",title:"다녀가용",genre:"인크리멘탈, 로그라이크",role:"내 역할 입력",summary:"원시부터 우주까지, 다녀가용! 건물을 부수고 골드를 빼앗는 인크리멘탈 게임",body:"",image:"assets/images/project-03-key.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2026.09.28 ~ 2026.11.20",position:"비주얼 가이드, 기획, 리소스 작업",gains:"리소스 규격 설정, 게임 루프 설정",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
 @@탭 프로젝트
 
@@ -924,6 +923,56 @@ projects:[
 
 @@탭 워크 플로우
 
+@@주제 및 아이디어 선정
+
+- 인크리멘탈 짧은 세션을 주제로 받음
+- 각자 아이디어와 프로토타입 제출 후 팀장·부팀장 기준표 평가에서 러너 형식의 드래곤 게임 채택
+
+@@컨셉 구체화 및 역할 배분
+
+- 성장 수치와 외형 변화의 즉시 체감, 직관적인 파괴의 재미를 기준으로 설정
+- 드래곤이 건물을 파괴하며 성장하는 컨셉 결정, 직접 조작은 보너스 수단으로 설정
+- 팀장의 원페이지 기획서를 바탕으로 시스템 명세, 컨텐츠/업그레이드, 비주얼 가이드로 분배
+- 비주얼 가이드 담당으로 캔버스·기준점·지면 높이 통일, 투명 PNG 전달 규칙 설정
+
+@@프로토타입 및 MVP 명세
+
+- 작은 범위 프로토타입 테스트 후 공격 판정, 자동 타기팅 문제 확인
+- 업그레이드 → 스테이지 → 환생 한 사이클을 MVP로 확정, 수치는 데이터 테이블로 관리
+- 성장 단계 5단계에서 4단계로 축소, 공중 유닛은 위협 요소로 설정
+
+@@추가 컨텐츠 논의
+
+- 플레이타임 조건 미달로 미니게임 추가 결정
+- 스테이지 테마 전환마다 점수제 미니게임, 아웃게임은 수집품·꾸미기로 유도하는 방향 결정
+
+@@MVP 개발 및 itch.io 출시
+
+- 추가 컨텐츠는 이후 분량으로 빼고 인게임 범위 개발
+- itch.io 자료 조사 후 썸네일 제작
+
+@@게임 방향성 수정
+
+- 방치와 조작 중 조작요소 강화로 결정, 랜드마크를 돌파하는 러너 구조로 변경
+- 환생 시스템을 빼고 아웃게임 컨텐츠로 대체
+- 보스 몬스터 추가 결정
+
+@@추가 시스템 기획 및 피드백 반영
+
+- 유저 피드백 바탕으로 용어, 안내 문구, 아웃게임 UX 개선
+- 추가된 컨텐츠 관련 기획서 업무 배분, 작업
+
+@@Steam 출시 준비
+
+- HUD 정리, 애니메이션·사운드 보완, 검수용 빌드와 SDK 연동 테스트
+- 조작 모드 선택, 키 매핑을 환경설정에 추가
+- Steam 판매 500장 목표로 Reddit, 유튜버 홍보 준비
+
+@@플랫폼 제작
+
+- 미니게임을 모은 웹·모바일 플랫폼으로 드래곤 게임과 서로 유입시키는 구상
+- 인원 대비 일정 우려가 있어 미니게임은 컨셉과 수익모델 중심으로 제안
+
 @@탭 리소스 구현
 
 @@비주얼 구현 설계
@@ -978,8 +1027,56 @@ projects:[
 
 @@탭 제안서
 
+@@제안
+제목: 아이디어, 프로토타입 제안
+- 러너 형식 드래곤 게임 제안 | 채택
+
+@@제안
+제목: 재미요소 논의
+설명: 게임 플레이가 늘어진다고 생각
+- 허들 설정 방법에 대한 제안서 | 논의
+- 초반부 게임 늘어짐 해결 방법에 대한 제안서 | 논의
+- 방치와 능동적 조작 중 하나를 선택해야 한다는 제안서 | 기각
+- 강화 스탯의 타입 분류 제안서 | 논의
+- 드래곤 종류 별 경험 차별화 제안서 | 논의
+
+@@게임 추가 컨텐츠 논의
+구역: 어둡게
+
+- 미니게임 형식을 집어넣자는 방향이 정해짐
+- 미니게임이 게임의 흐름을 끊고 동떨어진다고 판단
+- 스테이지가 넘어갈때마다 미니게임을 넣자는 방향 결정
+
+@@제안
+구역: 어둡게
+- 미니게임 제안서 | 논의
+- 성장 컨텐츠와 엮인 미니게임 구조 제안서 | 기각
+- 스테이지 흐름 끊김을 우려해 구두 제안 | 기각
+
+@@제안
+제목: 게임 재미요소 논의 2
+설명: QA 후 제안서 작성
+- 초반부 재화 부족으로 늘어짐 현상 — 재화 지급 상향 제안 | 논의
+- 공격력에 관여하는 강화 둘이 모두 비싸거나 후반 강화 — 비용 하락 혹은 초반 시점 해금 제안 | 논의
+- 초반 스타터가 특정 위치를 제외하면 디메리트를 줘 선택 강제 — 초반 스타터 위치 문제 제기 | 논의
+- 재화 부족 상황에 재화 획득량 강화 한계가 낮은 문제 — 강화 한계 해제 제안 | 논의
+- 이동속도 강화 비쌈으로 템포 느림 문제 — 가격 하향 제안 | 논의
+- 강화 내에서 지수 증가가 일어나지 않음 — 배율 상승 혹은 강화 곱연산 되는 강화 종류 확장 제안 | 논의
+
+@@게임 방향성 수정
+설명: 게임 리뉴얼 제안서 작성
+구역: 어둡게
+
+- 적의 체력으로 허들을 두지 않고 적의 공격력으로 허들을 두는 형식 — 늘어짐 삭제
+- 수동 공격 요소 추가
+- 인게임에서 알을 랜덤 드랍, 아웃게임에 로비 배치 후 알 가챠, 유물 등을 추가하는 방안
+
+@@제안
+구역: 어둡게
+- 게임 리뉴얼 제안서 | 일부 채택 일부 기각
+
 @@기획서
-`,shortVideos:[],images:[],documents:[{title:"다녀가용 컨셉 기획서",src:"assets/documents/dragon-concept.pdf"}]},
+`,shortVideos:[],images:[],proposals:{},documents:[{title:"다녀가용 컨셉 기획서",src:"assets/documents/dragon-concept.pdf"}]},
   {id:"project-04",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-05",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-06",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
