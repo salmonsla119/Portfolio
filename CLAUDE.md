@@ -115,7 +115,7 @@
 - **`@@탭 이름`은 양식이 아니라 가름선이다.** 그 뒤의 양식들이 그 탭(`.pj-panel`)에 들어가고, `@@탭` 앞의 양식은 탭 위에 늘 보인다. 단추 줄은 `.pj-tabsbar`(`.pj-tab`, `.doc-tab`과 같은 모양) 한 구역이고, 탭마다 밝기를 처음부터 다시 세고 `.pj-foot`도 탭마다 하나씩 붙인다. 탭이 없으면 예전과 똑같이 이어서 그린다.
 - 구역을 그리는 일은 `blockSection()`/`blockRun()`에 모아 두었다. 탭 때문에 같은 코드를 두 번 돌려야 해서다.
 - **`인용:`·`전:`·`후:`·`손그림:`·`카드:`·`흐름:`은 `bodyHtml()`이 처리한다**(`quoteBox()`, `baRow()`, `inkFigs()`, `cardGrid()`, `flowRow()`). 양식마다 따로 받지 말 것.
-- **`@@제안`은 제안서 목록이다.** 한 줄이 `이름 | 상태 | 글키` 꼴이고 상태(`채택`·`논의`·`기각`)는 오른쪽 칩으로 붙는다. **글키가 프로젝트의 `proposals` 칸에 있으면 그 줄이 단추가 되고, 누르면 `showProposal()`이 가운데 창(`.pp-modal`)으로 글을 띄운다**(바깥 누르기·×·Esc로 닫고 바탕 스크롤은 잠근다). 글키가 없으면 그냥 한 줄이다.
+- **`@@제안`은 제안서 목록이다.** 한 줄이 `이름 | 상태 | 글키` 꼴이고 상태(`채택`·`논의`·`기각`)는 오른쪽 칩으로 붙는다. **글키가 프로젝트의 `proposals` 칸에 있으면 그 줄이 단추가 되고(오른쪽에 손가락 `tap` 아이콘), **누를 때만**(마우스를 올려도 열리지 않는다) `showProposal()`이 가운데 창(`.pp-modal`)으로 글을 띄운다**(바깥 누르기·×·Esc로 닫고 바탕 스크롤은 잠근다). 글키가 없으면 그냥 한 줄이다.
 - **`흐름: A > B > C`는 기획서의 플로우차트를 선 상자로 그린다**(`.pj-flow`). `>` `→` `->` 로 나누고 처음·끝 칸만 하늘색이다. 560px 미만에서는 세로로 쌓는다. **PPT 도형으로 그린 도식은 쪽을 캡처하지 말고 이 칸으로 다시 그릴 것.**
   - **전·후는 한 벌로 묶이므로 `전:`/`후:` 분기에서 `row()`를 부르면 안 된다.** 한 번 그렇게 했다가 전 → 후가 `.pj-ba.one` 두 개로 쪼개져 화살표가 사라지고 세로로 쌓였다.
 - **`손그림:`은 바탕이 비어 있는(투명) 선 그림 전용이다.** 테두리·바탕 없이 그림만 놓고, 파일은 **밝은 선**으로 만들어 두었으므로 밝은 구역에서만 `.on-light .ink{filter:invert(1)}`로 뒤집는다. 크기는 `max-height`로 묶어 가로로 긴 그림은 넓게, 정사각에 가까운 그림은 좁게 앉는다. **흰 바탕 그림을 넣으면 어두운 칸에서 흰 네모가 된다.**
@@ -176,7 +176,7 @@
 
 **아이콘은 전부 선(벡터) 아이콘이다.** `assets/app.js` 위쪽 `ICONS`에 24x24 path 만 모여 있고, 쓰는 쪽은 **`data-ico="이름"` 한 줄이면 된다**(`paintIcons()`가 채운다). JS로 그리는 곳에서는 `icon('이름')`을 쓴다. 색은 `currentColor`, 굵기는 `.ico`가 정하므로 아이콘마다 색·크기를 따로 지정하지 않는다. 다시 그려지는 화면(프로젝트 상세, 기획서 뷰어)에서는 그린 뒤 `paintIcons(root)`를 호출해야 한다.
 
-현재 있는 이름: `doc pen grid film sound mute quote swap clip down back image user badge award case layers tool alert hybrid` + 문양 `orn-dice orn-card orn-chip orn-star orn-target orn-shell`(48 격자)
+현재 있는 이름: `doc pen grid film sound mute quote swap clip down tap back image user badge award case layers tool alert hybrid` + 문양 `orn-dice orn-card orn-chip orn-star orn-target orn-shell`(48 격자)
 
 아이콘 안에서 일부만 포인트 색을 쓰려면 그 `path`(또는 `g`)에 클래스를 준다 — `a`(선을 하늘색), `fill-a`(면을 하늘색), `no-line`(선 없이 면만).
 

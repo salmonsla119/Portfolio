@@ -1412,7 +1412,12 @@ projects:[
 - 획득한 유물을 배치할 수 있음
 - 배치해야만 유물 효과가 적용됨`
   },documents:[{title:"다녀가용 컨셉 기획서",src:"assets/documents/dragon-concept.pdf"}]},
-  {id:"project-04",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
+  {id:"project-04",year:"2024",title:"My Darkest Friend",genre:"로그라이크, 육성 시뮬레이션",role:"내 역할 입력",summary:"인간 '화이트'와 괴물 '블랙'이 몰래 사람을 잡아먹으며 성장해나가는 육성 시뮬레이션 게임",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2024.03.29 ~ 2024.10.27",position:"아트 전반",gains:"돌발상황 대처",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+
+@@탭 프로젝트
+
+@@기획서
+`,shortVideos:[{src:"assets/videos/project-04-hero.mp4",title:"My Darkest Friend 소개 영상"}],images:[],documents:[{title:"My Darkest Friend 컨셉 기획서",src:"assets/documents/my-darkest-friend-concept.pdf"}]},
   {id:"project-05",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-06",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-07",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},

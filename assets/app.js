@@ -37,6 +37,7 @@ var ICONS={
   swap:'<path d="M3 8.5h15"/><path d="M14.5 5l3.5 3.5-3.5 3.5"/><path d="M21 15.5H6"/><path d="M9.5 12L6 15.5 9.5 19"/>',
   clip:'<rect x="5" y="4" width="14" height="18" rx="1"/><path d="M9 4V2.5h6V4"/><path d="M9 10.5h6M9 14.5h6"/>',
   down:'<path d="M12 3.5v11.5"/><path d="M7.5 11L12 15.5 16.5 11"/><path d="M4 20h16"/>',
+  tap:'<path d="M9 15.5V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M12 11V9.5a1.5 1.5 0 0 1 3 0v2"/><path d="M15 11.5v-1a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-.8a5.5 5.5 0 0 1-4.4-2.2l-2.6-3.3a1.5 1.5 0 0 1 2.3-1.9L9 15.5"/>',
   back:'<path d="M20 12H4"/><path d="M10 6l-6 6 6 6"/>',
   image:'<rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 16.5l-5.5-5.5L9 17.5"/>',
   user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>',
@@ -577,7 +578,7 @@ var BLOCKS={
             :'<span class="'+cls+'">')
             +'<span class="pp-name">'+mdLine(name)+'</span>'
             +(state?'<span class="pp-state">'+e(state)+'</span>':'')
-            +(has?icon('down'):'')
+            +(has?icon('tap'):'')
             +(has?'</button>':'</span>')+'</li>'}).join('')
       +'</ul>';
   }},
@@ -592,9 +593,7 @@ var BLOCKS={
   }}
 };
 
-/* 제안서 창 — 마우스를 올리면 뜨고, 누르면 고정된다.
-   고정했을 때만 바탕 스크롤을 잠근다(지나가다 열릴 때 화면이 흔들리지 않게) */
-var ppPinned=false,ppTimer=null;
+/* 제안서 창 — 줄을 누르면 가운데 창으로 뜬다. 바깥·×·Esc 로 닫고 바탕 스크롤은 잠근다 */
 function proposalBox(){
   var box=document.getElementById('pp-modal');
   if(box)return box;
@@ -607,35 +606,24 @@ function proposalBox(){
   box.addEventListener('click',function(ev){
     if(ev.target===box||ev.target.classList.contains('pp-close'))hideProposal();
   });
-  /* 목록에서 창으로 마우스가 건너오는 사이에 닫히지 않게 한다 */
-  box.addEventListener('mouseenter',function(){clearTimeout(ppTimer)});
-  box.addEventListener('mouseleave',proposalLater);
   document.addEventListener('keydown',function(ev){
     if(ev.key==='Escape')hideProposal();
   });
   return box;
 }
-function showProposal(md,title,pin){
-  clearTimeout(ppTimer);
-  if(ppPinned&&!pin)return;          /* 고정해 둔 글은 지나가도 바뀌지 않는다 */
+function showProposal(md,title){
   var box=proposalBox();
   box.querySelector('.pp-title').textContent=title||'';
   box.querySelector('.pp-body').innerHTML=bodyHtml(md||'');
   box.hidden=false;
-  box.classList.toggle('is-pinned',!!pin);
-  if(pin){ppPinned=true;document.body.classList.add('pp-open');
-    box.querySelector('.pp-close').focus()}
+  document.body.classList.add('pp-open');
   paintIcons(box);
-}
-/* 잠깐 뒤에 닫는다 — 그 사이 창이나 다른 줄에 닿으면 취소된다 */
-function proposalLater(){
-  clearTimeout(ppTimer);
-  ppTimer=setTimeout(function(){if(!ppPinned)hideProposal()},180);
+  box.querySelector('.pp-sheet').scrollTop=0;
+  box.querySelector('.pp-close').focus();
 }
 function hideProposal(){
-  clearTimeout(ppTimer);ppPinned=false;
   var box=document.getElementById('pp-modal');
-  if(box){box.hidden=true;box.classList.remove('is-pinned')}
+  if(box)box.hidden=true;
   document.body.classList.remove('pp-open');
 }
 
@@ -816,18 +804,14 @@ function renderBlocks(md,c){
       });
     }
 
-    /* 제안서는 마우스를 올리기만 해도 열리고, 누르면 그 자리에 고정된다
-       (메인 특기 설명판과 같은 방식) */
+    /* 제안서 — 글이 달린 줄을 누르면 창으로 연다 */
     var pps=root.querySelectorAll('.pp-item.has-doc');
-    function ppShow(el,pin){
-      showProposal((p.proposals||{})[el.getAttribute('data-pp')],
-        el.querySelector('.pp-name').textContent,pin);
-    }
     for(var pi=0;pi<pps.length;pi++){
-      pps[pi].addEventListener('mouseenter',function(ev){ppShow(ev.currentTarget,false)});
-      pps[pi].addEventListener('mouseleave',proposalLater);
-      pps[pi].addEventListener('focus',function(ev){ppShow(ev.currentTarget,false)});
-      pps[pi].addEventListener('click',function(ev){ppShow(ev.currentTarget,true)});
+      pps[pi].addEventListener('click',function(ev){
+        var el=ev.currentTarget;
+        showProposal((p.proposals||{})[el.getAttribute('data-pp')],
+          el.querySelector('.pp-name').textContent);
+      });
     }
 
     /* 오른쪽 위 썸네일 → 그 프로젝트로 내용 교체 */
