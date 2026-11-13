@@ -1554,7 +1554,7 @@ projects:[
 
 - QA에 직접 참여, 누락과 오류 검수
 `,shortVideos:[{src:"assets/videos/project-04-hero.mp4",title:"My Darkest Friend 소개 영상"}],images:[],documents:[{title:"My Darkest Friend 컨셉 기획서",src:"assets/documents/my-darkest-friend-concept.pdf"}]},
-  {id:"project-05",year:"2025",title:"코나와 스노래빗",genre:"장르 입력",role:"내 역할 입력",summary:"악동들의 냉동 액션!",body:"프로젝트 상세 설명 입력",image:"assets/images/project-05-thumb.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2025.02.18 ~ 2025.11.30",position:"배경원화",gains:"원화 - 3D - 레벨 파이프라인",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+  {id:"project-05",year:"2025",title:"코나와 스노래빗",genre:"액션, 어드벤처, 캐주얼, 인디",role:"내 역할 입력",summary:"악동들의 냉동 액션!",body:"프로젝트 상세 설명 입력",image:"assets/images/project-05-thumb.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2025.02.18 ~ 2025.11.30",position:"배경원화",gains:"원화 - 3D - 레벨 파이프라인",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 링크: Steam 페이지 | https://store.steampowered.com/app/3985850/%EC%BD%94%EB%82%98%EC%99%80_%EC%8A%A4%EB%85%B8%EB%9E%98%EB%B9%97/?l=koreana
 `,shortVideos:[{src:"assets/videos/project-05-hero.mp4",title:"코나와 스노래빗 트레일러"}],images:[],documents:[]},
   {id:"project-06",year:"2022",title:"Last Hideout",genre:"전략, 보드게임",role:"내 역할 입력",summary:"좀비를 막고 생존하는 4인 보드게임",body:"프로젝트 상세 설명 입력",image:"assets/images/project-06-board.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2022.12 ~ 2022.12.26",position:"기획, 아트",gains:"실제 제작 경험",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
