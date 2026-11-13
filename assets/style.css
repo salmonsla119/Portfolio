@@ -411,9 +411,11 @@ iframe.pj-player{pointer-events:none}
 .wrap.has-orn{position:relative}
 .wrap.has-orn>*:not(.pj-orn){position:relative;z-index:1}
 .pj-orn{position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:0;
-  width:clamp(130px,15vw,200px);color:var(--line-2);opacity:.45;pointer-events:none;
+  /* 칸보다 커지면 위아래가 잘려 나간다 — 칸 높이의 72% 를 넘지 않게 묶는다 */
+  width:auto;height:min(clamp(130px,15vw,200px),72%);
+  color:var(--line-2);opacity:.45;pointer-events:none;
   -webkit-user-select:none;user-select:none}
-.pj-orn .ico{width:100%;height:auto}
+.pj-orn .ico{width:auto;height:100%}
 @media(max-width:1023px){.pj-orn{display:none}}
 
 /* 자유 양식(글·이미지·표) */

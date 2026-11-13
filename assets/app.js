@@ -566,7 +566,10 @@ function blockSection(b,c,prev,n){
       /* 같은 밝기가 이어지면 위 패딩을 뺀다(구역이 두 번 겹쳐 보이지 않게) */
       tight=prev===tone?' is-tight':'';
   /* 그림이 붙는 양식(이미지·표)과 그림 칸을 쓴 글에는 문양을 깔지 않는다 */
-  var bare=['이미지','표','기획서','인용'].indexOf(key)<0&&!b.fields['그림']&&!b.fields['사진']
+  /* 문양은 `ornament:true` 인 프로젝트에만 기본으로 깐다(지금은 High Num).
+     다른 프로젝트에서는 칸에 `문양: 이름` 을 적은 자리에만 들어간다 */
+  var bare=(c.p.ornament===true||b.fields['문양'])
+            &&['이미지','표','기획서','인용'].indexOf(key)<0&&!b.fields['그림']&&!b.fields['사진']
             &&!/^[ \t]*(손그림|카드)[ \t]*:/m.test(b.body||''),
       orn=bare?ornament(b,n||0):'';
   return{tone:tone,html:'<section class="'+spec.cls+(tone==='light'?' on-light':'')+tight+'">'

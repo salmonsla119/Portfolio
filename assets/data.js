@@ -40,7 +40,7 @@ resumeProjects:[{year:"",title:"",role:"",detail:""},{year:"",title:"",role:"",d
    비워 두면 기본 구성(포지션 → 소개 → 인용 → 문제 → 해결 → 기획서)으로 나옵니다.
    양식을 부르는 방법은 편집방법.md 의 "프로젝트 상세 — 양식 부르기"를 보세요. */
 projects:[
-  {id:"project-01",featured:true,year:"2026",title:"High Num",genre:"주사위, 롤플레잉, 전략",role:"부팀장, PM",summary:"샷건에 주사위를 장전해 쏘아라! 수치 상승의 쾌감이 느껴지는 주사위 도박 전투",body:"",image:"assets/images/project-01-main.png",team:[{part:"기획",count:5},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"일정 관리, 갈등 조율",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`
+  {id:"project-01",featured:true,year:"2026",title:"High Num",genre:"주사위, 롤플레잉, 전략",ornament:true,role:"부팀장, PM",summary:"샷건에 주사위를 장전해 쏘아라! 수치 상승의 쾌감이 느껴지는 주사위 도박 전투",body:"",image:"assets/images/project-01-main.png",team:[{part:"기획",count:5},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"일정 관리, 갈등 조율",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`
 @@인용
 그래서 저희 게임 무슨 게임이에요?
 
@@ -745,7 +745,258 @@ projects:[
 
 @@기획서
 `,shortVideos:[{src:"assets/videos/project-02-hero.mp4",title:"타일 시공 마스터 소개 영상"}],images:[],documents:[{title:"타일 시공 마스터 컨셉 기획서",src:"assets/documents/tile-master-concept.pdf"}]},
-  {id:"project-03",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
+  {id:"project-03",year:"2026",title:"다녀가용",genre:"인크리멘탈, 로그라이크",role:"내 역할 입력",summary:"간단 설명 입력",body:"",image:"assets/images/project-03-key.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+
+@@탭 프로젝트
+
+@@게임 요약
+그림: assets/images/dragondoc/keyart.jpg
+그림위치: 왼쪽
+
+==**원시부터 우주까지, 다녀가용!**==
+
+- 게임 장르: 인크리멘탈, 로그라이크
+- 게임 시점: 2D 횡스크롤
+- 타겟 유저: 가볍게 켜두고 짧은 플레이로도 뚜렷한 성장을 즐기는 PC 캐주얼 인크리멘탈 유저
+
+### 핵심 재미
+
+- **한 번에 와르르, 시원한 파괴 쾌감**
+  - 건물을 연속해서 부시고, 골드가 쏟아지는 시청각적 재미
+- **한 판마다 쑥쑥, 확실한 성장 체감**
+  - 짧은 플레이의 성장으로, 이전에 막힌 도시를 손쉽게 부수는 성장 체감
+
+### 레퍼런스 게임
+
+- Bills Must Be Paid: 강화 트리 구조
+- Burrito Bison: 세션 진행 구조
+
+@@이미지
+그림: assets/images/dragondoc/loop.jpg, assets/images/dragondoc/mech.jpg
+비율: 원본
+설명: 순환 구조와 핵심 메카닉스
+
+@@세계관 / 시놉시스
+구역: 어둡게
+
+### 시놉시스 — 작은 용의 커다란 보물 욕심
+
+- 보물과 금은보화가 곧 자신의 위상이라 생각하는 드래곤
+- 산더미 같은 보물 위에 앉은 멋진 드래곤을 꿈꾸는 작은 용
+- ==인간이 있는 곳에 보물이 따라온다!==
+- 파괴의 재미와 보물 모으는 맛에 눈뜬 꼬마용의 놀이터는 점점 넓어진다
+
+### 게임 진행 스토리
+
+- 돈을 모아도 모아도 부족해!
+- 더 많은 돈! 인간은 발전할 수록 부자가 되는구나!
+- 더! 더! 많이!!
+
+@@이미지
+그림: assets/images/dragondoc/story-1.jpg, assets/images/dragondoc/story-2.jpg
+비율: 원본
+설명: 시놉시스 · 게임 진행 스토리
+
+@@플레이 흐름
+
+### 인게임 흐름
+
+==스테이지 시작 → 건물 파괴 → 랜드마크 파괴 → 다음 테마 → 최종 테마 클리어 → 스테이지 종료==
+
+- 기력 또는 체력이 고갈되면 그 자리에서 스테이지가 끝난다
+
+### 아웃게임 흐름
+
+==스테이지 종료 → 동굴 → 강화 · 알 부화 · 도감==
+
+@@이미지
+그림: assets/images/dragondoc/flow.jpg
+
+@@주요 요소
+구역: 어둡게
+
+### 인게임
+
+- 드래곤: 플레이어블 캐릭터. W/S 이동, space 활공
+- 건물: 이동 방해/공격 구조물이자 게임 내 파괴 목표물
+- 보스: 각 테마별 보스. 처치 시 다음 테마 이동
+- 유닛: 공격 객체. 플레이어를 방해하는 적
+
+### 인게임 드랍 자원
+
+- 금 코인: 1 골드 코인
+- 금괴: 5 골드 코인
+- 사파이어: 25 골드 코인
+- 루비: 100 골드 코인
+- 다이아몬드: 500 골드 코인
+- 왕관: 1,000 골드 코인
+
+### 아웃게임 재화
+
+- 골드 코인: 업그레이드 시 필요한 재화. 인게임에서 획득 가능
+- 알: 유물 / 꾸미기 뽑기. 자유롭게 부화 가능하고 축적한 시간만큼 높은 등급 보상 (최대 1시간)
+
+@@이미지
+그림: assets/images/dragondoc/elements.jpg
+
+@@스탯 구성
+
+### 구조물 스탯
+
+- 체력: 건물 체력. 피격 시 감소
+- 공격력: 건물 공격력. 공격 시 데미지 결정
+- 공격 속도: 건물 공격 속도
+
+### 드래곤 스탯
+
+- 체력: 드래곤 체력. 피격 시 감소
+- 기력: 드래곤 기력. 일정 시간 마다 감소
+- 공격력: 드래곤 공격력. 공격 시 데미지 결정
+- 공격 속도: 드래곤 공격 속도
+- 이동 속도: 드래곤 이동 속도
+
+@@승패 조건
+구역: 어둡게
+
+### 승리 조건
+
+- 한 세션 내 모든 테마의 끝까지 완주 및 보스 처치 시 클리어
+- 스테이지 클리어 → 아웃게임
+
+### 패배 조건
+
+- 체력 또는 기력 고갈 시 클리어 실패
+- 스테이지 실패 → 아웃게임
+
+@@이미지
+그림: assets/images/dragondoc/clear.jpg, assets/images/dragondoc/fail.jpg
+비율: 원본
+설명: 스테이지 클리어 · 클리어 실패
+
+@@조작 방식
+
+- 자동 공격: 용이 자동으로 앞으로 이동하며 자동으로 공격 및 스킬 발동
+- 앞 뒤 이동: ↑↓ / W·S 또는 마우스로 지상 앞뒤 위치 변경. 나눠진 칸에서 함정 / 공격을 회피하며 전진
+- 비행과 착지: Space 유지 / 해제로 상승 / 하강. 착지 시 높이에 따른 충격파 발생
+- 소모형 보조 스킬: 1/2/3 숫자키 또는 아이콘 클릭으로 강력한 스킬 사용 [소모성 아이템]
+
+@@이미지
+그림: assets/images/dragondoc/control.jpg
+
+@@강화 요소
+구역: 어둡게
+
+### 업그레이드 트리
+
+- 골드를 소모해 해금 및 강화
+- 능력치 상승 / 스킬 해금
+
+### 유물
+
+- 총 3개 장착 가능
+- 플레이 보너스[데미지/골드 수급 등]를 주는 장착형 아이템
+
+@@이미지
+그림: assets/images/dragondoc/tree.jpg, assets/images/dragondoc/relic.jpg
+비율: 원본
+설명: 업그레이드 트리 · 유물
+
+@@스테이지
+그림: assets/images/dragondoc/stage.jpg
+
+==**시대를 넘어 모든 것을 부셔라!**==
+
+@@보스전
+그림: assets/images/dragondoc/boss.jpg
+그림위치: 왼쪽
+구역: 어둡게
+
+==**시대를 넘기위한 보스와의 전투!**==
+
+@@변신
+그림: assets/images/dragondoc/evolve.jpg
+
+==**더 강한 용으로 변신 준비 끝!**==
+
+@@키비주얼
+
+==**익살스럽고 과장된 묘사의 카툰 스타일**==
+
+@@이미지
+그림: assets/images/dragondoc/keyvisual.jpg
+
+@@톤 & 무드
+그림: assets/images/dragondoc/mood.jpg
+구역: 어둡게
+
+### 공통 화풍
+
+- 익살스럽고 과장된 묘사
+- 해칭 위주의 선 묘사
+- 둥근 실루엣 — MD 수준의 데포르메
+- 원색 사용 지양
+- 동일 객체 내의 강한 색 대비 사용 지양
+- 밝은 색 위주
+
+@@탭 워크 플로우
+
+@@탭 리소스 구현
+
+@@비주얼 구현 설계
+
+- 기획자만 있는 프로젝트인 만큼 AI 사용이 필요
+- 이후에 스킨 등의 공통 애니메이션 적용을 위해 균일한 규격이 필요
+- 직접 키 비주얼과 규격 틀을 제작 후 이후 양산에 AI를 사용하는 방식으로 결정
+
+### 결정한 구현 방향
+
+- **스타일**
+  - 2D 사이드뷰: 리소스 제작에 가장 용이한 구도
+  - 카툰풍: 드래곤은 서양권의 인기가 압도적이다
+- **규격**
+  - 캐릭터: 스프라이트 리깅 형태로 결정. 8파츠로 분절 후 관절 좌표를 잡아 틀로 삼는 형태
+  - 배경: 4단 레이어 식으로 구성. 배경 원,중,근경을 분리해 속도를 다르게 하고 이동 체감을 주는 형태
+- 베이스 리소스 하나씩 제작
+
+### 구현 계획
+
+- MVP 범위를 한 사이클 플레이로 지정
+- 필요 리소스 분량 지정
+- 데이터 테이블 필요 항목 지정
+- 리소스 명세 작업
+
+### 구현 작업
+
+- 리소스 규격 틀 작업
+- 리소스 AI 생성
+  - AI가 규격을 잘 맞추지 못하는 문제 발생
+  - AI가 생성한 생성물을 폴리싱하는 방향 결정
+- AI와 포토샵을 사용한 리소스 폴리싱 연구
+
+@@문제
+제목: 리소스 누락 문제
+
+- 리소스 체크리스트가 따로 존재하지 않아 기획서에 각자 적은 파편화된 리소스를 놓치는 문제
+
+@@해결
+제목: **체크리스트** 제작
+
+- 리소스 체크리스트 제작 후 작성방법 안내
+
+@@문제
+제목: 리소스 관리 문제
+
+- 리소스가 100 단위가 넘어가기 시작하니 폴리싱 완료한 리소스와 아닌것의 구분이 힘들어짐
+
+@@해결
+제목: **작업 단위**로 나누어 관리
+
+- 리소스를 작업 단위로 나누어 폴더에서 관리. 해당 작업 내에서만 체크
+
+@@탭 제안서
+
+@@기획서
+`,shortVideos:[],images:[],documents:[{title:"다녀가용 컨셉 기획서",src:"assets/documents/dragon-concept.pdf"}]},
   {id:"project-04",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-05",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-06",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
