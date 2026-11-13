@@ -233,7 +233,7 @@ python -m http.server 8000
 
 **이 절은 다음 사람이 이어받기 위한 메모다. 내용을 채우거나 끝낸 일은 여기서 지운다.**
 
-### 프로젝트 네 개
+### 프로젝트 여섯 개
 
 | id | 이름 | 탭 | 비고 |
 |---|---|---|---|
@@ -241,8 +241,10 @@ python -m http.server 8000
 | `project-02` | 타일 시공 마스터 | 프로젝트 | 소개 영상이 mp4(`assets/videos/project-02-hero.mp4`) |
 | `project-03` | 다녀가용 | 프로젝트 · 워크 플로우 · 리소스 구현 · 제안서 | 영상 없음 |
 | `project-04` | My Darkest Friend | 프로젝트 · 문제 상황 | 2024 졸업 작품. 소개 영상 mp4(`assets/videos/project-04-hero.mp4`), 표지는 기획서 로고 |
+| `project-05` | 코나와 스노래빗 | (없음 — 소개만) | 라스칼랩 작업. 소개 영상은 스팀 두 번째 트레일러(`assets/videos/project-05-hero.mp4`), 썸네일에 RascalLab 워터마크, 소개에 Steam 링크 |
+| `project-06` | Last Hideout | 프로젝트 | 2022 보드게임. 대표 이미지는 실물 보드 사진. 프로젝트 탭에는 기말 발표 자료 PDF(`assets/documents/221218_기말발표자료_22기조사단.pdf`, 41MB — 사용자가 `claude/vibrant-thompson-om82ms` 브랜치에 올린 파일)만 있다 |
 
-`project-05` 이후는 빈 틀이다. **프로젝트는 `period`의 끝 날짜로 자동 정렬되므로 배열 순서를 바꾸지 말고 기간만 적으면 된다.**
+`project-07` 이후는 빈 틀이다. **프로젝트는 `period`의 끝 날짜로 자동 정렬되므로 배열 순서를 바꾸지 말고 기간만 적으면 된다.**
 
 ### 채워진 것
 
