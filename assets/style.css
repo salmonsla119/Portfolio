@@ -436,8 +436,7 @@ iframe.pj-player{pointer-events:none}
    칸(테두리)이 그림에 딱 맞고 좌우에 빈 바탕이 남지 않는다 */
 .pj-cols .pj-figs{justify-items:center}
 .pj-cols .pj-figs img{width:auto;max-width:100%;height:auto;
-  min-height:clamp(220px,26vw,300px);max-height:clamp(340px,42vw,560px);
-  object-fit:contain}
+  max-height:clamp(340px,42vw,560px);object-fit:contain}
 /* 여러 장은 한 줄로. 자르지 않고 높이만 맞춰 아랫변이 가지런히 떨어지게 한다 */
 .pj-figs{display:grid;gap:clamp(10px,1.4vw,18px);margin:clamp(16px,2.4vw,30px) 0 0}
 .pj-cols .pj-figs{margin:0}
@@ -451,19 +450,20 @@ iframe.pj-player{pointer-events:none}
    세로로 긴 화면 캡처를 흐름대로 늘어놓는 자리다 */
 .pj-figs.many{grid-template-columns:repeat(var(--cols),minmax(0,1fr))}
 .pj-figs.n2,.pj-figs.n3,.pj-figs.n4,.pj-figs.many{justify-items:center}
-.pj-figs.n2 img,.pj-figs.n3 img,.pj-figs.n4 img{width:auto;max-width:100%;
-  height:clamp(240px,30vw,440px);object-fit:contain}
+.pj-figs.n2 img,.pj-figs.n3 img,.pj-figs.n4 img{width:auto;max-width:100%;height:auto;
+  max-height:clamp(260px,32vw,460px);object-fit:contain}
 /* 한 장짜리 그림이 세로로 길면(모바일 게임 화면 등) 화면 높이에 맞춰 줄인다.
    자르지는 않으므로 좌우에 칸 바탕이 남는다 */
 /* 세로로 긴 그림(모바일 게임 화면 등)이 한 장 들어오면 칸 안에서 높이를 묶는다.
    자르지 않고 가운데에 놓이며 좌우는 칸 바탕이 된다.
    폭은 100% 로 두어야 아직 안 불러온 그림도 자리를 잡는다(안 그러면 2px 로 쪼그라든다).
    글 옆에 붙는 .pj-cols 의 옆그림도 n1 이므로 칸 바로 아래 것만 고른다 */
-.wrap>.pj-figs.n1 img{max-height:72vh;object-fit:contain}
+.wrap>.pj-figs.n1{justify-items:center}
+.wrap>.pj-figs.n1 img{width:auto;max-width:100%;height:auto;max-height:72vh;object-fit:contain}
 /* `비율: 원본` — 이제는 기본과 같다(어떤 그림도 자르지 않는다).
    예전 글에서 쓰던 칸이라 규칙만 남겨 둔다 */
 .pj-figs.as-is img{aspect-ratio:auto;object-fit:contain;min-height:0;
-  height:clamp(240px,30vw,440px);max-height:none}
+  width:auto;max-width:100%;height:auto;max-height:clamp(260px,32vw,460px)}
 .pj-figs img{display:block;width:100%;height:auto;border:1px solid var(--line-2);
   border-radius:var(--radius);background:var(--screen)}
 .pj-figs figcaption{grid-column:1/-1;margin-top:2px;color:var(--dim);font-size:var(--fs-small)}
