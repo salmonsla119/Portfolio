@@ -1085,7 +1085,7 @@ projects:[
 @@제안
 구역: 어둡게
 - 게임 리뉴얼 제안서 | 일부 채택 일부 기각 | 리뉴얼
-`,shortVideos:[],images:[],proposals:{
+`,shortVideos:[{src:"assets/videos/project-03-hero.mp4",title:"다녀가용 소개 영상"}],images:[],proposals:{
     아이디어:`**장르**
 - 육성, 인크리멘탈
 

@@ -243,7 +243,7 @@ python -m http.server 8000
 |---|---|---|---|
 | `project-01` | High Num | 프로젝트 · 워크 플로우 · 문제 상황 | 유일하게 `ornament:true`(문양). itch.io 링크 있음 |
 | `project-02` | 타일 시공 마스터 | 프로젝트 | 소개 영상이 mp4(`assets/videos/project-02-hero.mp4`) |
-| `project-03` | 다녀가용 | 프로젝트 · 워크 플로우 · 리소스 구현 · 제안서 | 영상 없음 |
+| `project-03` | 다녀가용 | 프로젝트 · 워크 플로우 · 리소스 구현 · 제안서 | 소개 영상 mp4(`assets/videos/project-03-hero.mp4`) |
 | `project-04` | My Darkest Friend | 프로젝트 · 문제 상황 | 2024 졸업 작품. 소개 영상 mp4(`assets/videos/project-04-hero.mp4`), 표지는 기획서 로고 |
 | `project-05` | 코나와 스노래빗 | (없음 — 소개만) | 라스칼랩 작업. 소개 영상은 스팀 두 번째 트레일러(`assets/videos/project-05-hero.mp4`), 썸네일은 RascalLab 워터마크가 비스듬히 그림 전체를 덮는다(이 프로젝트만). `thumbPos:"4% 50%"`로 썸네일에 캐릭터 쪽만 보인다. 소개에 Steam 링크 |
 | `project-06` | Last Hideout | 프로젝트 | 2022 보드게임. 대표 이미지(`image` — 썸네일·목록·소개)는 사용자가 준 보드 목업(`project-06-thumb.webp`, 투명 바탕을 `--screen` 색에 얹음). **영상 칸(맨 위 16:9 화면·메인 영상 칸)만** `hero`로 실물 보드 사진(`project-06-board.webp`) — 사용자 요청. 프로젝트 탭은 기말 발표 자료 PDF(`assets/documents/221218_기말발표자료_22기조사단.pdf`, 41MB)를 옮긴 것 — 시장·이용층 분석(7~12쪽)은 넣지 않았다 |
