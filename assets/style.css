@@ -138,9 +138,6 @@ body.on-light{background:var(--bg)}
 .fx-t2{color:var(--text);font-weight:400}
 .fx-t3{color:#fff;font-weight:800}
 
-/* 바로가기 버튼 (1474,37) */
-.fx-nav{left:1474px;top:37px;display:flex;gap:8px}
-
 /* 특기 사항 목록 (75,139) — 항목 간격 94px */
 .fx-spec{left:75px;top:139px;display:flex;flex-direction:column;gap:28px}
 .spec-item{display:flex;align-items:flex-start;gap:18px;width:280px;height:66px;
@@ -165,8 +162,8 @@ body.on-light{background:var(--bg)}
 .fx-panel h3{margin:8px 0;font-size:16px;font-weight:800;line-height:19px}
 .fx-panel .spec-detail{font-size:12px;line-height:14px}
 
-/* 영상 (1250,126) 570x325 */
-.fx-screen{left:1250px;top:126px;width:570px;height:325px;overflow:hidden;
+/* 영상 (1250,40) 570x325 */
+.fx-screen{left:1250px;top:40px;width:570px;height:325px;overflow:hidden;
   border:4px solid var(--accent);border-radius:8px;background:#000}
 .screen{position:absolute;inset:0;overflow:hidden;background:var(--screen)}
 .screen-media{position:absolute;inset:0;display:block;overflow:hidden}
@@ -187,9 +184,25 @@ body.on-light{background:var(--bg)}
 .nav-label .ico{width:15px;height:15px;color:var(--accent)}
 .nav-label:hover{border-color:var(--accent);color:var(--accent)}
 
-/* 영상 아래 선 (1250,471) + 화살표 (1757,460)(1788,460) */
-.fx-rail{left:1250px;top:471px;width:500px;height:1px;background:var(--line)}
-.fx-arrows{left:1757px;top:460px;display:flex;gap:6px}
+/* 영상 아래 선 (1250,385) + 화살표 (1757,374)(1788,374) */
+.fx-rail{left:1250px;top:385px;width:500px;height:1px;background:var(--line)}
+.fx-arrows{left:1757px;top:374px;display:flex;gap:6px}
+
+/* 최신 소식 (1285,405) 350 — 붓통 왼쪽 빈자리. 프로젝트를 최신순으로 한 줄씩 */
+.fx-news{left:1285px;top:405px;width:350px}
+.fx-news-title{display:flex;align-items:center;gap:14px;margin:0 0 14px;
+  color:var(--text);font-size:20px;font-weight:800;line-height:1.2}
+.fx-news-title:after{content:"";flex:1;height:1px;background:var(--line-2)}
+.fx-news-list{margin:0;padding:0;list-style:none}
+.fx-news-list a{display:flex;align-items:center;gap:10px;padding:9px 0;
+  border-bottom:1px solid var(--line);color:var(--read);font-size:15px;line-height:1.3;
+  transition:color .15s ease}
+.fx-news-list a:hover{color:var(--accent)}
+.fx-news-chip{flex:0 0 auto;padding:3px 8px;border:1px solid var(--line-2);border-radius:999px;
+  color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.04em}
+.fx-news-text{flex:1 1 auto;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.fx-news-text b{color:var(--text);font-weight:800}
+.fx-news-list a:hover .fx-news-text b{color:var(--accent)}
 .arrow{display:grid;place-items:center;width:25px;height:25px;padding:0;
   border:1px solid var(--line-2);border-radius:50%;background:transparent;
   cursor:pointer;color:var(--text);transition:border-color .15s ease,color .15s ease}
@@ -202,21 +215,21 @@ body.on-light{background:var(--bg)}
 .fx-mask{left:0;top:862px;width:1905px;height:80px;background:var(--light-bg)}
 /* 그림 두 장 + 바닥 선 */
 /* 초상화 — 누르면 이력서로 */
-.fx-portrait{left:561px;top:56px;width:780px;display:block;cursor:pointer}
+.fx-portrait{left:486px;top:56px;width:780px;display:block;cursor:pointer}
 .fx-portrait img{display:block;width:100%;height:auto;
   transition:filter .15s ease,transform .15s ease}
 .fx-portrait:hover img{filter:brightness(1.06)}
 .fx-brush{left:1460px;top:487px;width:360px;height:auto}
+/* 초상화 곁 바로가기 상자 — 자기소개서(485,600) · 이력서(988,470), 둘 다 210 폭. 초상화를 옮기면 같이 옮길 것.
+   사진 위에서도 눈에 띄게 하늘색으로 채운다(아이콘 없음) */
+.fx-go{display:block;width:210px;padding:14px 0;text-align:center;border:0;border-radius:2px;
+  background:var(--accent);color:var(--accent-ink);
+  font-size:30px;font-weight:800;line-height:1;white-space:nowrap;
+  transition:background .15s ease,color .15s ease}
+.fx-go:hover{background:#fff;color:var(--accent-ink)}
+.fx-go-cover{left:485px;top:600px}
+.fx-go-resume{left:988px;top:470px}
 .fx-ground{left:0;top:862px;width:1905px;height:4px;background:var(--accent)}
-
-/* 알약 버튼 */
-.frame-pill{display:flex;align-items:center;gap:12px;padding:12px 18px;
-  border:1px solid var(--line-2);border-radius:999px;background:transparent;color:var(--text);
-  font-size:12px;font-weight:700;letter-spacing:.06em;line-height:1;white-space:nowrap;
-  transition:border-color .15s ease,background .15s ease,color .15s ease}
-.frame-pill .ico{order:2;width:15px;height:15px;color:var(--accent)}
-.frame-pill:hover{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
-.frame-pill:hover .ico{color:var(--accent-ink)}
 
 /* 도트 아이콘 — 칸마다 선을 두르면 형체가 뭉개지므로 stroke 를 끈다 */
 .pixel{display:block;width:66px;height:auto;shape-rendering:crispEdges}
@@ -246,8 +259,8 @@ body.on-light{background:var(--bg)}
   .fx-head{flex-wrap:wrap;gap:8px 12px}
   .fx-head .ico{width:42px;height:42px}
   .fx-head p{font-size:24px}
-  .fx-nav{flex-wrap:wrap}
-  .frame-pill{flex:1 1 30%;justify-content:center}
+  .fx-go{width:auto;font-size:18px;padding:12px 18px}
+  .fx-news{width:100%}
   .fx-screen{width:100%;height:auto;aspect-ratio:570/325;border-width:2px}
   .fx-rail{display:none}
   .fx-arrows{align-self:flex-end}

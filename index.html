@@ -24,17 +24,14 @@
         <p class="fx-t3">김채연</p>
       </div>
 
-      <div class="fx-nav">
-        <a class="frame-pill" href="resume.html" data-ico="doc">이력서</a>
-        <a class="frame-pill" href="cover-letter.html" data-ico="pen">자기소개서</a>
-        <a class="frame-pill" href="#projects" data-ico="grid">프로젝트</a>
-      </div>
-
       <ul class="fx-spec" id="spec-list"></ul>
 
       <a class="fx-portrait" href="resume.html" aria-label="이력서 보기">
         <img src="assets/images/portrait.webp" alt="" aria-hidden="true">
       </a>
+      <!-- 초상화 곁의 바로가기 상자 두 개 -->
+      <a class="fx-go fx-go-cover" href="cover-letter.html">자기소개서</a>
+      <a class="fx-go fx-go-resume" href="resume.html">이력서</a>
       <!-- 바닥 선 아래를 덮어 그림 밑동을 잘라 주는 띠 (피그마의 #23272c 1905x80) -->
       <div class="fx-mask"></div>
       <div class="fx-ground"></div>
@@ -52,6 +49,12 @@
         <button type="button" class="arrow" data-dir="1" aria-label="다음 프로젝트">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
         </button>
+      </div>
+
+      <!-- 최신 소식 — 프로젝트를 최신순으로 한 줄씩, 누르면 그 프로젝트로 -->
+      <div class="fx-news">
+        <h2 class="fx-news-title">최신 소식</h2>
+        <ul class="fx-news-list" id="news-list"></ul>
       </div>
 
       <img class="fx-brush" src="assets/images/brush-jar.webp" alt="" aria-hidden="true">

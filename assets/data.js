@@ -1557,7 +1557,7 @@ projects:[
   {id:"project-05",year:"2025",title:"코나와 스노래빗",genre:"액션, 어드벤처, 캐주얼, 인디",role:"내 역할 입력",summary:"악동들의 냉동 액션!",body:"프로젝트 상세 설명 입력",image:"assets/images/project-05-thumb.png",thumbPos:"4% 50%",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2025.02.18 ~ 2025.11.30",position:"배경원화",gains:"원화 - 3D - 레벨 파이프라인",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 링크: Steam 페이지 | https://store.steampowered.com/app/3985850/%EC%BD%94%EB%82%98%EC%99%80_%EC%8A%A4%EB%85%B8%EB%9E%98%EB%B9%97/?l=koreana
 `,shortVideos:[{src:"assets/videos/project-05-hero.mp4",title:"코나와 스노래빗 트레일러"}],images:[],documents:[]},
-  {id:"project-06",year:"2022",title:"Last Hideout",genre:"전략, 보드게임",role:"내 역할 입력",summary:"좀비를 막고 생존하는 4인 보드게임",body:"프로젝트 상세 설명 입력",image:"assets/images/project-06-thumb.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2022.12 ~ 2022.12.26",position:"기획, 아트",gains:"실제 제작 경험",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+  {id:"project-06",year:"2022",title:"Last Hideout",genre:"전략, 보드게임",role:"내 역할 입력",summary:"좀비를 막고 생존하는 4인 보드게임",body:"프로젝트 상세 설명 입력",image:"assets/images/project-06-thumb.webp",hero:"assets/images/project-06-board.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2022.12 ~ 2022.12.26",position:"기획, 아트",gains:"실제 제작 경험",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
 @@탭 프로젝트
 
@@ -1640,8 +1640,6 @@ projects:[
 코로나 팬데믹으로 좀비 아포칼립스를 다룬 작품이 주목받고 있다. 넷플릭스 <킹덤>은 뉴욕타임스 최고 인터내셔널 TV쇼 TOP10에 선정되었다.
 
 @@장점 및 특징
-그림: assets/images/lhdoc/survivor.webp
-그림위치: 왼쪽
 
 - 회전률: 평균 20~40분의 플레이타임을 지녀 회전률이 좋다.
 - 간소한 규칙: 간소화된 쉬운 규칙으로 플레이어가 쉽게 이해할 수 있다.
@@ -1704,7 +1702,7 @@ projects:[
 플레이어의 잔여 HP
 
 @@이미지
-그림: assets/images/lhdoc/piece-zombie.webp, assets/images/lhdoc/piece-human.webp, assets/images/lhdoc/stand.webp, assets/images/lhdoc/barricade.webp
+그림: assets/images/lhdoc/piece-zombie.webp, assets/images/lhdoc/stand.webp, assets/images/lhdoc/barricade.webp
 비율: 원본
 설명: 말 · 지지대 · 바리케이트
 

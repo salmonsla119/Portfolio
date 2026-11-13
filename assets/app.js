@@ -224,8 +224,8 @@ function sheetTable(key){
     }else if(clip&&clip.src){
       media='<video class="screen-video" src="'+e(clip.src)+'" autoplay muted loop playsinline'
         +(p.image?' poster="'+e(p.image)+'"':'')+'></video>';
-    }else if(p.image){
-      media='<img class="screen-img" src="'+e(p.image)+'" alt="'+e(p.title)+'">';
+    }else if(p.hero||p.image){
+      media='<img class="screen-img" src="'+e(p.hero||p.image)+'" alt="'+e(p.title)+'">';
     }else{
       media='<span class="screen-empty">영상이나 대표 이미지를 넣어 주세요</span>';
     }
@@ -246,6 +246,20 @@ function sheetTable(key){
     });
   }
   render();
+})();
+
+/* ================= 메인: 최신 소식 =================
+   프로젝트를 최신순(projects())으로 한 줄씩, 4개까지. 아직 제목을 안 적은 빈 틀은 뺀다. */
+(function(){
+  var ul=q('news-list');if(!ul)return;
+  ul.innerHTML=projects().filter(function(p){
+    return p.title&&p.title!=='프로젝트 제목 입력'}).slice(0,4).map(function(p){
+    var year=/^\d{4}$/.test(String(p.year||''))?p.year:'프로젝트',
+        sum=p.summary&&p.summary!=='간단 설명 입력'?' — '+p.summary:'';
+    return'<li><a href="project.html?id='+encodeURIComponent(p.id)+'">'
+      +'<span class="fx-news-chip">'+e(year)+'</span>'
+      +'<span class="fx-news-text"><b>'+e(p.title)+'</b>'+e(sum)+'</span></a></li>';
+  }).join('');
 })();
 
 /* ================= 프로젝트 목록 ================= */
@@ -720,7 +734,7 @@ function renderBlocks(md,c){
     var slides=(p.images||[]).filter(function(x){return x&&x.src}),
         tags=String(p.genre||'').split(/[,·]/).map(function(t){return t.trim()}).filter(Boolean),
         docs=(p.documents||[]).filter(function(x){return x&&x.src}),
-        hero=coverOf(p),
+        hero=p.hero||coverOf(p),   /* 영상 칸에만 다른 그림을 쓰려면 data.js 의 hero */
         others=list;   /* 지금 보고 있는 것도 자리를 지킨다(.on 으로 표시) */
 
     /* 맨 위 16:9 칸: 영상이 있으면 영상을 틀고, 없으면 대표 이미지.
