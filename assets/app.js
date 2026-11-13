@@ -576,15 +576,25 @@ var BLOCKS={
   }},
 
   /* 제안 목록 — `이름 | 상태 | 글키` 한 줄이 제안서 하나.
-     글키가 data.js 의 proposals 에 있으면 눌러서 창으로 띄운다 */
+     글키가 data.js 의 proposals 에 있으면 눌러서 창으로 띄운다.
+     `|` 가 없는 줄은 설명 글로 보고, 적은 차례 그대로 제안서 줄 사이에 놓는다 */
   '제안':{cls:'pj-free',tone:'light',make:function(c,b){
     var docs=c.p.proposals||{},
-        rows=String(b.body||'').split('\n').map(function(t){
-          return t.replace(/^[ \t]*[-*][ \t]+/,'').trim()}).filter(Boolean);
-    return(b.fields['제목']?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'doc')+'">'
-          +mdLine(b.fields['제목'])+'</h2>':'')
-      +(b.fields['설명']?'<p class="pp-lead">'+mdLine(b.fields['설명'])+'</p>':'')
-      +'<ul class="pp-list">'+rows.map(function(t){
+        isRow=function(t){return t.indexOf('|')>=0},
+        chunks=[];   /* [{rows:[…]} 또는 {text:'…'}] 를 적은 차례대로 */
+    String(b.body||'').split('\n').forEach(function(line){
+      var kind=isRow(line)?'rows':(line.trim()?'text':'gap'),
+          last=chunks[chunks.length-1];
+      if(kind==='gap'){if(last&&last.text!=null)last.text+='\n';return}
+      if(kind==='rows'){
+        var t=line.replace(/^[ \t]*[-*][ \t]+/,'').trim();
+        if(last&&last.rows)last.rows.push(t);else chunks.push({rows:[t]});
+      }else{
+        if(last&&last.text!=null)last.text+=line+'\n';else chunks.push({text:line+'\n'});
+      }
+    });
+    function list(rows){
+      return'<ul class="pp-list">'+rows.map(function(t){
           var part=t.split('|').map(function(x){return x.trim()}),
               name=part[0],state=part[1]||'',key=part[2]||'',
               has=key&&docs[key],
@@ -596,7 +606,13 @@ var BLOCKS={
             +(state?'<span class="pp-state">'+e(state)+'</span>':'')
             +(has?icon('tap'):'')
             +(has?'</button>':'</span>')+'</li>'}).join('')
-      +'</ul>';
+        +'</ul>';
+    }
+    return(b.fields['제목']?'<h2 class="sec-title" data-ico="'+e(b.fields['아이콘']||'doc')+'">'
+          +mdLine(b.fields['제목'])+'</h2>':'')
+      +(b.fields['설명']?'<p class="pp-lead">'+mdLine(b.fields['설명'])+'</p>':'')
+      +chunks.map(function(k){
+        return k.rows?list(k.rows):'<div class="md-body pp-text">'+bodyHtml(k.text.trim())+'</div>'}).join('');
   }},
 
   /* 엑셀 표 — assets/sheets.js 의 이름을 적는다 */

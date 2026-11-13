@@ -462,7 +462,7 @@ projects:[
 게임 사이클을 보기 위한 ==1스테이지 분량==
 
 @@기획서
-제목: **컨셉** 기획서
+제목: High Num **컨셉** 기획서
 이름: 컨셉 기획서
 
 @@탭 워크 플로우
@@ -613,7 +613,7 @@ projects:[
 - 팀 내 권한 분할 및 체계 확정
 
 이것으로 일주일 늦어졌던 개발 일정을 효율화시켜 ==제 시간에 맞출 수 있었습니다==.
-`,shortVideos:[{src:"https://www.youtube.com/watch?v=mYlwMKpCUC0&t=1s",title:"High Num 소개 영상"}],images:[],documents:[{title:"2026년 8월 작업 캘린더",src:"assets/documents/work-calendar-2026-08.xlsx",sheet:"work-calendar-2026-08"},{title:"컨셉 기획서 Ver 1.1.2",src:"assets/documents/highnum-concept-ver1.1.2.pdf"}]},
+`,shortVideos:[{src:"https://www.youtube.com/watch?v=mYlwMKpCUC0&t=1s",title:"High Num 소개 영상"}],images:[],documents:[{title:"2026년 8월 작업 캘린더",src:"assets/documents/work-calendar-2026-08.xlsx",sheet:"work-calendar-2026-08"},{title:"High Num 컨셉 기획서",src:"assets/documents/highnum-concept-ver1.1.2.pdf"}]},
   {id:"project-02",year:"2026",title:"타일 시공 마스터",genre:"캐주얼 클리커",role:"내 역할 입력",summary:"낡은 타일을 부수고, 새로 칠하고, 완성하자!",body:"프로젝트 상세 설명 입력",image:"assets/images/project-02-logo.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2026.06.30 ~ 2026.08.03",position:"비주얼 가이드, 리소스 작업",gains:"리소스 관리, UI 작업 파이프라인",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
 @@탭 프로젝트
@@ -766,6 +766,7 @@ projects:[
 설명: 의뢰 실패 · 의뢰 완료
 
 @@기획서
+제목: 타일 시공 마스터 **컨셉** 기획서
 `,shortVideos:[{src:"assets/videos/project-02-hero.mp4",title:"타일 시공 마스터 소개 영상"}],images:[],documents:[{title:"타일 시공 마스터 컨셉 기획서",src:"assets/documents/tile-master-concept.pdf"}]},
   {id:"project-03",year:"2026",title:"다녀가용",genre:"인크리멘탈, 로그라이크",role:"내 역할 입력",summary:"원시부터 우주까지, 다녀가용! 건물을 부수고 골드를 빼앗는 인크리멘탈 게임",body:"",image:"assets/images/project-03-key.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2026.09.28 ~ 2026.11.20",position:"비주얼 가이드, 기획, 리소스 작업",gains:"리소스 규격 설정, 게임 루프 설정",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
@@ -945,6 +946,7 @@ projects:[
 - 밝은 색 위주
 
 @@기획서
+제목: 다녀가용 **컨셉** 기획서
 
 @@탭 워크 플로우
 
@@ -1054,49 +1056,57 @@ projects:[
 
 @@제안
 제목: 아이디어, 프로토타입 제안
+
+각자 게임 아이디어를 제시
+
 - 러너 형식 드래곤 게임 제안 | 채택 | 아이디어
 
 @@제안
 제목: 재미요소 논의
-설명: 게임 플레이가 늘어진다고 생각
+구역: 어둡게
+
+게임 플레이가 늘어진다는 판단을 내림
+
+### 대응
+
 - 허들 설정 방법에 대한 제안서 | 논의 | 허들
 - 초반부 게임 늘어짐 해결 방법에 대한 제안서 | 논의 | 초반스퍼트
 - 방치와 능동적 조작 중 하나를 선택해야 한다는 제안서 | 기각 | 방치
 - 강화 스탯의 타입 분류 제안서 | 논의 | 강화타입
 - 드래곤 종류 별 경험 차별화 제안서 | 논의 | 드래곤종류
 
-@@게임 추가 컨텐츠 논의
-구역: 어둡게
-
-- 미니게임 형식을 집어넣자는 방향이 정해짐
-- 미니게임이 게임의 흐름을 끊고 동떨어진다고 판단
-- 스테이지가 넘어갈때마다 미니게임을 넣자는 방향 결정
-
 @@제안
-구역: 어둡게
+제목: 게임 추가 컨텐츠 논의
+
+미니게임 형식을 집어넣는 방향이 결정됨
+미니게임이 게임의 흐름을 끊고 동떨어진다고 판단을 내림
+
+### 대응
+
 - 성장 컨텐츠와 엮인 미니게임 구조 제안서 | 기각 | 성장미니게임
 - 스테이지 흐름 끊김을 우려해 구두 제안 | 기각
 
 @@제안
-제목: 게임 재미요소 논의 2
-설명: QA 후 제안서 작성
+제목: 게임 개선 제안
+구역: 어둡게
+
+QA후 여러 개선 필요 사항 체감
+
+### 대응
+
 - 공격력에 관여하는 강화 둘이 모두 비싸거나 후반 강화 — 비용 하락 혹은 초반 시점 해금 제안 | 논의 | 스킬밸런싱
 - 초반 스타터가 특정 위치를 제외하면 디메리트를 줘 선택 강제 — 초반 스타터 위치 문제 제기 | 논의 | 스타터위치
 - 재화 부족 상황에 재화 획득량 강화 한계가 낮은 문제 — 강화 한계 해제 제안 | 논의 | 재화한계
 - 이동속도 강화 비쌈으로 템포 느림 문제 — 가격 하향 제안 | 논의 | 이동속도
 - 강화 내에서 지수 증가가 일어나지 않음 — 배율 상승 혹은 강화 곱연산 되는 강화 종류 확장 제안 | 논의 | 지수증가
 
-@@게임 방향성 수정
-설명: 게임 리뉴얼 제안서 작성
-구역: 어둡게
+@@제안
+제목: 게임 방향성 수정
 
-- 적의 체력으로 허들을 두지 않고 적의 공격력으로 허들을 두는 형식 — 늘어짐 삭제
+- 적의 체력으로 허들을 두지 않고 적의 공격력으로 허들을 두는 형식 — 늘어짐 삭제 | 일부 채택 일부 기각 | 리뉴얼
+
 - 수동 공격 요소 추가
 - 인게임에서 알을 랜덤 드랍, 아웃게임에 로비 배치 후 알 가챠, 유물 등을 추가하는 방안
-
-@@제안
-구역: 어둡게
-- 게임 리뉴얼 제안서 | 일부 채택 일부 기각 | 리뉴얼
 `,shortVideos:[{src:"assets/videos/project-03-hero.mp4",title:"다녀가용 소개 영상"}],images:[],proposals:{
     아이디어:`**장르**
 - 육성, 인크리멘탈
@@ -1537,7 +1547,7 @@ projects:[
 비율: 원본
 
 @@기획서
-제목: **컨셉** 기획서
+제목: My Darkest Friend **컨셉** 기획서
 
 @@탭 문제 상황
 
@@ -1740,8 +1750,8 @@ projects:[
 외에도 데포르메는 《뱅!》처럼 ==반실사체를 사용하여 적당한 무게감==을 추구했다.
 
 @@기획서
-제목: **기말** 발표 자료
-`,shortVideos:[],images:[],documents:[{title:"Last Hideout 기말 발표 자료",src:"assets/documents/221218_기말발표자료_22기조사단.pdf"}]},
+제목: Last Hideout **컨셉** 기획서
+`,shortVideos:[],images:[],documents:[{title:"Last Hideout 컨셉 기획서",src:"assets/documents/221218_기말발표자료_22기조사단.pdf"}]},
   {id:"project-07",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-08",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-09",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
