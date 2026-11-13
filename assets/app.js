@@ -268,7 +268,7 @@ function sheetTable(key){
    - FLOW_KEY  : 본문에서 **적은 자리에 그대로 그려지는** 칸(인용 상자, 전·후 이미지,
                  손그림, 카드). */
 var BLOCK_KEY=/^[ \t]*(그림|사진|제목|아이콘|이름|설명|구역|포지션|역량|작업[ \t]*기간|기간|장르|링크|그림위치|비율|문양)[ \t]*:[ \t]*(.*)$/,
-    FLOW_KEY=/^[ \t]*(전|후|인용|손그림|카드)[ \t]*:[ \t]*(.*)$/,
+    FLOW_KEY=/^[ \t]*(전|후|인용|손그림|카드|흐름)[ \t]*:[ \t]*(.*)$/,
     RE_CALL=/^[ \t]*@@[ \t]*(.*?)[ \t]*$/,
     RE_RULE=/^[ \t]*-{3,}[ \t]*$/;
 
@@ -347,6 +347,16 @@ function inkFigs(v){
         return'<img class="ink" src="'+e(src)+'" alt="" loading="lazy">'}).join('')
     +'</div>';
 }
+/* 흐름 도식 — `흐름: 스테이지 시작 > 건물 파괴 > 종료` 처럼 적는다.
+   기획서의 플로우차트를 그림 대신 선 상자로 그린다 */
+function flowRow(v){
+  var list=String(v||'').split(/[ \t]*(?:>|→|->)[ \t]*/)
+    .map(function(t){return t.trim()}).filter(Boolean);
+  if(!list.length)return'';
+  return'<div class="pj-flow">'+list.map(function(t,i){
+    return(i?'<span class="pj-flow-arrow" aria-hidden="true"></span>':'')
+      +'<span class="pj-flow-step">'+mdLine(t)+'</span>'}).join('')+'</div>';
+}
 /* 카드 — `카드: 그림들` 바로 아래의 목록 항목이 카드 한 장씩이 된다.
    그림은 적은 차례대로 카드에 들어간다(모자라면 그림 없는 카드) */
 function cardGrid(v,items){
@@ -377,6 +387,7 @@ function bodyHtml(t){
       text();
       if(f[1]==='인용'){row();cards();out+=quoteBox(f[2].trim());continue}
       if(f[1]==='손그림'){row();cards();out+=inkFigs(f[2].trim());continue}
+      if(f[1]==='흐름'){row();cards();out+=flowRow(f[2].trim());continue}
       if(f[1]==='카드'){row();cards();cd=f[2].trim();items=[];continue}
       /* 전·후는 한 벌로 묶어야 하므로 여기서 row() 를 부르지 않는다
          (부르면 전 → 후가 한 장짜리 칸 두 개로 쪼개진다) */
