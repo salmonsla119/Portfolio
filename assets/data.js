@@ -1412,11 +1412,147 @@ projects:[
 - 획득한 유물을 배치할 수 있음
 - 배치해야만 유물 효과가 적용됨`
   },documents:[{title:"다녀가용 컨셉 기획서",src:"assets/documents/dragon-concept.pdf"}]},
-  {id:"project-04",year:"2024",title:"My Darkest Friend",genre:"로그라이크, 육성 시뮬레이션",role:"내 역할 입력",summary:"인간 '화이트'와 괴물 '블랙'이 몰래 사람을 잡아먹으며 성장해나가는 육성 시뮬레이션 게임",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2024.03.29 ~ 2024.10.27",position:"아트 전반",gains:"돌발상황 대처",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+  {id:"project-04",year:"2024",title:"My Darkest Friend",genre:"로그라이크, 육성 시뮬레이션",role:"내 역할 입력",summary:"인간 '화이트'와 괴물 '블랙'이 몰래 사람을 잡아먹으며 성장해나가는 육성 시뮬레이션 게임",body:"프로젝트 상세 설명 입력",image:"assets/images/darkdoc/logo.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2024.03.29 ~ 2024.10.27",position:"아트 전반",gains:"돌발상황 대처",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
 @@탭 프로젝트
 
+@@게임 개요
+
+==**가장 어두운 시간 찾아온, 나의 가장 어두운 친구**==
+
+- 게임명: My Darkest Friend
+- 게임 주제: 인간 '화이트'와 괴물 '블랙'이 몰래 사람을 잡아먹으며 성장해나가는 육성 시뮬레이션 게임
+- 장르: #흑백_도트 #로그라이크 #육성_시뮬레이션
+- 플랫폼/툴: PC Windows / Unity 제작
+- 주요 대상층: 스토리 위주의 게임을 선호하는 10-20대 유저
+- 게임 소재: 성장, 크리쳐, 역공포, 어드벤처, 선택의 중요성, 멀티엔딩
+- 게임 목표: 엔딩 달성 / 수집
+
+### About My Darkest Friend
+
+가정폭력을 당하던 어린아이 '화이트', 화이트의 아버지를 잡아먹고 태어난 그림자 괴물 '블랙'.
+원수이자 영웅인 괴물을 이용하거나 혹은 이용당하며, 존재를 들키지 않고 살아남아 독특한 우정을 키워나가세요.
+
+==우리의 목적은 하나, 성장입니다.==
+
+### 기획 의도
+
+- 주인공에게 몰입하며 즐길 수 있는 ==스토리 중점==의 게임
+- 선악이 모호한 순수함을 지닌 두 캐릭터를 통해 성향과 목적, 지향 플레이에 따라 ==다른 성장==
+- 플레이어의 선택에 따라 스토리의 분위기, 장르까지 변화하는 ==변칙적==인 게임
+- 기존의 게임과는 다른 방식의 ==새로움==으로 플레이어 개인의 만족도와 재미를 높이는 게임
+
+@@게임의 재미요소
+구역: 어둡게
+
+==#선택과_집중== ==#맞춤_성향_플레이== ==#괴물과의_교감== ==#퍼즐_로그라이크==
+
+### #1 매력적인 스토리 중심
+
+- 인간과 괴물의 협력과 우정, 혹은 기만. 다양한 면모를 살필 수 있는 스토리
+- 다양한 지역과 상황에서 ==불시에 등장==하는 대화와 스토리
+
+### #2 독특한 게임 방식
+
+- ==맵의 밝기==에 따라 캐릭터를 ==번갈아 조작==하며 목표까지 도달하는 탐색 구간
+- ==로그라이크== 형식의 각 맵에 따라 **변화하는 지형**으로 모험심을 자극
+
+### #3 다양한 멀티 엔딩
+
+- 플레이어가 직접 스토리의 흐름을 제어하고 바꿀 수 있는 ==선택의 중요성==
+- 플레이 성향과 쌓아온 스탯에 따라 다양하게 결정되는 ==멀티 엔딩== 요소
+
+### #4 캐릭터와의 교감
+
+- 인간과 괴물 두 캐릭터를 함께 조작하며 교감하고 대화할 수 있는 ==일상 구간==
+- 성장해나가는 두 캐릭터를 플레이어가 직접적으로 지켜볼 수 있는 성격 변화 요소
+
+@@이미지
+그림: assets/images/darkdoc/bulb.webp, assets/images/darkdoc/hand.webp
+
+@@게임 핵심 매커니즘
+
+==두 캐릭터가 성장하는 것이 게임의 주된 목표이다.==
+
+### 주간 일정
+
+7일 단위로 일정을 계획할 수 있다.
+일정은 탐색, 대화, 행동 세 가지로 구분되며,
+각 행동은 주 1회 이상 필수로 배치해야 한다.
+
+### 게임 총 기간
+
+- 1년 = 4개월, 1개월 = 4주, 1주 = 7일
+- 총 10년 (160턴)
+
+### 일정 배치
+
+흐름: 일주일 시작 > 탐색 · 대화 · 일상 > 정산
+
+카드: assets/images/darkdoc/icon-explore.webp, assets/images/darkdoc/icon-talk.webp, assets/images/darkdoc/icon-daily.webp
+- 탐색: 퍼즐 어드벤처 구간. 지역을 탐색하며 NPC 포식 가능. 한 층 선택시 다른 층 입장 불가. 밝은 지역에서는 '화이트', 어두운 지역에서는 '블랙' 조작 가능
+- 대화: 자아 성장에 큰 영향. 선택지를 통해 진행 가능.
+- 일상: 3가지 행동으로 구성. 분기별 선택 가능 행동 변경. '구매' 일정 고정 (TV로 상점 이용)
+
+@@이미지
+그림: assets/images/darkdoc/weekly.webp, assets/images/darkdoc/screen.webp
+비율: 원본
+설명: 주간 일정 · 탐색 화면
+
+@@게임 콘셉트
+구역: 어둡게
+
+<My Darkest Friend>는 화이트와 블랙, 두 캐릭터의 성장 이야기를 담은 로그라이트형 게임입니다.
+
+- 빛과 어둠: 밝은 곳과 어두운 곳을 번갈아 가며 캐릭터를 조작하는 조도 시스템을 통해 다소 루즈해질 수 있는 탐색 구간의 재미요소 추가
+- 레트로 그래픽: 흑백 4bit의 도트 그래픽을 통해 레트로 감성을 불러일으킴
+- 선택과 이야기: 플레이어의 선택으로 만들어나갈 수 있는 이야기의 전개 방식과 다양한 멀티 엔딩
+- 함께하는 성장: 플레이어가 직접 육성한 캐릭터가 점점 성장해나가는 것을 느낄 수 있음
+
+@@이미지
+그림: assets/images/darkdoc/keyart.webp
+
+@@이미지
+그림: assets/images/darkdoc/room.webp, assets/images/darkdoc/map.webp
+비율: 원본
+
+@@이미지
+그림: assets/images/darkdoc/illust-1.webp, assets/images/darkdoc/illust-2.webp
+비율: 원본
+
+@@이미지
+그림: assets/images/darkdoc/sprite-1.webp, assets/images/darkdoc/sprite-2.webp, assets/images/darkdoc/sprite-3.webp, assets/images/darkdoc/sprite-4.webp, assets/images/darkdoc/sprite-5.webp
+비율: 원본
+
 @@기획서
+제목: **컨셉** 기획서
+
+@@탭 문제 상황
+
+@@문제
+제목: **돌발상황** 발생
+
+2인 팀으로 각각 기획 / UI / 캐릭터, 나머지 아트를 맡아서 작업하던 팀
+
+- 작업 중 손가락 부상, 작업 불가해짐
+- 기획자의 취업으로 많은 작업이 불가해짐
+
+@@해결
+제목: **대응**
+
+- 2주 뒤 손가락의 최소 회복 즉시 작업 시작
+- 기획자가 맡았던 나머지 아트 작업을 모두 받아와 담당
+- 외주 프로그래머에게 파일 컨벤션과 리소스 사용 지침 제작해서 전달
+
+@@문제
+제목: **추가** 돌발상황
+
+- 개발 일정이 끝나기 2주 전 게임 테스트에서 프로그래머가 챕터 2를 통째로 누락시켰다는 사실을 발견
+
+@@해결
+제목: **대응**
+
+- QA에 직접 참여, 누락과 오류 검수
 `,shortVideos:[{src:"assets/videos/project-04-hero.mp4",title:"My Darkest Friend 소개 영상"}],images:[],documents:[{title:"My Darkest Friend 컨셉 기획서",src:"assets/documents/my-darkest-friend-concept.pdf"}]},
   {id:"project-05",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
   {id:"project-06",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
