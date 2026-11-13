@@ -7,6 +7,8 @@ var d=window.PORTFOLIO_DATA||{};
 function e(v){return String(v==null?'':v).replace(/[&<>'"]/g,function(c){
   return{'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]})}
 function q(id){return document.getElementById(id)}
+/* 썸네일처럼 잘라 보이는 자리에서 그림의 어느 쪽을 보일지 — data.js 의 thumbPos(예: "5% 50%") */
+function thumbPos(p){return p&&p.thumbPos?' style="object-position:'+e(p.thumbPos)+'"':''}
 /* 프로젝트는 작업 기간이 늦게 끝난 것부터 보여 준다.
    기간을 안 적은 것은 data.js 에 쓴 차례대로 뒤에 붙는다 */
 function periodKey(p){
@@ -252,7 +254,7 @@ function sheetTable(key){
   grid.innerHTML=projects().map(function(p){
     var cover=p.image||((p.images||[])[0]||{}).src||'';
     return'<a class="proj-card" href="project.html?id='+encodeURIComponent(p.id)+'">'
-      +'<div class="proj-card-thumb">'+(cover?'<img src="'+e(cover)+'" alt="'+e(p.title)+'" loading="lazy">':'이미지 추가 영역')+'</div>'
+      +'<div class="proj-card-thumb">'+(cover?'<img src="'+e(cover)+'" alt="'+e(p.title)+'" loading="lazy"'+thumbPos(p)+'>':'이미지 추가 영역')+'</div>'
       +'<div class="proj-card-meta"><span>'+e(p.year)+'</span><h2>'+e(p.title)+'</h2>'
       +'<p>'+e(p.position||p.role||'')+'</p></div></a>';
   }).join('')||'<p class="rs-empty">프로젝트를 추가해 주세요</p>';
@@ -763,7 +765,7 @@ function renderBlocks(md,c){
               var now=x.id===p.id;
               return'<button type="button" class="pj-thumb'+(now?' on':'')+'" data-go="'+e(x.id)
                 +'" title="'+e(x.title)+'"'+(now?' aria-current="true"':'')+'>'
-                +(c?'<img src="'+e(c)+'" alt="'+e(x.title)+'" loading="lazy">'
+                +(c?'<img src="'+e(c)+'" alt="'+e(x.title)+'" loading="lazy"'+thumbPos(x)+'>'
                    :'<span class="pj-thumb-empty">'+e(x.title)+'</span>')+'</button>'}).join('')
           +'</div>'
           +'<button type="button" class="pj-thumbs-arrow" data-scroll="1" aria-label="다음 프로젝트들">›</button>'
