@@ -504,9 +504,14 @@ button.pp-item:hover{border-color:var(--accent);color:var(--text)}
 /* 제안서 창 */
 body.pp-open{overflow:hidden}
 .pp-modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;
-  padding:clamp(16px,4vw,48px);background:rgba(12,14,17,.72);
+  padding:clamp(16px,4vw,48px);background:rgba(12,14,17,.74);
   -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .pp-modal[hidden]{display:none}
+/* 마우스를 올려 둘러보는 동안은 덮개를 옅게 두고 목록을 계속 쓸 수 있게 한다.
+   누르면(.is-pinned) 덮개가 진해지고 창만 남는다 */
+.pp-modal:not(.is-pinned){background:rgba(12,14,17,.46);pointer-events:none}
+.pp-modal:not(.is-pinned) .pp-sheet{pointer-events:auto}
+.pp-modal:not(.is-pinned) .pp-close{display:none}
 .pp-sheet{position:relative;width:min(760px,100%);max-height:84vh;overflow:auto;
   padding:clamp(24px,3.4vw,42px);border:1px solid var(--line-2);border-radius:var(--radius-lg);
   background:var(--box)}

@@ -252,7 +252,8 @@ function sheetTable(key){
     var cover=p.image||((p.images||[])[0]||{}).src||'';
     return'<a class="proj-card" href="project.html?id='+encodeURIComponent(p.id)+'">'
       +'<div class="proj-card-thumb">'+(cover?'<img src="'+e(cover)+'" alt="'+e(p.title)+'" loading="lazy">':'이미지 추가 영역')+'</div>'
-      +'<div class="proj-card-meta"><span>'+e(p.year)+'</span><h2>'+e(p.title)+'</h2><p>'+e(p.role)+'</p></div></a>';
+      +'<div class="proj-card-meta"><span>'+e(p.year)+'</span><h2>'+e(p.title)+'</h2>'
+      +'<p>'+e(p.position||p.role||'')+'</p></div></a>';
   }).join('')||'<p class="rs-empty">프로젝트를 추가해 주세요</p>';
 })();
 
@@ -591,34 +592,50 @@ var BLOCKS={
   }}
 };
 
-/* 제안서 창 — 누른 제안서의 글을 덮개 창으로 띄운다.
-   돌아갈 자리를 잃지 않게 바탕 스크롤을 잠그고, Esc 와 바깥 누르기로 닫는다 */
-function showProposal(key,md,title){
+/* 제안서 창 — 마우스를 올리면 뜨고, 누르면 고정된다.
+   고정했을 때만 바탕 스크롤을 잠근다(지나가다 열릴 때 화면이 흔들리지 않게) */
+var ppPinned=false,ppTimer=null;
+function proposalBox(){
   var box=document.getElementById('pp-modal');
-  if(!box){
-    box=document.createElement('div');
-    box.id='pp-modal';box.className='pp-modal';box.hidden=true;
-    box.innerHTML='<div class="pp-sheet" role="dialog" aria-modal="true" aria-label="제안서">'
-      +'<button type="button" class="pp-close" aria-label="닫기">\u00d7</button>'
-      +'<h3 class="pp-title"></h3><div class="md-body pp-body"></div></div>';
-    document.body.appendChild(box);
-    box.addEventListener('click',function(ev){
-      if(ev.target===box||ev.target.classList.contains('pp-close'))hideProposal();
-    });
-    document.addEventListener('keydown',function(ev){
-      if(ev.key==='Escape')hideProposal();
-    });
-  }
+  if(box)return box;
+  box=document.createElement('div');
+  box.id='pp-modal';box.className='pp-modal';box.hidden=true;
+  box.innerHTML='<div class="pp-sheet" role="dialog" aria-modal="true" aria-label="제안서">'
+    +'<button type="button" class="pp-close" aria-label="닫기">\u00d7</button>'
+    +'<h3 class="pp-title"></h3><div class="md-body pp-body"></div></div>';
+  document.body.appendChild(box);
+  box.addEventListener('click',function(ev){
+    if(ev.target===box||ev.target.classList.contains('pp-close'))hideProposal();
+  });
+  /* 목록에서 창으로 마우스가 건너오는 사이에 닫히지 않게 한다 */
+  box.addEventListener('mouseenter',function(){clearTimeout(ppTimer)});
+  box.addEventListener('mouseleave',proposalLater);
+  document.addEventListener('keydown',function(ev){
+    if(ev.key==='Escape')hideProposal();
+  });
+  return box;
+}
+function showProposal(md,title,pin){
+  clearTimeout(ppTimer);
+  if(ppPinned&&!pin)return;          /* 고정해 둔 글은 지나가도 바뀌지 않는다 */
+  var box=proposalBox();
   box.querySelector('.pp-title').textContent=title||'';
   box.querySelector('.pp-body').innerHTML=bodyHtml(md||'');
   box.hidden=false;
-  document.body.classList.add('pp-open');
+  box.classList.toggle('is-pinned',!!pin);
+  if(pin){ppPinned=true;document.body.classList.add('pp-open');
+    box.querySelector('.pp-close').focus()}
   paintIcons(box);
-  box.querySelector('.pp-close').focus();
+}
+/* 잠깐 뒤에 닫는다 — 그 사이 창이나 다른 줄에 닿으면 취소된다 */
+function proposalLater(){
+  clearTimeout(ppTimer);
+  ppTimer=setTimeout(function(){if(!ppPinned)hideProposal()},180);
 }
 function hideProposal(){
+  clearTimeout(ppTimer);ppPinned=false;
   var box=document.getElementById('pp-modal');
-  if(box)box.hidden=true;
+  if(box){box.hidden=true;box.classList.remove('is-pinned')}
   document.body.classList.remove('pp-open');
 }
 
@@ -799,14 +816,18 @@ function renderBlocks(md,c){
       });
     }
 
-    /* 제안서 누르면 창으로 띄운다 */
+    /* 제안서는 마우스를 올리기만 해도 열리고, 누르면 그 자리에 고정된다
+       (메인 특기 설명판과 같은 방식) */
     var pps=root.querySelectorAll('.pp-item.has-doc');
+    function ppShow(el,pin){
+      showProposal((p.proposals||{})[el.getAttribute('data-pp')],
+        el.querySelector('.pp-name').textContent,pin);
+    }
     for(var pi=0;pi<pps.length;pi++){
-      pps[pi].addEventListener('click',function(ev){
-        var key=ev.currentTarget.getAttribute('data-pp');
-        showProposal(key,(p.proposals||{})[key],
-          ev.currentTarget.querySelector('.pp-name').textContent);
-      });
+      pps[pi].addEventListener('mouseenter',function(ev){ppShow(ev.currentTarget,false)});
+      pps[pi].addEventListener('mouseleave',proposalLater);
+      pps[pi].addEventListener('focus',function(ev){ppShow(ev.currentTarget,false)});
+      pps[pi].addEventListener('click',function(ev){ppShow(ev.currentTarget,true)});
     }
 
     /* 오른쪽 위 썸네일 → 그 프로젝트로 내용 교체 */
