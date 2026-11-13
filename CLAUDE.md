@@ -36,6 +36,7 @@
 | `assets/images/tiledoc/` | 타일 시공 마스터 컨셉 기획서 PDF에서 뽑은 그림(같은 방법) |
 | `assets/images/dragondoc/` | 다녀가용 그림. **`pdfimages -png`으로 뽑은 내장 원본을 자르지 않고 그대로 쓴다**(webp 로만 바꿔 용량을 줄였다). `-j`로 뽑으면 마스크(.ppm)만 나오니 반드시 `-png`을 쓸 것. **쪽을 캡처해 잘라 쓰지 말 것**(2026-11 사용자 요청) — PPT 도형으로 그린 도식은 PDF 안에 그림 원본이 없으므로 아예 넣지 않는다. 규격 두 장은 사용자가 직접 준 파일 |
 | `assets/images/darkdoc/` | My Darkest Friend 그림. `pdfimages -png` 원본에 마스크를 입혀 webp로 만들었다. 표지(`logo.webp`)는 기획서 1쪽 로고 그림. **도트 캐릭터(`sprite-*`)만 투명 여백을 걷어 내고 흰 바탕에 얹었다**(그림 자체는 자르지 않았다 — 원본 캔버스가 450x300인데 캐릭터는 한쪽 구석에 작게 있었다). 탐색·대화·일상 아이콘은 투명 바탕 그대로 |
+| `assets/images/lhdoc/` | Last Hideout 그림. 발표 자료 PDF 내장 원본을 흰 바탕에 얹었다(일러스트·말은 투명 여백만 걷음). **카드 그림은 `카드:` 칸에 넣지 말 것** — `.pj-card`가 그림을 반전시켜 검은 카드가 회색으로 뒤집힌다. `@@이미지`로 넣었다. 다른 회사 게임 그림(뱅!·데드 오브 윈터·다키스트 던전 등)은 넣지 않았다 |
 | `assets/images/project-01-cause-*.png` 등 | 손그림(바탕이 빈 선 그림). 사용자가 준 원본은 **검은 선 + 투명 바탕**이라 `convert 원본 -channel RGB -negate +channel -trim +repage -resize 폭x` 로 선만 밝게 뒤집어 넣었다 |
 | `편집방법.md` | 사용자용 한국어 편집 안내. **사용자가 따로 말하기 전까지는 건드리지 않는다**(2026-10 사용자 요청). 갱신하라고 하면 그때 고치고 **`node tools/guide-shots.js && node tools/guide-pdf.js`로 그림과 PDF를 다시 만든다** |
 
@@ -242,7 +243,7 @@ python -m http.server 8000
 | `project-03` | 다녀가용 | 프로젝트 · 워크 플로우 · 리소스 구현 · 제안서 | 영상 없음 |
 | `project-04` | My Darkest Friend | 프로젝트 · 문제 상황 | 2024 졸업 작품. 소개 영상 mp4(`assets/videos/project-04-hero.mp4`), 표지는 기획서 로고 |
 | `project-05` | 코나와 스노래빗 | (없음 — 소개만) | 라스칼랩 작업. 소개 영상은 스팀 두 번째 트레일러(`assets/videos/project-05-hero.mp4`), 썸네일에 RascalLab 워터마크, 소개에 Steam 링크 |
-| `project-06` | Last Hideout | 프로젝트 | 2022 보드게임. 대표 이미지는 실물 보드 사진. 프로젝트 탭에는 기말 발표 자료 PDF(`assets/documents/221218_기말발표자료_22기조사단.pdf`, 41MB — 사용자가 `claude/vibrant-thompson-om82ms` 브랜치에 올린 파일)만 있다 |
+| `project-06` | Last Hideout | 프로젝트 | 2022 보드게임. 대표 이미지는 실물 보드 사진. 프로젝트 탭은 기말 발표 자료 PDF(`assets/documents/221218_기말발표자료_22기조사단.pdf`, 41MB)를 옮긴 것 — 시장·이용층 분석(7~12쪽)은 넣지 않았다 |
 
 `project-07` 이후는 빈 틀이다. **프로젝트는 `period`의 끝 날짜로 자동 정렬되므로 배열 순서를 바꾸지 말고 기간만 적으면 된다.**
 
