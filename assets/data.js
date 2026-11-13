@@ -614,7 +614,7 @@ projects:[
 
 이것으로 일주일 늦어졌던 개발 일정을 효율화시켜 ==제 시간에 맞출 수 있었습니다==.
 `,shortVideos:[{src:"https://www.youtube.com/watch?v=mYlwMKpCUC0&t=1s",title:"High Num 소개 영상"}],images:[],documents:[{title:"2026년 8월 작업 캘린더",src:"assets/documents/work-calendar-2026-08.xlsx",sheet:"work-calendar-2026-08"},{title:"High Num 컨셉 기획서",src:"assets/documents/highnum-concept-ver1.1.2.pdf"}]},
-  {id:"project-02",year:"2026",title:"타일 시공 마스터",genre:"캐주얼 클리커",role:"내 역할 입력",summary:"낡은 타일을 부수고, 새로 칠하고, 완성하자!",body:"프로젝트 상세 설명 입력",image:"assets/images/project-02-logo.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2026.06.30 ~ 2026.08.03",position:"비주얼 가이드, 리소스 작업",gains:"리소스 관리, UI 작업 파이프라인",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+  {id:"project-02",year:"2026",title:"타일 시공 마스터",genre:"캐주얼 클리커",role:"내 역할 입력",summary:"낡은 타일을 부수고, 새로 칠하고, 완성하자!",body:"",image:"assets/images/project-02-logo.png",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2026.06.30 ~ 2026.08.03",position:"비주얼 가이드, 리소스 작업",gains:"리소스 관리, UI 작업 파이프라인",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
 @@탭 프로젝트
 
@@ -947,6 +947,7 @@ projects:[
 
 @@기획서
 제목: 다녀가용 **컨셉** 기획서
+이름: 컨셉
 
 @@탭 워크 플로우
 
@@ -1045,6 +1046,13 @@ projects:[
 
 - 리소스 체크리스트가 따로 존재하지 않아 기획서에 각자 적은 파편화된 리소스를 놓치는 문제
 - 리소스 체크리스트 제작 후 작성방법 안내
+
+@@이미지
+그림: assets/images/project-03-resource-checklist.webp
+
+@@기획서
+제목: **리소스** 체크리스트
+이름: 체크리스트
 
 @@문제
 제목: 리소스 관리 문제
@@ -1433,8 +1441,8 @@ QA후 여러 개선 필요 사항 체감
 옆의 유물 배치 공간
 - 획득한 유물을 배치할 수 있음
 - 배치해야만 유물 효과가 적용됨`
-  },documents:[{title:"다녀가용 컨셉 기획서",src:"assets/documents/dragon-concept.pdf"}]},
-  {id:"project-04",year:"2024",title:"My Darkest Friend",genre:"로그라이크, 육성 시뮬레이션",role:"내 역할 입력",summary:"인간 '화이트'와 괴물 '블랙'이 몰래 사람을 잡아먹으며 성장해나가는 육성 시뮬레이션 게임",body:"프로젝트 상세 설명 입력",image:"assets/images/darkdoc/logo.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2024.03.29 ~ 2024.10.27",position:"아트 전반",gains:"돌발상황 대처",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+  },documents:[{title:"다녀가용 컨셉 기획서",src:"assets/documents/dragon-concept.pdf"},{title:"다녀가용 리소스 체크리스트",src:"assets/documents/dragon-resource-checklist.xlsx",sheet:"dragon-resource-checklist"}]},
+  {id:"project-04",art:true,year:"2024",title:"My Darkest Friend",genre:"로그라이크, 육성 시뮬레이션",role:"내 역할 입력",summary:"인간 '화이트'와 괴물 '블랙'이 몰래 사람을 잡아먹으며 성장해나가는 육성 시뮬레이션 게임",body:"",image:"assets/images/darkdoc/logo.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2024.03.29 ~ 2024.10.27",position:"아트 전반",gains:"돌발상황 대처",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
 @@탭 프로젝트
 
@@ -1576,10 +1584,10 @@ QA후 여러 개선 필요 사항 체감
 
 - QA에 직접 참여, 누락과 오류 검수
 `,shortVideos:[{src:"assets/videos/project-04-hero.mp4",title:"My Darkest Friend 소개 영상"}],images:[],documents:[{title:"My Darkest Friend 컨셉 기획서",src:"assets/documents/my-darkest-friend-concept.pdf"}]},
-  {id:"project-05",year:"2025",title:"코나와 스노래빗",genre:"액션, 어드벤처, 캐주얼, 인디",role:"내 역할 입력",summary:"악동들의 냉동 액션!",body:"프로젝트 상세 설명 입력",image:"assets/images/project-05-thumb.png",thumbPos:"4% 50%",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2025.02.18 ~ 2025.11.30",position:"배경원화",gains:"원화 - 3D - 레벨 파이프라인",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+  {id:"project-05",art:true,year:"2025",title:"코나와 스노래빗",genre:"액션, 어드벤처, 캐주얼, 인디",role:"내 역할 입력",summary:"악동들의 냉동 액션!",body:"",image:"assets/images/project-05-thumb.png",thumbPos:"4% 50%",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2025.02.18 ~ 2025.11.30",position:"배경원화",gains:"원화 - 3D - 레벨 파이프라인",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 링크: Steam 페이지 | https://store.steampowered.com/app/3985850/%EC%BD%94%EB%82%98%EC%99%80_%EC%8A%A4%EB%85%B8%EB%9E%98%EB%B9%97/?l=koreana
 `,shortVideos:[{src:"assets/videos/project-05-hero.mp4",title:"코나와 스노래빗 트레일러"}],images:[],documents:[]},
-  {id:"project-06",year:"2022",title:"Last Hideout",genre:"전략, 보드게임",role:"내 역할 입력",summary:"좀비를 막고 생존하는 4인 보드게임",body:"프로젝트 상세 설명 입력",image:"assets/images/project-06-thumb.webp",hero:"assets/images/project-06-board.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2022.12 ~ 2022.12.26",position:"기획, 아트",gains:"실제 제작 경험",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
+  {id:"project-06",art:true,year:"2022",title:"Last Hideout",genre:"전략, 보드게임",role:"내 역할 입력",summary:"좀비를 막고 생존하는 4인 보드게임",body:"",image:"assets/images/project-06-thumb.webp",hero:"assets/images/project-06-board.webp",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"2022.12 ~ 2022.12.26",position:"기획, 아트",gains:"실제 제작 경험",quote:"",problem:"",solution:{before:"",after:"",note:""},md:`@@소개
 
 @@탭 프로젝트
 
@@ -1752,11 +1760,11 @@ QA후 여러 개선 필요 사항 체감
 @@기획서
 제목: Last Hideout **컨셉** 기획서
 `,shortVideos:[],images:[],documents:[{title:"Last Hideout 컨셉 기획서",src:"assets/documents/221218_기말발표자료_22기조사단.pdf"}]},
-  {id:"project-07",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
-  {id:"project-08",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
-  {id:"project-09",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
-  {id:"project-10",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
-  {id:"project-11",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
-  {id:"project-12",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"프로젝트 상세 설명 입력",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]}
+  {id:"project-07",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
+  {id:"project-08",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
+  {id:"project-09",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
+  {id:"project-10",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
+  {id:"project-11",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]},
+  {id:"project-12",year:"연도 입력",title:"프로젝트 제목 입력",genre:"장르 입력",role:"내 역할 입력",summary:"간단 설명 입력",body:"",image:"",team:[{part:"기획",count:0},{part:"아트",count:0},{part:"프로그래밍",count:0}],period:"",position:"",gains:"",quote:"",problem:"",solution:{before:"",after:"",note:""},md:``,shortVideos:[],images:[],documents:[]}
 ]
 };

@@ -139,7 +139,9 @@
 - **`글`·`이미지` 양식의 `그림:`은 쉼표로 여러 장을 받는다**(`figures()`). 한 장이면 `.pj-cols` 두 칸(기획서 슬라이드처럼 글 옆), 여러 장이면 `.pj-figs.n2~n4` 한 줄. `그림위치: 왼쪽`으로 좌우를 바꾼다. **다섯 장이 넘으면** `figures()`가 `--cols`에 장수를 넣고 `.pj-figs.many`가 그만큼 칸을 나눈다(좁은 화면에서는 3열 → 2열).
 - **그림은 자르지 않고, 칸도 그림보다 커지지 않는다**(2026-11 사용자 요청). 모든 그림 칸이 `width:auto;max-width:100%;height:auto;max-height:…` + `contain` 이라 테두리가 늘 그림에 딱 맞는다. **`height`를 고정하면 폭이 `max-width`에 걸릴 때 칸 안에 빈 자리가 남으므로 `max-height`로 묶을 것.** 예전에는 `aspect-ratio:4/3` + `cover`로 조금씩 잘랐는데 세로 화면이 30%까지 잘려 나갔다. 자르는 곳은 오른쪽 위 썸네일(`.pj-thumb`)과 맨 위 16:9 화면뿐이다. `.pj-figs.n1`(한 장짜리 `@@이미지`)만 원본 비율 그대로다 — 도식·표를 넣는 자리라 자르면 안 된다. 다만 **세로로 긴 그림(모바일 게임 화면 등)은 `max-height:72vh`로 묶는다**(`.wrap>.pj-figs.n1 img`). 자르지 않고 가운데에 놓이며 좌우는 칸 바탕이 된다. **폭은 `100%`로 두어야** 아직 안 불러온 그림도 자리를 잡는다(`width:auto`로 바꿨다가 2px로 쪼그라들었다). `.pj-cols`의 옆그림도 `n1`이므로 `.wrap>`로 범위를 좁혀야 한다. **`비율: 원본`을 적으면 여러 장이어도 자르지 않는다**(`.pj-figs.as-is`) — 원화처럼 잘리면 안 되는 그림에 쓴다. 대신 **나란히 놓인 그림들의 높이는 맞춘다**(`height:clamp(240px,30vw,440px)` + `contain`). 비율이 다르면 좌우에 칸 바탕이 남지만 아랫변이 가지런히 떨어진다.
 - **프로젝트의 `hero`는 영상 칸(상세 맨 위 16:9 화면, 메인 영상 칸)에만 쓰는 그림이다.** 영상이 없을 때만 보이고, 비우면 `image`를 쓴다. 썸네일·목록·소개는 늘 `image`다.
+- **프로젝트의 `art:true`는 아트 파트로 들어간 작업 표시다**(지금은 My Darkest Friend·코나와 스노래빗·Last Hideout). 썸네일 줄(`.pj-thumb`)과 목록 카드(`.proj-card-thumb`) 오른쪽 아래에 붓 아이콘(`.art-badge`, `brush`)이 붙는다(`app.js`의 `artBadge()`).
 - **프로젝트의 `thumbPos`(예: `"4% 50%"`)는 잘라 보이는 썸네일(`.pj-thumb`, `.proj-card-thumb`)의 `object-position`이다**(`app.js`의 `thumbPos()`). 그림 파일은 그대로 두고 보이는 자리만 옮긴다. 안 적으면 가운데.
+- **기획서 칸은 한 페이지에 여러 개 둘 수 있다**(다녀가용: 프로젝트 탭 `이름: 컨셉`, 리소스 구현 탭 `이름: 체크리스트`). 뷰어는 `.docs` 칸마다 자기 `.doc-view`에 그린다 — 예전엔 `id="doc-view"` 하나라 두 번째 칸의 단추가 첫 칸에 그려졌다.
 - 기획서의 `이름:`은 `documents`를 걸러 준다. **단추의 `data-doc`은 걸러진 뒤 순번이 아니라 원래 배열의 자리여야 한다** — 뷰어(`showDoc`)가 같은 배열을 인덱싱하기 때문이다. 한 번 어긋나 엉뚱한 문서가 열렸다.
 
 ## 디자인 시스템 — 어두운 차콜 + 가는 선 + 하늘색 포인트
@@ -181,7 +183,7 @@
 
 **아이콘은 전부 선(벡터) 아이콘이다.** `assets/app.js` 위쪽 `ICONS`에 24x24 path 만 모여 있고, 쓰는 쪽은 **`data-ico="이름"` 한 줄이면 된다**(`paintIcons()`가 채운다). JS로 그리는 곳에서는 `icon('이름')`을 쓴다. 색은 `currentColor`, 굵기는 `.ico`가 정하므로 아이콘마다 색·크기를 따로 지정하지 않는다. 다시 그려지는 화면(프로젝트 상세, 기획서 뷰어)에서는 그린 뒤 `paintIcons(root)`를 호출해야 한다.
 
-현재 있는 이름: `doc pen grid film sound mute quote swap clip down tap back image user badge award case layers tool alert hybrid` + 문양 `orn-dice orn-card orn-chip orn-star orn-target orn-shell`(48 격자)
+현재 있는 이름: `doc pen grid film sound mute quote swap clip down tap brush back image user badge award case layers tool alert hybrid` + 문양 `orn-dice orn-card orn-chip orn-star orn-target orn-shell`(48 격자)
 
 아이콘 안에서 일부만 포인트 색을 쓰려면 그 `path`(또는 `g`)에 클래스를 준다 — `a`(선을 하늘색), `fill-a`(면을 하늘색), `no-line`(선 없이 면만).
 
@@ -243,7 +245,7 @@ python -m http.server 8000
 |---|---|---|---|
 | `project-01` | High Num | 프로젝트 · 워크 플로우 · 문제 상황 | 유일하게 `ornament:true`(문양). itch.io 링크 있음 |
 | `project-02` | 타일 시공 마스터 | 프로젝트 | 소개 영상이 mp4(`assets/videos/project-02-hero.mp4`) |
-| `project-03` | 다녀가용 | 프로젝트 · 워크 플로우 · 리소스 구현 · 제안서 | 소개 영상 mp4(`assets/videos/project-03-hero.mp4`) |
+| `project-03` | 다녀가용 | 프로젝트 · 워크 플로우 · 리소스 구현 · 제안서 | 소개 영상 mp4(`assets/videos/project-03-hero.mp4`). 리소스 구현 탭의 리소스 누락 문제 아래에 체크리스트 캡처(`project-03-resource-checklist.webp`)와 엑셀(`dragon-resource-checklist.xlsx`, 첫 시트 "작업목록"만 `sheets.js`로 변환) |
 | `project-04` | My Darkest Friend | 프로젝트 · 문제 상황 | 2024 졸업 작품. 소개 영상 mp4(`assets/videos/project-04-hero.mp4`), 표지는 기획서 로고 |
 | `project-05` | 코나와 스노래빗 | (없음 — 소개만) | 라스칼랩 작업. 소개 영상은 스팀 두 번째 트레일러(`assets/videos/project-05-hero.mp4`), 썸네일은 RascalLab 워터마크가 비스듬히 그림 전체를 덮는다(이 프로젝트만). `thumbPos:"4% 50%"`로 썸네일에 캐릭터 쪽만 보인다. 소개에 Steam 링크 |
 | `project-06` | Last Hideout | 프로젝트 | 2022 보드게임. 대표 이미지(`image` — 썸네일·목록·소개)는 사용자가 준 보드 목업(`project-06-thumb.webp`, 투명 바탕을 `--screen` 색에 얹음). **영상 칸(맨 위 16:9 화면·메인 영상 칸)만** `hero`로 실물 보드 사진(`project-06-board.webp`) — 사용자 요청. 프로젝트 탭은 기말 발표 자료 PDF(`assets/documents/221218_기말발표자료_22기조사단.pdf`, 41MB)를 옮긴 것 — 시장·이용층 분석(7~12쪽)은 넣지 않았다 |

@@ -8,6 +8,8 @@ function e(v){return String(v==null?'':v).replace(/[&<>'"]/g,function(c){
   return{'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]})}
 function q(id){return document.getElementById(id)}
 /* 썸네일처럼 잘라 보이는 자리에서 그림의 어느 쪽을 보일지 — data.js 의 thumbPos(예: "5% 50%") */
+/* 아트 파트로 들어간 프로젝트(data.js 의 art:true)는 썸네일 구석에 붓 아이콘을 단다 */
+function artBadge(p){return p&&p.art?'<span class="art-badge" title="아트 파트" aria-label="아트 파트">'+icon('brush')+'</span>':''}
 function thumbPos(p){return p&&p.thumbPos?' style="object-position:'+e(p.thumbPos)+'"':''}
 /* 프로젝트는 작업 기간이 늦게 끝난 것부터 보여 준다.
    기간을 안 적은 것은 data.js 에 쓴 차례대로 뒤에 붙는다 */
@@ -40,6 +42,7 @@ var ICONS={
   clip:'<rect x="5" y="4" width="14" height="18" rx="1"/><path d="M9 4V2.5h6V4"/><path d="M9 10.5h6M9 14.5h6"/>',
   down:'<path d="M12 3.5v11.5"/><path d="M7.5 11L12 15.5 16.5 11"/><path d="M4 20h16"/>',
   tap:'<path d="M9 15.5V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M12 11V9.5a1.5 1.5 0 0 1 3 0v2"/><path d="M15 11.5v-1a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-.8a5.5 5.5 0 0 1-4.4-2.2l-2.6-3.3a1.5 1.5 0 0 1 2.3-1.9L9 15.5"/>',
+  brush:'<path d="M20.5 3.5l-8 8"/><path class="fill" d="M10.6 10.1l3.3 3.3-1 1-3.3-3.3z"/><path class="a fill-a" d="M9.6 11.1c-2.4.2-3.6 1.6-3.8 3.6-.2 2-1.1 3.4-2.8 4.3 3.6.9 7.4.2 8.7-2.5.5-1.1.4-2.2-.2-3.2z"/>',
   back:'<path d="M20 12H4"/><path d="M10 6l-6 6 6 6"/>',
   image:'<rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 16.5l-5.5-5.5L9 17.5"/>',
   user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>',
@@ -268,7 +271,7 @@ function sheetTable(key){
   grid.innerHTML=projects().map(function(p){
     var cover=p.image||((p.images||[])[0]||{}).src||'';
     return'<a class="proj-card" href="project.html?id='+encodeURIComponent(p.id)+'">'
-      +'<div class="proj-card-thumb">'+(cover?'<img src="'+e(cover)+'" alt="'+e(p.title)+'" loading="lazy"'+thumbPos(p)+'>':'이미지 추가 영역')+'</div>'
+      +'<div class="proj-card-thumb">'+(cover?'<img src="'+e(cover)+'" alt="'+e(p.title)+'" loading="lazy"'+thumbPos(p)+'>':'이미지 추가 영역')+artBadge(p)+'</div>'
       +'<div class="proj-card-meta"><span>'+e(p.year)+'</span><h2>'+e(p.title)+'</h2>'
       +'<p>'+e(p.position||p.role||'')+'</p></div></a>';
   }).join('')||'<p class="rs-empty">프로젝트를 추가해 주세요</p>';
@@ -540,7 +543,7 @@ var BLOCKS={
       +(docs.length
         ?'<div class="doc-tabs" role="tablist">'+docs.map(function(r,i){
             return'<button type="button" class="doc-tab'+(i?'':' on')+'" data-doc="'+r.at+'">'
-              +e(r.doc.title||('기획서 '+(r.at+1)))+'</button>'}).join('')+'</div><div id="doc-view"></div>'
+              +e(r.doc.title||('기획서 '+(r.at+1)))+'</button>'}).join('')+'</div><div class="doc-view"></div>'
         :'<div class="media-empty">'+icon('clip')+'상세 기획서 추가 영역</div>')
       +'</div>'
       +(b.body?'<div class="md-body">'+bodyHtml(b.body)+'</div>':'');
@@ -796,7 +799,7 @@ function renderBlocks(md,c){
               return'<button type="button" class="pj-thumb'+(now?' on':'')+'" data-go="'+e(x.id)
                 +'" title="'+e(x.title)+'"'+(now?' aria-current="true"':'')+'>'
                 +(c?'<img src="'+e(c)+'" alt="'+e(x.title)+'" loading="lazy"'+thumbPos(x)+'>'
-                   :'<span class="pj-thumb-empty">'+e(x.title)+'</span>')+'</button>'}).join('')
+                   :'<span class="pj-thumb-empty">'+e(x.title)+'</span>')+artBadge(x)+'</button>'}).join('')
           +'</div>'
           +'<button type="button" class="pj-thumbs-arrow" data-scroll="1" aria-label="다음 프로젝트들">›</button>'
         +'</div>'
@@ -874,10 +877,11 @@ function renderBlocks(md,c){
       });
     }
 
-    /* 기획서 뷰어 */
-    var docView=q('doc-view');
-    if(docView&&docs.length){
-      var tabs=root.querySelectorAll('.doc-tab');
+    /* 기획서 뷰어 — 기획서 칸이 여러 개(탭마다 하나씩)일 수 있으므로 칸마다 따로 건다 */
+    var docBoxes=root.querySelectorAll('.docs');
+    for(var db=0;db<docBoxes.length&&docs.length;db++)(function(box){
+      var docView=box.querySelector('.doc-view');if(!docView)return;
+      var tabs=box.querySelectorAll('.doc-tab');
       var showDoc=function(n){
         var x=docs[n];if(!x)return;
         var src=String(x.src||''),ext=src.split('?')[0].split('.').pop().toLowerCase(),
@@ -904,7 +908,7 @@ function renderBlocks(md,c){
           showDoc(parseInt(ev.currentTarget.getAttribute('data-doc'),10)||0)});
       }
       if(tabs.length)showDoc(parseInt(tabs[0].getAttribute('data-doc'),10)||0);
-    }
+    })(docBoxes[db]);
   }
 
   var id=new URLSearchParams(location.search).get('id');

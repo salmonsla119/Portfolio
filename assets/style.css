@@ -334,7 +334,7 @@ iframe.pj-player{pointer-events:none}
 .pj-thumbs{flex:1 1 auto;min-width:0;display:flex;gap:8px;overflow-x:auto;padding:1px 1px 4px;
   scroll-behavior:smooth;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .pj-thumbs::-webkit-scrollbar{display:none}
-.pj-thumb{flex:0 0 auto;width:clamp(42px,4.6vw,72px);aspect-ratio:165/182;padding:0;overflow:hidden;
+.pj-thumb{position:relative;flex:0 0 auto;width:clamp(42px,4.6vw,72px);aspect-ratio:165/182;padding:0;overflow:hidden;
   border:1px solid var(--line-2);border-radius:3px;background:var(--screen);cursor:pointer;
   line-height:0;transition:border-color .15s ease}
 .pj-thumb:hover{border-color:var(--accent)}
@@ -760,6 +760,16 @@ a.rs-card:hover h3{color:var(--accent)}
   color:var(--dim);font-size:var(--fs-small);position:relative;overflow:hidden;
   border-bottom:1px solid var(--line)}
 .proj-card-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* 아트 파트 표시 — 썸네일 오른쪽 아래의 붓 아이콘 (art:true 인 프로젝트만) */
+.art-badge{position:absolute;right:3px;bottom:3px;z-index:1;display:grid;place-items:center;
+  width:28px;height:28px;border-radius:50%;background:rgba(27,31,36,.88);color:#e7ebee;line-height:0}
+.art-badge .ico{width:20px;height:20px;stroke-width:1.8}
+/* 붓털은 하늘색으로 채우고, 쇠붙이(손잡이 끝)는 흰색으로 채운다 */
+.art-badge .ico .a{stroke:#a6d9e8}
+.art-badge .ico .fill-a{fill:#a6d9e8}
+.art-badge .ico .fill{fill:currentColor}
+.proj-card-thumb .art-badge{right:10px;bottom:10px;width:46px;height:46px}
+.proj-card-thumb .art-badge .ico{width:30px;height:30px}
 .proj-card-meta{padding:14px 16px 16px}
 .proj-card-meta span{color:var(--accent);font-size:var(--fs-label);letter-spacing:.06em}
 .proj-card-meta h2{margin:5px 0;font-size:var(--fs-lead);font-weight:800}
