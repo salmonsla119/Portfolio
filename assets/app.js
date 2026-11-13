@@ -237,7 +237,7 @@ function sheetTable(key){
     /* 아래 줄의 "프로젝트 보기"도 지금 보고 있는 프로젝트로 */
     if(stageLink)stageLink.setAttribute('href','project.html?id='+encodeURIComponent(p.id));
   }
-  var arrows=document.querySelectorAll('.frame-nav .arrow');
+  var arrows=document.querySelectorAll('.fx-arrows .arrow');
   for(var i=0;i<arrows.length;i++){
     arrows[i].addEventListener('click',function(ev){
       if(!list.length)return;
@@ -910,20 +910,35 @@ function renderBlocks(md,c){
   /* 프로젝트 목록 — 좌우로 끌어서 넘긴다 */
   var rail=q('rs-projects');
   if(rail){
-    var ps=(d.resumeProjects||[]);
+    var ps=(d.resumeProjects||[]),
+        /* 제목이 같은 프로젝트가 있으면 그 상세 페이지로 잇는다 */
+        byTitle={};
+    (d.projects||[]).forEach(function(p){if(p.title)byTitle[p.title]=p.id});
     rail.innerHTML=ps.map(function(x){
-      return'<article><time>'+e(x.year||'연도 입력')+'</time><h3>'+e(x.title||'프로젝트명 입력')+'</h3>'
-        +'<b>'+e(x.role||'역할 입력')+'</b><p>'+e(x.detail||'설명 입력')+'</p></article>'}).join('')
+      var id=byTitle[x.title],
+          inner='<time>'+e(x.year||'연도 입력')+'</time><h3>'+e(x.title||'프로젝트명 입력')+'</h3>'
+        +'<b>'+e(x.role||'역할 입력')+'</b><p>'+e(x.detail||'설명 입력')+'</p>';
+      return id?'<a class="rs-card" href="project.html?id='+encodeURIComponent(id)+'">'+inner+'</a>'
+               :'<article class="rs-card">'+inner+'</article>'}).join('')
       ||'<p class="rs-empty">프로젝트를 입력해 주세요</p>';
-    var dragging=false,startX=0,startScroll=0;
+    /* 끌어서 넘기기 — 조금이라도 끌었으면 그 클릭은 링크로 보내지 않는다.
+       누르자마자 포인터를 붙잡으면 클릭이 목록으로 가 버려 링크가 안 열리므로
+       5px 넘게 움직였을 때만 붙잡는다 */
+    var down=false,dragging=false,moved=false,startX=0,startScroll=0;
     rail.addEventListener('pointerdown',function(ev){
-      dragging=true;startX=ev.clientX;startScroll=rail.scrollLeft;
-      rail.setPointerCapture(ev.pointerId);rail.classList.add('dragging')});
+      down=true;dragging=false;moved=false;startX=ev.clientX;startScroll=rail.scrollLeft});
     rail.addEventListener('pointermove',function(ev){
+      if(!down)return;
+      if(!dragging&&Math.abs(ev.clientX-startX)>5){
+        dragging=moved=true;rail.setPointerCapture(ev.pointerId);rail.classList.add('dragging')}
       if(dragging)rail.scrollLeft=startScroll-(ev.clientX-startX)});
-    var stop=function(){dragging=false;rail.classList.remove('dragging')};
+    var stop=function(){down=dragging=false;rail.classList.remove('dragging')};
     rail.addEventListener('pointerup',stop);
     rail.addEventListener('pointercancel',stop);
+    rail.addEventListener('click',function(ev){
+      if(moved){ev.preventDefault();ev.stopPropagation();moved=false}},true);
+    /* 링크 그림이 끌려 나가지 않게 */
+    rail.addEventListener('dragstart',function(ev){ev.preventDefault()});
   }
 
   var careers=q('rs-careers');

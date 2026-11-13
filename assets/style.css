@@ -646,8 +646,13 @@ body.pp-open{overflow:hidden}
 .rs-rail{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;
   -webkit-overflow-scrolling:touch}
 .rs-rail.dragging{cursor:grabbing;-webkit-user-select:none;user-select:none}
-.rs-rail>article{flex:0 0 clamp(200px,22vw,260px);padding:16px;border:1px solid var(--line);
-  border-radius:3px;background:transparent}
+.rs-card{flex:0 0 clamp(200px,22vw,260px);padding:16px;border:1px solid var(--line);
+  border-radius:3px;background:transparent;color:inherit}
+/* 프로젝트 페이지로 이어진 칸 — 호버하면 선과 제목이 하늘색 */
+a.rs-card{transition:border-color .15s ease}
+a.rs-card h3{transition:color .15s ease}
+a.rs-card:hover{border-color:var(--accent)}
+a.rs-card:hover h3{color:var(--accent)}
 .rs-rail time{display:block;color:var(--accent);font-size:var(--fs-label);letter-spacing:.06em}
 .rs-rail h3{margin:6px 0;font-size:var(--fs-lead);font-weight:800}
 .rs-rail b{display:block;color:var(--accent);font-size:var(--fs-label);font-weight:600}
