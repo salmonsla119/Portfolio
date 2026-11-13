@@ -750,7 +750,7 @@ projects:[
 @@탭 프로젝트
 
 @@게임 요약
-그림: assets/images/dragondoc/keyart.jpg
+그림: assets/images/dragondoc/keyart.webp
 그림위치: 왼쪽
 
 ==**원시부터 우주까지, 다녀가용!**==
@@ -771,11 +771,6 @@ projects:[
 - Bills Must Be Paid: 강화 트리 구조
 - Burrito Bison: 세션 진행 구조
 
-@@이미지
-그림: assets/images/dragondoc/loop.jpg, assets/images/dragondoc/mech.jpg
-비율: 원본
-설명: 순환 구조와 핵심 메카닉스
-
 @@세계관 / 시놉시스
 구역: 어둡게
 
@@ -793,7 +788,7 @@ projects:[
 - 더! 더! 많이!!
 
 @@이미지
-그림: assets/images/dragondoc/story-1.jpg, assets/images/dragondoc/story-2.jpg
+그림: assets/images/dragondoc/story-1.webp, assets/images/dragondoc/story-2.webp
 비율: 원본
 설명: 시놉시스 · 게임 진행 스토리
 
@@ -808,9 +803,6 @@ projects:[
 ### 아웃게임 흐름
 
 ==스테이지 종료 → 동굴 → 강화 · 알 부화 · 도감==
-
-@@이미지
-그림: assets/images/dragondoc/flow.jpg
 
 @@주요 요소
 구역: 어둡게
@@ -835,9 +827,6 @@ projects:[
 
 - 골드 코인: 업그레이드 시 필요한 재화. 인게임에서 획득 가능
 - 알: 유물 / 꾸미기 뽑기. 자유롭게 부화 가능하고 축적한 시간만큼 높은 등급 보상 (최대 1시간)
-
-@@이미지
-그림: assets/images/dragondoc/elements.jpg
 
 @@스탯 구성
 
@@ -869,7 +858,7 @@ projects:[
 - 스테이지 실패 → 아웃게임
 
 @@이미지
-그림: assets/images/dragondoc/clear.jpg, assets/images/dragondoc/fail.jpg
+그림: assets/images/dragondoc/clear.webp, assets/images/dragondoc/fail.webp
 비율: 원본
 설명: 스테이지 클리어 · 클리어 실패
 
@@ -879,9 +868,6 @@ projects:[
 - 앞 뒤 이동: ↑↓ / W·S 또는 마우스로 지상 앞뒤 위치 변경. 나눠진 칸에서 함정 / 공격을 회피하며 전진
 - 비행과 착지: Space 유지 / 해제로 상승 / 하강. 착지 시 높이에 따른 충격파 발생
 - 소모형 보조 스킬: 1/2/3 숫자키 또는 아이콘 클릭으로 강력한 스킬 사용 [소모성 아이템]
-
-@@이미지
-그림: assets/images/dragondoc/control.jpg
 
 @@강화 요소
 구역: 어둡게
@@ -897,36 +883,28 @@ projects:[
 - 플레이 보너스[데미지/골드 수급 등]를 주는 장착형 아이템
 
 @@이미지
-그림: assets/images/dragondoc/tree.jpg, assets/images/dragondoc/relic.jpg
+그림: assets/images/dragondoc/tree.webp
+설명: 업그레이드 트리
+
+@@주요 컨텐츠
+
+- 스테이지: ==시대를 넘어 모든 것을 부셔라!==
+- 보스전: ==시대를 넘기위한 보스와의 전투!==
+- 변신: ==더 강한 용으로 변신 준비 끝!==
+
+@@이미지
+그림: assets/images/dragondoc/stage.webp, assets/images/dragondoc/boss.webp, assets/images/dragondoc/evolve.webp
 비율: 원본
-설명: 업그레이드 트리 · 유물
-
-@@스테이지
-그림: assets/images/dragondoc/stage.jpg
-
-==**시대를 넘어 모든 것을 부셔라!**==
-
-@@보스전
-그림: assets/images/dragondoc/boss.jpg
-그림위치: 왼쪽
-구역: 어둡게
-
-==**시대를 넘기위한 보스와의 전투!**==
-
-@@변신
-그림: assets/images/dragondoc/evolve.jpg
-
-==**더 강한 용으로 변신 준비 끝!**==
+설명: 스테이지 · 보스전 · 변신
 
 @@키비주얼
 
 ==**익살스럽고 과장된 묘사의 카툰 스타일**==
 
 @@이미지
-그림: assets/images/dragondoc/keyvisual.jpg
+그림: assets/images/dragondoc/keyvisual.webp
 
 @@톤 & 무드
-그림: assets/images/dragondoc/mood.jpg
 구역: 어둡게
 
 ### 공통 화풍
@@ -957,6 +935,13 @@ projects:[
   - 캐릭터: 스프라이트 리깅 형태로 결정. 8파츠로 분절 후 관절 좌표를 잡아 틀로 삼는 형태
   - 배경: 4단 레이어 식으로 구성. 배경 원,중,근경을 분리해 속도를 다르게 하고 이동 체감을 주는 형태
 - 베이스 리소스 하나씩 제작
+
+@@이미지
+그림: assets/images/dragondoc/spec-char.webp, assets/images/dragondoc/spec-bg.webp
+비율: 원본
+설명: 캐릭터 8파츠 분절 규격 · 배경 4단 레이어 규격
+
+@@글
 
 ### 구현 계획
 
